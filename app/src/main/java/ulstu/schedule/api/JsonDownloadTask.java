@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.zip.GZIPInputStream;
 
 class JsonDownloadTask extends AsyncTask<String, Void, String> {
 
@@ -40,9 +41,10 @@ class JsonDownloadTask extends AsyncTask<String, Void, String> {
             URL url = new URL(path);
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestMethod("GET");
+            c.setRequestProperty("Accept-Encoding", "gzip");
             c.setReadTimeout(3000);
             c.connect();
-            reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(c.getInputStream())));
             StringBuilder buf = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {

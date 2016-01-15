@@ -4,86 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
-
-import com.quinny898.library.persistentsearch.SearchBox;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SearchBox search;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        search = (SearchBox)findViewById(R.id.searchbox);
-        search.enableVoiceRecognition(this);
-        for(int x = 0; x < 10; x++){
-            SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_more_vert_black_24dp));
-            search.addSearchable(option);
-        }
-        search.setLogoText(getString(R.string.searchview));
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        search.setMenuListener(new SearchBox.MenuListener() {
-
-            @Override
-            public void onMenuClick() {
-                //Hamburger has been clicked
-                drawer.openDrawer(Gravity.LEFT);
-            }
-
-        });
-        search.setSearchListener(new SearchBox.SearchListener() {
-
-            @Override
-            public void onSearchOpened() {
-                //Use this to tint the screen
-            }
-
-            @Override
-            public void onSearchClosed() {
-                //Use this to un-tint the screen
-            }
-
-            @Override
-            public void onSearchTermChanged(String s) {
-
-            }
-
-            @Override
-            public void onSearch(String searchTerm) {
-                Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onResultClick(SearchResult result) {
-                //React to a result being clicked
-            }
-
-
-            @Override
-            public void onSearchCleared() {
-
-            }
-
-        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,21 +55,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == MainActivity.RESULT_OK) {
-            ArrayList<String> matches = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            //search.populateEditText(matches);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

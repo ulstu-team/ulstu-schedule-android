@@ -19,6 +19,8 @@ android {
     }
 }
 
+
+
 def libsVersion = '23.1.1'
 
 dependencies {
@@ -26,5 +28,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$libsVersion"
     compile "com.android.support:design:$libsVersion"
-    compile 'com.quinny898.library.persistentsearch:library:1.1.0-SNAPSHOT'
 }

@@ -7,19 +7,20 @@ import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
 
+import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
 import ulstu.schedule.models.Cathedra;
 import ulstu.schedule.models.Faculty;
 import ulstu.schedule.models.Group;
 import ulstu.schedule.models.Lesson;
 import ulstu.schedule.models.Teacher;
+import ulstu.schedule.models.TeacherLessons;
 
 public class UlstuScheduleAPI
         implements ReceiverSetter, Request, JsonDownloadTask.OnDownloadedListener {
 
-    private static final String URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/api/";
+    private static final String URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/ulstu/";
 
     private static UlstuScheduleAPI mUlstuScheduleAPI;
-
     private UlstuScheduleAPI() { }
 
     private static String mUrl;
@@ -53,7 +54,9 @@ public class UlstuScheduleAPI
     @Override
     public void onDownloaded(String response) {
         Gson gson = new GsonBuilder().create();
-        // TODO: carefully testing!
+        // TODO: carefully testing! Add exception to method signature
+        if (response == null || response.isEmpty())
+            throw new DownloadException();
         mReceiver.onDataReceived(gson.fromJson(response, mType));
     }
 
@@ -91,6 +94,9 @@ public class UlstuScheduleAPI
                 break;
             case Schedule.TEACHERS:
                 mType = Teacher[].class;
+                break;
+            case Schedule.TEACHER_LESSONS:
+                mType = TeacherLessons.class;
                 break;
         }
 

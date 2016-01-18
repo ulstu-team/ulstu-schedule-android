@@ -1,24 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
-            android:title="Import" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
+    <group
+        android:id="@+id/nav_main_sections"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_schedule"
+            android:icon="@mipmap/my_schedule"
+            android:title="@string/my_schedule" />
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@mipmap/favorites"
+            android:title="@string/favorites" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/nav_test_sections"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_credits"
+            android:icon="@mipmap/credits"
+            android:title="@string/credits" />
+        <item
+            android:id="@+id/nav_exams"
+            android:icon="@mipmap/exams"
+            android:title="@string/exams" />
+    </group>
+
+    <group
+        android:id="@+id/nav_sections"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_faculties"
+            android:icon="@mipmap/faculties"
+            android:title="@string/faculties" />
+        <item
+            android:id="@+id/nav_cathedries"
+            android:icon="@mipmap/cathedries"
+            android:title="@string/cathedries" />
+        <item
+            android:id="@+id/nav_groups"
+            android:icon="@mipmap/group"
+            android:title="@string/groups" />
+        <item
+            android:id="@+id/nav_teachers"
+            android:icon="@mipmap/teacher"
+            android:title="@string/teachers" />
+    </group>
+
+    <group
+        android:id="@+id/nav_advanced"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/settings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@mipmap/feedback"
+            android:title="@string/feedback" />
+    </group>
 
 </menu>

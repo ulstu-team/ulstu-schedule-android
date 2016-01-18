@@ -14,4 +14,22 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TextAppearance.MenuItem" parent="@android:style/TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+    <style name="TimeText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="TimeText.Little" parent="TimeText">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TimeText.Big" parent="TimeText">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

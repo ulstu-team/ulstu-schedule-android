@@ -1,9 +1,55 @@
 <resources>
-    <string name="app_name">UlSTU.Schedule</string>
+    <string name="app_name">УлГТУ. Расписание</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="searchview">Поиск...</string>
+    <string name="my_schedule">Мое расписание</string>
+    <string name="favorites">Избранное</string>
+    <string name="credits">Зачеты</string>
+    <string name="exams">Экзамены</string>
+    <string name="faculties">Факультеты</string>
+    <string name="cathedries">Кафедры</string>
+    <string name="groups">Группы</string>
+    <string name="teachers">Преподаватели</string>
+    <string name="settings">Настройки</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="ulstu_photo">ulsu photo</string>
+
+    <string-array name="months">
+        <item>Января</item>
+        <item>Февраля</item>
+        <item>Марта</item>
+        <item>Апреля</item>
+        <item>Мая</item>
+        <item>Июня</item>
+        <item>Июля</item>
+        <item>Августа</item>
+        <item>Сентября</item>
+        <item>Октября</item>
+        <item>Ноября</item>
+        <item>Декабря</item>
+    </string-array>
+
+    <string-array name="short_days_of_week">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
+
+    <string-array name="full_days_of_week">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
 </resources>

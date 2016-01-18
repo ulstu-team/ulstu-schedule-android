@@ -1,42 +1,46 @@
 package ru.ulstu_team.ulstuschedule;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
+import java.util.Arrays;
+
+import ru.ulstu_team.ulstuschedule.adapters.StickyListTeacherAdapter;
+import ru.ulstu_team.ulstuschedule.adapters.TeacherAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import ulstu.schedule.api.Schedule;
 import ulstu.schedule.api.ScheduleReceiver;
 import ulstu.schedule.api.UlstuScheduleAPI;
-import ulstu.schedule.models.Cathedra;
+import ulstu.schedule.models.TeacherLessons;
+import ulstu.schedule.storage.PrefsKeys;
+import ulstu.schedule.storage.PrefsManager;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ScheduleReceiver<Cathedra> {
+        implements NavigationView.OnNavigationItemSelectedListener, ScheduleReceiver<TeacherLessons> {
+
+    private HeaderViewManager headerViewManager;
+    private StickyListHeadersListView slTeacherLessons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UlstuScheduleAPI.makeRequest(Schedule.CATHEDRA)
+        UlstuScheduleAPI.makeRequest(Schedule.TEACHER_LESSONS, 133)
                 .setReceiver(this)
                 .request();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        slTeacherLessons = (StickyListHeadersListView) findViewById(R.id.slTeacherLessons);
 
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 //                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,6 +49,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        PrefsManager prefsManager = new PrefsManager(this);
+        prefsManager.putString(PrefsKeys.USER_NAME, "Новосельцева Н. Н.");
+
+        headerViewManager = new HeaderViewManager(this);
+        headerViewManager.start();
+        navigationView.addHeaderView(headerViewManager.getNavHeaderView());
     }
 
     @Override
@@ -85,18 +96,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_my_schedule) {
+            Toast.makeText(this, getString(R.string.my_schedule), Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_favorites) {
+            Toast.makeText(this, getString(R.string.favorites), Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -105,8 +108,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDataReceived(Cathedra data) {
+    public void onDataReceived(TeacherLessons data) {
+        StickyListTeacherAdapter teacherAdapter = new StickyListTeacherAdapter(this, Arrays.asList(data.Lessons));
+        slTeacherLessons.setAdapter(teacherAdapter);
+    }
 
-        Cathedra r = data;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

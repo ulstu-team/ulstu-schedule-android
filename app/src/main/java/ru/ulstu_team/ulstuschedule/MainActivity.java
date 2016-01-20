@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import ru.ulstu_team.ulstuschedule.adapters.StickyListTeacherAdapter;
 import ru.ulstu_team.ulstuschedule.adapters.TeacherAdapter;
@@ -21,6 +23,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import ulstu.schedule.api.Schedule;
 import ulstu.schedule.api.ScheduleReceiver;
 import ulstu.schedule.api.UlstuScheduleAPI;
+import ulstu.schedule.models.Lesson;
 import ulstu.schedule.models.TeacherLessons;
 import ulstu.schedule.storage.PrefsKeys;
 import ulstu.schedule.storage.PrefsManager;
@@ -36,7 +39,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UlstuScheduleAPI.makeRequest(Schedule.TEACHER_LESSONS, 133)
+        UlstuScheduleAPI.with(this)
+                .makeRequest(Schedule.TEACHER_LESSONS, 133)
                 .setReceiver(this)
                 .request();
 
@@ -109,7 +113,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDataReceived(TeacherLessons data) {
-        StickyListTeacherAdapter teacherAdapter = new StickyListTeacherAdapter(this, Arrays.asList(data.Lessons));
+        Lesson[] lessons = data == null ? new Lesson[0] : data.Lessons;
+
+        StickyListTeacherAdapter teacherAdapter = new StickyListTeacherAdapter(this, Arrays.asList(lessons));
         slTeacherLessons.setAdapter(teacherAdapter);
     }
 

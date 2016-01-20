@@ -1,13 +1,13 @@
 package ulstu.schedule.api;
 
-import android.os.AsyncTask;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.lang.reflect.Type;
-
-import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
 import ulstu.schedule.models.Cathedra;
 import ulstu.schedule.models.Faculty;
 import ulstu.schedule.models.Group;
@@ -15,92 +15,150 @@ import ulstu.schedule.models.Lesson;
 import ulstu.schedule.models.Teacher;
 import ulstu.schedule.models.TeacherLessons;
 
-public class UlstuScheduleAPI
-        implements ReceiverSetter, Request, JsonDownloadTask.OnDownloadedListener {
+public class UlstuScheduleAPI {
+
+    public static final String BROADCAST_ACTION = "ru.ulstu_team.ulstuschedule.api.request";
 
     private static final String URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/ulstu/";
 
-    private static UlstuScheduleAPI mUlstuScheduleAPI;
     private UlstuScheduleAPI() { }
 
-    private static String mUrl;
-    private static Type mType;
-    private static ScheduleReceiver mReceiver;
+    private Context mContext;
+    private String mUrl;
+    private ScheduleReceiver mReceiver;
+    private String mKey;
 
-    public static ReceiverSetter makeRequest(String key) {
-        prepareNewRequest(key);
+    public static UlstuScheduleAPI with(Context context) {
+        UlstuScheduleAPI ulstuScheduleAPI = new UlstuScheduleAPI();
+        ulstuScheduleAPI.mContext = context;
+        return ulstuScheduleAPI;
+    }
+
+    public UlstuScheduleAPI makeRequest(String key) {
         mUrl = URL_BASE_PART + key;
-        return mUlstuScheduleAPI;
+        mKey = key;
+        return this;
     }
 
-    public static ReceiverSetter makeRequest(String key, int id) {
-        prepareNewRequest(key);
+    public UlstuScheduleAPI makeRequest(String key, int id) {
         mUrl = URL_BASE_PART + key + "/" + id;
-        return mUlstuScheduleAPI;
+        mKey = key;
+        return this;
     }
 
-    @Override
-    public Request setReceiver(ScheduleReceiver receiver) {
+    public UlstuScheduleAPI setReceiver(ScheduleReceiver receiver) {
         mReceiver = receiver;
-        return mUlstuScheduleAPI;
+        return this;
     }
 
-    @Override
     public void request() {
-        new JsonDownloadTask(mUrl, this)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (mContext == null || mUrl == null || mReceiver == null || mKey == null)
+            throw new RequestNotCorrectException();
+
+        BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String json = intent.getStringExtra("json");
+                deliverResponseFromNetwork(json);
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
+        mContext.registerReceiver(br, intentFilter);
+
+        Intent intent = new Intent(mContext, JsonDownloaderService.class)
+                .putExtra("url", mUrl);
+        mContext.startService(intent);
     }
 
-    @Override
-    public void onDownloaded(String response) {
-        Gson gson = new GsonBuilder().create();
-        // TODO: carefully testing! Add exception to method signature
-        if (response == null || response.isEmpty())
-            throw new DownloadException();
-        mReceiver.onDataReceived(gson.fromJson(response, mType));
-    }
-
-    private static void prepareNewRequest(String key) {
-        if (mUlstuScheduleAPI == null)
-            mUlstuScheduleAPI = new UlstuScheduleAPI();
-
-        switch (key) {
-            case Schedule.GROUP:
-                mType = Group.class;
-                break;
-            case Schedule.GROUPS:
-                mType = Group[].class;
-                break;
-            case Schedule.CATHEDRA:
-                mType = Cathedra.class;
-                break;
-            case Schedule.CATHEDRIES:
-                mType = Cathedra[].class;
-                break;
-            case Schedule.FACULTY:
-                mType = Faculty.class;
-                break;
-            case Schedule.FACULTIES:
-                mType = Faculty[].class;
-                break;
-            case Schedule.LESSON:
-                mType = Lesson.class;
-                break;
-            case Schedule.LESSONS:
-                mType = Lesson[].class;
-                break;
-            case Schedule.TEACHER:
-                mType = Teacher.class;
-                break;
-            case Schedule.TEACHERS:
-                mType = Teacher[].class;
-                break;
-            case Schedule.TEACHER_LESSONS:
-                mType = TeacherLessons.class;
-                break;
+    @SuppressWarnings("unchecked")
+    private void deliverResponseFromNetwork(String json) {
+        if (json == null || json.isEmpty()) {
+            mReceiver.onDataReceived(null);
+            clearFields();
+            return;
         }
 
-        mUrl = null;
+        Gson gson = new GsonBuilder().create();
+        switch (mKey) {
+            case Schedule.GROUP:
+                mReceiver.onDataReceived(gson.fromJson(json, Group.class));
+                break;
+            case Schedule.GROUPS:
+                mReceiver.onDataReceived(gson.fromJson(json, Group[].class));
+                break;
+            case Schedule.CATHEDRA:
+                mReceiver.onDataReceived(gson.fromJson(json, Cathedra.class));
+                break;
+            case Schedule.CATHEDRIES:
+                mReceiver.onDataReceived(gson.fromJson(json, Cathedra[].class));
+                break;
+            case Schedule.FACULTY:
+                mReceiver.onDataReceived(gson.fromJson(json, Faculty.class));
+                break;
+            case Schedule.FACULTIES:
+                mReceiver.onDataReceived(gson.fromJson(json, Faculty[].class));
+                break;
+            case Schedule.LESSON:
+                mReceiver.onDataReceived(gson.fromJson(json, Lesson.class));
+                break;
+            case Schedule.LESSONS:
+                mReceiver.onDataReceived(gson.fromJson(json, Lesson[].class));
+                break;
+            case Schedule.TEACHER:
+                mReceiver.onDataReceived(gson.fromJson(json, Teacher.class));
+                break;
+            case Schedule.TEACHERS:
+                mReceiver.onDataReceived(gson.fromJson(json, Teacher[].class));
+                break;
+            case Schedule.TEACHER_LESSONS:
+                mReceiver.onDataReceived(gson.fromJson(json, TeacherLessons.class));
+                break;
+        }
+        clearFields();
+    }
+
+    private boolean deliverResponseFromStorage() {
+        switch (mKey) {
+            case Schedule.GROUP:
+                mReceiver.onDataReceived(gson.fromJson(json, Group.class));
+                break;
+            case Schedule.GROUPS:
+                mReceiver.onDataReceived(gson.fromJson(json, Group[].class));
+                break;
+            case Schedule.CATHEDRA:
+                mReceiver.onDataReceived(gson.fromJson(json, Cathedra.class));
+                break;
+            case Schedule.CATHEDRIES:
+                mReceiver.onDataReceived(gson.fromJson(json, Cathedra[].class));
+                break;
+            case Schedule.FACULTY:
+                mReceiver.onDataReceived(gson.fromJson(json, Faculty.class));
+                break;
+            case Schedule.FACULTIES:
+                mReceiver.onDataReceived(gson.fromJson(json, Faculty[].class));
+                break;
+            case Schedule.LESSON:
+                mReceiver.onDataReceived(gson.fromJson(json, Lesson.class));
+                break;
+            case Schedule.LESSONS:
+                mReceiver.onDataReceived(gson.fromJson(json, Lesson[].class));
+                break;
+            case Schedule.TEACHER:
+                mReceiver.onDataReceived(gson.fromJson(json, Teacher.class));
+                break;
+            case Schedule.TEACHERS:
+                mReceiver.onDataReceived(gson.fromJson(json, Teacher[].class));
+                break;
+            case Schedule.TEACHER_LESSONS:
+                mReceiver.onDataReceived(gson.fromJson(json, TeacherLessons.class));
+                break;
+        }
+    }
+
+    private void clearFields() {
+        mContext = null;
         mReceiver = null;
+        mUrl = null;
     }
 }

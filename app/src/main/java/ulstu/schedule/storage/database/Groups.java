@@ -39,8 +39,7 @@ public class Groups implements BaseColumns {
         if (c == null) return null;
         c.moveToFirst();
 
-        Group group = getGroupFromDb(c);
-        return group;
+        return getGroupFromDb(c);
     }
 
     public List<Group> getAll(){

@@ -38,4 +38,5 @@ dependencies {
     compile "com.android.support:support-v4:$libsVersion"
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
+    compile 'io.realm:realm-android:0.87.2'
 }

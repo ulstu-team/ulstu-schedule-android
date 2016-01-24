@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -16,7 +17,8 @@ import java.util.List;
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-import ulstu.schedule.models.Lesson;
+import ru.ulstu_team.ulstuschedule.data.model.Lesson;
+import ru.ulstu_team.ulstuschedule.data.model.LessonComparator;
 
 public class StickyListTeacherAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
@@ -29,8 +31,12 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
 
     public StickyListTeacherAdapter(Context context, List<Lesson> lessons) {
         mInflater = LayoutInflater.from(context);
-        Collections.sort(lessons);
-        mLessons = lessons;
+        ArrayList<Lesson> l = new ArrayList<>(lessons.size());
+        for (Lesson lesson : lessons) {
+            l.add(lesson);
+        }
+        Collections.sort(l, new LessonComparator());
+        mLessons = l;
         mContext = context;
 
         calendar = Calendar.getInstance();
@@ -51,7 +57,7 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
         Lesson lesson = mLessons.get(position);
         calendar.add(Calendar.DAY_OF_MONTH, getDayIncrement(lesson));
 
-        String date = getDaysOfWeek()[lesson.DayOfWeek - 1] + ", " +
+        String date = getDaysOfWeek()[lesson.getDayOfWeek() - 1] + ", " +
                 calendar.get(Calendar.DAY_OF_MONTH) + " " +
                 getMonths()[calendar.get(Calendar.MONTH)];
         holder.headerText.setText(date);
@@ -62,7 +68,7 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
     @Override
     public long getHeaderId(int position) {
         Lesson lesson = mLessons.get(position);
-        return lesson.DayOfWeek + lesson.NumberOfWeek * 7;
+        return lesson.getDayOfWeek() + lesson.getNumberOfWeek() * 7;
     }
 
     @Override
@@ -112,7 +118,7 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
     }
 
     private int getDayIncrement(Lesson lesson) {
-        return (lesson.NumberOfWeek - 1) * 7 + (lesson.DayOfWeek - 1);
+        return (lesson.getNumberOfWeek() - 1) * 7 + (lesson.getDayOfWeek() - 1);
     }
 
     class HeaderViewHolder {

@@ -1,7 +1,6 @@
 package ru.ulstu_team.ulstuschedule.adapters;
 
 import android.databinding.DataBindingUtil;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
-import ulstu.schedule.models.Lesson;
+import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 
 public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
 

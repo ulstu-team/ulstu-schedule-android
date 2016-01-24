@@ -17,40 +17,30 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ulstu.schedule.storage.PrefsKeys;
-import ulstu.schedule.storage.PrefsManager;
+import javax.inject.Inject;
+
+import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
+import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 
 public class HeaderViewManager {
 
     private final Context mContext;
     private final ImageView mImageView;
 
-    private final Timer timer = new Timer();
-    private final Handler uiHandler = new Handler();
-    private final TimerTask changeTask = new TimerTask() {
-        @Override
-        public void run() {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        NavHeaderImageHelper.setRandomHeaderImage(mContext, mImageView);
-                    } catch (Exception e) {
-                        stop();
-                    }
-                }
-            });
-        }
-    };
+    private Timer timer;
+    private boolean isScheduled;
     private final View navHeaderView;
+    private final PrefsManager mPrefsManager;
 
-    public HeaderViewManager(Context context) {
+    @Inject
+    public HeaderViewManager(Context context, PrefsManager prefsManager) {
         mContext = context;
+        mPrefsManager = prefsManager;
+
         LayoutInflater inflater = LayoutInflater.from(context);
         navHeaderView = inflater.inflate(R.layout.nav_header_main, null, false);
         mImageView = (ImageView) navHeaderView.findViewById(R.id.headerImage);
 
-        PrefsManager prefsManager = new PrefsManager(context);
         TextView username = (TextView) navHeaderView.findViewById(R.id.headerUsername);
         username.setText(prefsManager.getString(PrefsKeys.USER_NAME));
     }
@@ -60,12 +50,35 @@ public class HeaderViewManager {
     }
 
     public void start() {
+        if (isScheduled)
+            return;
+
+        timer = new Timer();
+        final Handler uiHandler = new Handler();
+        final TimerTask changeTask = new TimerTask() {
+            @Override
+            public void run() {
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            NavHeaderImageHelper.setRandomHeaderImage(mContext, mImageView);
+                        } catch (Exception e) {
+                            stop();
+                        }
+                    }
+                });
+            }
+        };
         timer.schedule(changeTask, 0, 15000);
         NavHeaderImageHelper.setRandomHeaderImage(mContext, mImageView);
+
+        isScheduled = true;
     }
 
     public void stop() {
         timer.cancel();
+        isScheduled = false;
     }
 
 

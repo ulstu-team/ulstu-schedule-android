@@ -16,7 +16,9 @@
     <string name="teachers">Преподаватели</string>
     <string name="settings">Настройки</string>
     <string name="feedback">Обратная связь</string>
-    <string name="ulstu_photo">ulsu photo</string>
+    <string name="ulstu_photo">ulstu photo</string>
+
+    <string name="pair">%d пара</string>
 
     <string-array name="months">
         <item>Января</item>

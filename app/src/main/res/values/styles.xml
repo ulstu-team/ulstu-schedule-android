@@ -32,4 +32,8 @@
     <style name="TimeText.Big" parent="TimeText">
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="ulstu" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="colorPrimary">@android:color/holo_blue_dark</item>
+    </style>
 </resources>

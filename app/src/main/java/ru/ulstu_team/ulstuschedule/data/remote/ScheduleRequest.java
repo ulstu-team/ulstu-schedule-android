@@ -38,6 +38,6 @@ public class ScheduleRequest {
 
     public interface Callbacks {
         void onSuccess();
-        void onError();
+        void onError(Exception e);
     }
 }

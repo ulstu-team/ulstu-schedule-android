@@ -36,4 +36,13 @@
     <style name="ulstu" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
     </style>
+
+    <style name="Widget.AppTheme.ListView" parent="@android:style/Widget.ListView">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="AppTheme.List" parent="Theme.AppCompat">
+        <item name="stickyListHeadersListViewStyle">@style/Widget.AppTheme.ListView</item>
+    </style>
 </resources>

@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 
@@ -30,19 +31,19 @@ public class HeaderViewManager {
     private Timer timer;
     private boolean isScheduled;
     private final View navHeaderView;
-    private final PrefsManager mPrefsManager;
+    private final DataManager mDataManager;
 
     @Inject
-    public HeaderViewManager(Context context, PrefsManager prefsManager) {
+    public HeaderViewManager(Context context, DataManager dataManager) {
         mContext = context;
-        mPrefsManager = prefsManager;
+        mDataManager = dataManager;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         navHeaderView = inflater.inflate(R.layout.nav_header_main, null, false);
         mImageView = (ImageView) navHeaderView.findViewById(R.id.headerImage);
 
         TextView username = (TextView) navHeaderView.findViewById(R.id.headerUsername);
-        username.setText(prefsManager.getString(PrefsKeys.USER_NAME));
+        username.setText(dataManager.getUserName());
     }
 
     public View getNavHeaderView() {

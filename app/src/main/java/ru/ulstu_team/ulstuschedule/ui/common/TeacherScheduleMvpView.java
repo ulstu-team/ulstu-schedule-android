@@ -13,4 +13,5 @@ public interface TeacherScheduleMvpView extends MvpView {
 
     void showError();
 
+    void reload();
 }

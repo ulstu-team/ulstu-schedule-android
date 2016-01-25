@@ -1,11 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -33,16 +35,20 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TeacherSchedule.Group" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="TeacherSchedule.Lesson" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+
+
     <style name="ulstu" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
     </style>
 
-    <style name="Widget.AppTheme.ListView" parent="@android:style/Widget.ListView">
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-    </style>
-
-    <style name="AppTheme.List" parent="Theme.AppCompat">
-        <item name="stickyListHeadersListViewStyle">@style/Widget.AppTheme.ListView</item>
-    </style>
 </resources>

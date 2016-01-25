@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="ru.ulstu_team.ulstuschedule.data.model.Lesson" />
-
         <import type="ru.ulstu_team.ulstuschedule.util.TimeStringUtils" />
-
-        <variable
-            name="lesson"
-            type="Lesson" />
+        <variable name="lesson" type="Lesson" />
     </data>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:padding="6dp">
-
 
         <RelativeLayout
             android:id="@+id/timeView"
@@ -71,7 +65,6 @@
                 android:textSize="13sp"
                 tools:text="14" />
 
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -82,14 +75,16 @@
 
             <TextView
                 android:id="@+id/groupName"
+                style="@style/TeacherSchedule.Group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{lesson.getGroup().getName()}"
                 android:textSize="16sp"
+                app:font="@{`Roboto-Medium.ttf`}"
                 tools:text="ПИбд-31" />
 
             <TextView
-                fontPath="fonts/Roboto-Medium.ttf"
+                style="@style/TeacherSchedule.Lesson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -98,6 +93,7 @@
                 tools:text="пр.Ин.яз." />
 
             <TextView
+                style="@style/TeacherSchedule.Lesson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -106,6 +102,7 @@
                 tools:text="а.г.503" />
 
             <TextView
+                style="@style/TeacherSchedule.Lesson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

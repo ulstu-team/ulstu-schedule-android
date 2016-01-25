@@ -10,7 +10,6 @@ import dagger.Provides;
 import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
-import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 
 
 /**
@@ -44,5 +43,5 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    PrefsManager providePrefsManager(Context context) { return new PrefsManager(context); }
+    PrefsManager providePrefsManager(@ApplicationContext Context context) { return new PrefsManager(context); }
 }

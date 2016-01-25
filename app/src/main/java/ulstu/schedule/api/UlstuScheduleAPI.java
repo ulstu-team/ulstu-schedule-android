@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import java.util.List;
+
 import io.realm.Realm;
 import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
+import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 
 public class UlstuScheduleAPI {

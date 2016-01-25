@@ -17,9 +17,9 @@ public interface ApplicationComponent {
 
     void inject(JsonDownloadService jsonDownloadService);
 
-//    @ApplicationContext
-//    Context context();
-//    Application application();
-//    JsonDownloadService jsonDownloadService();
-//    PrefsManager prefsManager();
+    @ApplicationContext
+    Context context();
+    Application application();
+    JsonDownloadService jsonDownloadService();
+    PrefsManager prefsManager();
 }

@@ -11,21 +11,32 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import ru.ulstu_team.ulstuschedule.App;
 import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.activities.FacultiesActivity;
+import ru.ulstu_team.ulstuschedule.data.DataManager;
+import ru.ulstu_team.ulstuschedule.injection.component.ActivityComponent;
+import ru.ulstu_team.ulstuschedule.injection.component.DaggerActivityComponent;
+import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule;
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ActivityComponent mActivityComponent;
+
     @Inject HeaderViewManager headerViewManager;
+    @Inject DataManager dataManager;
+
+    private boolean configured;
 
     @Override
     protected void onStart() {
         super.onStart();
-        configureNavigationView();
+        if (!configured)
+            configureNavigationView();
     }
 
     @Override
@@ -45,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.addHeaderView(headerViewManager.getNavHeaderView());
+        configured = true;
     }
 
     @Override
@@ -80,5 +92,15 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public ActivityComponent getActivityComponent() {
+        if (mActivityComponent == null) {
+            mActivityComponent = DaggerActivityComponent.builder()
+                    .activityModule(new ActivityModule(this))
+                    .applicationComponent(App.get(this).getComponent())
+                    .build();
+        }
+        return mActivityComponent;
     }
 }

@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.adapters;
+package ru.ulstu_team.ulstuschedule.ui.common;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -13,6 +13,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
@@ -29,18 +31,34 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
     private String[] mMonths;
     private Calendar calendar;
 
+    @Inject
+    public StickyListTeacherAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+        mContext = context;
+        mLessons = Collections.emptyList();
+
+        calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+    }
+
     public StickyListTeacherAdapter(Context context, List<Lesson> lessons) {
         mInflater = LayoutInflater.from(context);
+        mContext = context;
+        mLessons = Collections.emptyList();
+
+        calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+
+        setLessons(lessons);
+    }
+
+    public void setLessons(List<Lesson> lessons) {
         ArrayList<Lesson> l = new ArrayList<>(lessons.size());
         for (Lesson lesson : lessons) {
             l.add(lesson);
         }
         Collections.sort(l, new LessonComparator());
         mLessons = l;
-        mContext = context;
-
-        calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
     }
 
     @Override
@@ -48,7 +66,8 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
         HeaderViewHolder holder;
         if (convertView == null) {
             holder = new HeaderViewHolder();
-            convertView = mInflater.inflate(R.layout.sticky_list_header, parent, false);
+            convertView = DataBindingUtil
+                    .inflate(mInflater, R.layout.sticky_list_header, parent, false).getRoot();
             holder.headerText = (TextView) convertView.findViewById(R.id.headerTitle);
             convertView.setTag(holder);
         } else {
@@ -91,7 +110,10 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.teacher_list_item, parent, false);
+            convertView = DataBindingUtil.
+                    inflate(mInflater, R.layout.teacher_list_item, parent, false).getRoot();
+            // mInflater.inflate(R.layout.teacher_list_item, parent, false);
+
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

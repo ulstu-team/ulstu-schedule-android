@@ -4,7 +4,7 @@
         <shape
             android:shape="rectangle" android:thickness="10dp" >
             <solid
-                android:color="@color/colorPrimaryDark" />
+                android:color="@color/endTime" />
         </shape>
     </item>
     <item android:height="76dp" android:width="50dp">
@@ -15,9 +15,9 @@
             android:pivotY="0%" >
             <shape
                 android:shape="rectangle"  >
-                <stroke android:color="@color/colorPrimary" android:width="2dp"/>
+                <stroke android:color="@color/timeDivider" android:width="2dp"/>
                 <solid
-                    android:color="@color/colorPrimaryLight" />
+                    android:color="@color/beginTime" />
             </shape>
 
         </rotate>

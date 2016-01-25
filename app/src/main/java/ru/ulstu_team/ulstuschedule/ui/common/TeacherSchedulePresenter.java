@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
 import io.realm.RealmQuery;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.data.model.Lesson;
@@ -15,42 +16,49 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
 
     private DataManager mDataManager;
 
-    private RealmQuery<Lesson> mQuery =
-            mRealm.where(Lesson.class)
-                    .equalTo("TeacherId", mDataManager.getUserId());
-
-    private ScheduleRequest mRequest =
-            new ScheduleRequest(Schedule.TEACHER_LESSONS,
-                    mDataManager.getUserId(), Lesson.class,
-                    new ScheduleRequest.Callbacks() {
-                        @Override
-                        public void onSuccess() {
-                            List<Lesson> lessons = mQuery.findAll();
-                            if (lessons.size() > 0)
-                                getMvpView().showSchedule(lessons);
-                            else
-                                getMvpView().showEmptySchedule();
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            getMvpView().showError();
-                        }
-                    }
-            );
-
-
     @Inject
     public TeacherSchedulePresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
+
     public void loadSchedule() {
-        List<Lesson> lessons = mQuery.findAll();
+        checkViewAttached();
+
+        List<Lesson> lessons = getRealmQuery().findAll();
 
         if (lessons.size() == 0)
-            mDataManager.requestScheduleData(mRequest);
+            mDataManager.requestScheduleData(getRequest());
         else
             getMvpView().showSchedule(lessons);
+    }
+
+    private RealmQuery<Lesson> getRealmQuery() {
+        return mRealm.where(Lesson.class).equalTo("TeacherId", mDataManager.getUserId());
+    }
+
+    private ScheduleRequest getRequest() {
+        return new ScheduleRequest(Schedule.TEACHER_LESSONS,
+                mDataManager.getUserId(), Lesson.class,
+                new ScheduleRequest.Callbacks() {
+                    @Override
+                    public void onSuccess() {
+                        List<Lesson> lessons = getRealmQuery().findAll();
+                        if (lessons.size() > 0)
+                            getMvpView().showSchedule(lessons);
+                        else
+                            getMvpView().showEmptySchedule();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        getMvpView().showError();
+                    }
+                }
+        );
+    }
+
+    public void reload() {
+        loadSchedule();
     }
 }

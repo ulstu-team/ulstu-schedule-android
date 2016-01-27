@@ -14,11 +14,11 @@ import javax.inject.Inject;
 import ru.ulstu_team.ulstuschedule.App;
 import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.R;
-import ru.ulstu_team.ulstuschedule.activities.FacultiesActivity;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.component.ActivityComponent;
 import ru.ulstu_team.ulstuschedule.injection.component.DaggerActivityComponent;
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule;
+import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity;
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

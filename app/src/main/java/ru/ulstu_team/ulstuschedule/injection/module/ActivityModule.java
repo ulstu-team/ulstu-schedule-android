@@ -9,6 +9,7 @@ import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
+import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
 
 @Module
 public class ActivityModule {
@@ -33,5 +34,11 @@ public class ActivityModule {
     @Provides
     HeaderViewManager provideHeaderViewManager(Context context, DataManager dataManager) {
         return new HeaderViewManager(context, dataManager);
+    }
+
+    @PerActivity
+    @Provides
+    FacultiesAdapter provideFacultiesAdapter() {
+        return new FacultiesAdapter();
     }
 }

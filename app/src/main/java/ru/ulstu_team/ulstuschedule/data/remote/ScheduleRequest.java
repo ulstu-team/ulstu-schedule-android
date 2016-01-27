@@ -37,7 +37,7 @@ public class ScheduleRequest {
     }
 
     public interface Callbacks {
-        void onSuccess();
+        void onSuccess(String json);
         void onError(Exception e);
     }
 }

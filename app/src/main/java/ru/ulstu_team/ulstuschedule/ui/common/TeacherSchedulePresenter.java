@@ -1,16 +1,17 @@
 package ru.ulstu_team.ulstuschedule.ui.common;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
 import io.realm.RealmQuery;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter;
-import ulstu.schedule.api.Schedule;
+import ru.ulstu_team.ulstuschedule.data.remote.Schedule;
+import ru.ulstu_team.ulstuschedule.util.GsonUtil;
 
 public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpView> {
 
@@ -25,12 +26,12 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
     public void loadSchedule() {
         checkViewAttached();
 
-        List<Lesson> lessons = getRealmQuery().findAll();
+        mDataManager.requestScheduleData(getRequest());
+        //List<Lesson> lessons = getRealmQuery().findAll();
 
-        if (lessons.size() == 0)
-            mDataManager.requestScheduleData(getRequest());
-        else
-            getMvpView().showSchedule(lessons);
+        //if (lessons.size() == 0)
+//        else
+//            getMvpView().showSchedule(lessons);
     }
 
     private RealmQuery<Lesson> getRealmQuery() {
@@ -42,10 +43,11 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
                 mDataManager.getUserId(), Lesson.class,
                 new ScheduleRequest.Callbacks() {
                     @Override
-                    public void onSuccess() {
-                        List<Lesson> lessons = getRealmQuery().findAll();
-                        if (lessons.size() > 0)
-                            getMvpView().showSchedule(lessons);
+                    public void onSuccess(String json) {
+                        Lesson[] lessons = GsonUtil.getGsonInstance().fromJson(json, Lesson[].class);
+
+                        if (lessons.length > 0)
+                            getMvpView().showSchedule(Arrays.asList(lessons));
                         else
                             getMvpView().showEmptySchedule();
                     }

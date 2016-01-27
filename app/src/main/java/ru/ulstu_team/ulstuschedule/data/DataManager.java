@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
-import ulstu.schedule.api.UlstuScheduleAPI;
+import ru.ulstu_team.ulstuschedule.data.remote.UlstuScheduleAPI;
 
 public class DataManager {
 

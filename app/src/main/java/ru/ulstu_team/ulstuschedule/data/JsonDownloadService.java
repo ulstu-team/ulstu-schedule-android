@@ -10,8 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
-import ulstu.schedule.api.UlstuScheduleAPI;
-
 public  class JsonDownloadService extends IntentService {
 
     public JsonDownloadService() {

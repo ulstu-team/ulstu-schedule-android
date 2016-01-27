@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.adapters;
+package ru.ulstu_team.ulstuschedule.ui.faculties;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +13,9 @@ import ru.ulstu_team.ulstuschedule.data.model.Faculty;
 
 public class FacultiesAdapter extends RecyclerView.Adapter<FacultiesAdapter.ViewHolder> {
 
-    private List<Faculty> mFaculties;
+    private Faculty[] mFaculties;
 
-    public FacultiesAdapter(List<Faculty> faculties) {
+    public void setFaculties(Faculty[] faculties) {
         mFaculties = faculties;
     }
 
@@ -28,13 +28,13 @@ public class FacultiesAdapter extends RecyclerView.Adapter<FacultiesAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Faculty faculty = mFaculties.get(position);
+        Faculty faculty = mFaculties[position];
         holder.name.setText(faculty.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mFaculties.size();
+        return mFaculties.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

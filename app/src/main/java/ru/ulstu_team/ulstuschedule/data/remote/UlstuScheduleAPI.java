@@ -1,16 +1,13 @@
-package ulstu.schedule.api;
+package ru.ulstu_team.ulstuschedule.data.remote;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import java.util.List;
-
 import io.realm.Realm;
 import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
-import ru.ulstu_team.ulstuschedule.data.model.Lesson;
-import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
+import ulstu.schedule.api.DownloadException;
 
 public class UlstuScheduleAPI {
 
@@ -64,39 +61,41 @@ public class UlstuScheduleAPI {
     @SuppressWarnings("unchecked")
     private static void deliverResponseFromNetwork(final String json) {
         if (json == null || json.isEmpty()) {
+            mRequest.getCallbacks().onError(new DownloadException());
             return;
         }
-        final Realm mRealm = Realm.getDefaultInstance();
-
-        // If json starts with '{' then it is a JSONObject and model is one
-        final boolean mIsOneModel = json.trim().charAt(0) == '{';
-        final Class mClass = mRequest.getDataType();
-
-        mRealm.executeTransaction(
-                new Realm.Transaction() {
-
-                    @Override
-                    public void execute(Realm realm) {
-                        if (mIsOneModel) {
-                            realm.createOrUpdateObjectFromJson(mClass, json);
-                        } else {
-                            realm.createOrUpdateAllFromJson(mClass, json);
-                        }
-                    }
-                }, new Realm.Transaction.Callback() {
-                    @Override
-                    public void onSuccess() {
-                        mRequest.getCallbacks().onSuccess();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        mRequest.getCallbacks().onError(e);
-                    }
-                }
-        );
-
-        mRealm.close();
+        mRequest.getCallbacks().onSuccess(json);
+//        final Realm mRealm = Realm.getDefaultInstance();
+//
+//        // If json starts with '{' then it is a JSONObject and model is one
+//        final boolean mIsOneModel = json.trim().charAt(0) == '{';
+//        final Class mClass = mRequest.getDataType();
+//
+//        mRealm.executeTransaction(
+//                new Realm.Transaction() {
+//
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        if (mIsOneModel) {
+//                            realm.createOrUpdateObjectFromJson(mClass, json);
+//                        } else {
+//                            realm.createOrUpdateAllFromJson(mClass, json);
+//                        }
+//                    }
+//                }, new Realm.Transaction.Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        mRequest.getCallbacks().onSuccess(json);
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        mRequest.getCallbacks().onError(e);
+//                    }
+//                }
+//        );
+//
+//        mRealm.close();
         mContext.unregisterReceiver(broadcastReceiver);
     }
 }

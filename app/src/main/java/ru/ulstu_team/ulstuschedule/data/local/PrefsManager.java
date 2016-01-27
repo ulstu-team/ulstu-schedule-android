@@ -3,6 +3,9 @@ package ru.ulstu_team.ulstuschedule.data.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.inject.Inject;
 
 public class PrefsManager {
@@ -36,6 +39,18 @@ public class PrefsManager {
         SharedPreferences prefs = context.getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public Set<String> getStringSet(String key) {
+        SharedPreferences prefs = context.getSharedPreferences(FILE_NAME, 0);
+        return prefs.getStringSet(key, new LinkedHashSet<String>());
+    }
+
+    public void putStringSet(String key, Set<String> value) {
+        SharedPreferences prefs = context.getSharedPreferences(FILE_NAME, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(key, value);
         editor.apply();
     }
 

@@ -19,6 +19,7 @@
     <string name="ulstu_photo">ulstu photo</string>
 
     <string name="pair">%d пара</string>
+    <string name="welcome">Войти</string>
 
     <string-array name="months">
         <item>Января</item>

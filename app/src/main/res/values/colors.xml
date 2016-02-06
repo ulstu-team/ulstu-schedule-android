@@ -18,5 +18,7 @@
     <color name="colorSecondaryText">#727272</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#B6B6B6</color>
+    <color name="lightBlue">#42A5F5</color>
+    <color name="darkBlue">#00458e</color>
 
 </resources>

@@ -1,5 +1,5 @@
 package ru.ulstu_team.ulstuschedule.data.remote;
-
+/*
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
 
@@ -10,3 +10,4 @@ public class SyncService extends GcmTaskService {
         return 0;
     }
 }
+*/

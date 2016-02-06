@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.data;
+package ru.ulstu_team.ulstuschedule.data.remote;
 
 import android.app.IntentService;
 import android.content.Intent;

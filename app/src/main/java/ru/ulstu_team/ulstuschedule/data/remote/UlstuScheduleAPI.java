@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import io.realm.Realm;
-import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
-import ulstu.schedule.api.DownloadException;
-
 public class UlstuScheduleAPI {
 
     public static final String BROADCAST_ACTION = "ru.ulstu_team.ulstuschedule.api.request";
@@ -64,7 +60,7 @@ public class UlstuScheduleAPI {
             mRequest.getCallbacks().onError(new DownloadException());
             return;
         }
-        mRequest.getCallbacks().onSuccess(json);
+        //mRequest.getCallbacks().onSuccess(json);
 //        final Realm mRealm = Realm.getDefaultInstance();
 //
 //        // If json starts with '{' then it is a JSONObject and model is one
@@ -96,6 +92,10 @@ public class UlstuScheduleAPI {
 //        );
 //
 //        mRealm.close();
-        mContext.unregisterReceiver(broadcastReceiver);
+        try {
+            mContext.unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -5,19 +5,16 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.ui.common.StickyListScheduleAdapter;
-import ru.ulstu_team.ulstuschedule.ui.common.student.StudentSchedulePresenter;
-import ru.ulstu_team.ulstuschedule.ui.common.teacher.TeacherScheduleFragment;
 
 @Module
-public class TeacherScheduleModule {
+public class StudentScheduleModule {
 
     protected final Fragment mScheduleFragment;
 
-    public TeacherScheduleModule(Fragment scheduleFragment) {
+    public StudentScheduleModule(Fragment scheduleFragment) {
         mScheduleFragment = scheduleFragment;
     }
 
@@ -35,11 +32,5 @@ public class TeacherScheduleModule {
     @Provides
     StickyListScheduleAdapter provideStickyListScheduleAdapter(@ApplicationContext Context context) {
         return new StickyListScheduleAdapter(context);
-    }
-
-    @PerActivity
-    @Provides
-    StudentSchedulePresenter provideStudentSchedulePresenter(DataManager dataManager){
-        return new StudentSchedulePresenter(dataManager);
     }
 }

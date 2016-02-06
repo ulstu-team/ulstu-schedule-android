@@ -5,7 +5,8 @@ import android.os.Bundle;
 
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity;
-import ru.ulstu_team.ulstuschedule.ui.common.TeacherScheduleFragment;
+import ru.ulstu_team.ulstuschedule.ui.common.student.StudentScheduleFragment;
+import ru.ulstu_team.ulstuschedule.ui.common.teacher.TeacherScheduleFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -18,12 +19,12 @@ public class MainActivity extends BaseActivity {
         configureNavigationView();
 
         FragmentManager fm = getFragmentManager();
-        if (fm.findFragmentByTag(TeacherScheduleFragment.TAG) == null) {
+        if (fm.findFragmentByTag(StudentScheduleFragment.TAG) == null) {
 
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentContainer,
-                            new TeacherScheduleFragment(),
-                            TeacherScheduleFragment.TAG)
+                            new StudentScheduleFragment(),
+                            StudentScheduleFragment.TAG)
                     .commit();
         }
     }

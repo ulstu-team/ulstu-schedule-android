@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.faculties;
+package ru.ulstu_team.ulstuschedule.ui.cathedries;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,36 +6,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import ru.ulstu_team.ulstuschedule.R;
-import ru.ulstu_team.ulstuschedule.data.model.Faculty;
+import ru.ulstu_team.ulstuschedule.data.model.Cathedra;
 
-public class FacultiesAdapter extends RecyclerView.Adapter<FacultiesAdapter.ViewHolder> {
+public class CathedriesAdapter extends RecyclerView.Adapter<CathedriesAdapter.ViewHolder> {
 
-    private Faculty[] mFaculties;
+    private Cathedra[] mCathedries;
 
-    public void setFaculties(Faculty[] faculties) {
-        mFaculties = faculties;
+    public void setCathedries(Cathedra[] cathedries) {
+        mCathedries = cathedries;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.simple_list_item, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Faculty faculty = mFaculties[position];
-        holder.name.setText(faculty.getName());
+        Cathedra cathedra = mCathedries[position];
+        holder.name.setText(cathedra.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mFaculties.length;
+        return mCathedries.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

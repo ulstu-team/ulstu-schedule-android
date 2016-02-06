@@ -33,8 +33,9 @@ public class App extends Application {
         Realm.setDefaultConfiguration(config);
 
         PrefsManager prefsManager = new PrefsManager(this);
-        prefsManager.putInt(PrefsKeys.USER_ID, 133);
-        prefsManager.putString(PrefsKeys.USER_NAME, "Новосельцева Н. Н.");
+        prefsManager.putInt(PrefsKeys.USER_ID, 103);
+        prefsManager.putString(PrefsKeys.USER_NAME, "ПИбд-11");
+        prefsManager.putString(PrefsKeys.USER_TYPE, "student");
     }
 
     public static App get(Context context) {

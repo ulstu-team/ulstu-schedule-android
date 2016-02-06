@@ -22,17 +22,21 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".data.JsonDownloadService" />
-
-        <service android:name=".data.remote.SyncService"
-            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
-            android:exported="true">
+        <service android:name=".data.remote.JsonDownloadService" />
+        <service
+            android:name=".data.remote.SyncService"
+            android:exported="true"
+            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
             <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
+                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.faculties.FacultiesActivity"/>
+        <activity android:name=".ui.faculties.FacultiesActivity" />
+        <activity
+            android:name=".ui.cathedries.CathedriesActivity"
+            android:label="@string/title_activity_cathedries"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

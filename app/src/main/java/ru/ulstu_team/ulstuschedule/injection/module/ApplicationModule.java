@@ -7,8 +7,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
+import ru.ulstu_team.ulstuschedule.data.remote.JsonDownloadService;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
+import ru.ulstu_team.ulstuschedule.data.remote.VolleySingleton;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
 
 
@@ -44,4 +45,10 @@ public class ApplicationModule {
     @Provides
     @Singleton
     PrefsManager providePrefsManager(@ApplicationContext Context context) { return new PrefsManager(context); }
+
+    @Provides
+    @Singleton
+    VolleySingleton provideVolleySingleton(@ApplicationContext Context context) {
+        return VolleySingleton.getInstance(context);
+    }
 }

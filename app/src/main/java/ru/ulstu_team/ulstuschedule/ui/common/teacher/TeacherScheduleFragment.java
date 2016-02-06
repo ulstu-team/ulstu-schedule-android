@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.common;
+package ru.ulstu_team.ulstuschedule.ui.common.teacher;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,25 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 import ru.ulstu_team.ulstuschedule.databinding.ScheduleBinding;
 import ru.ulstu_team.ulstuschedule.ui.base.BaseFragment;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+import ru.ulstu_team.ulstuschedule.ui.common.StickyListScheduleAdapter;
 
 public class TeacherScheduleFragment extends BaseFragment implements TeacherScheduleMvpView {
 
     public static final String TAG = "TeacherScheduleFragment";
 
-    @Inject StickyListTeacherAdapter mAdapter;
-    @Inject TeacherSchedulePresenter mPresenter;
+    @Inject
+    StickyListScheduleAdapter mAdapter;
+    @Inject
+    TeacherSchedulePresenter mPresenter;
     private View mView;
-    private ScheduleBinding binding;
+    private ScheduleBinding b;
 
     @Nullable
     @Override
@@ -35,15 +34,15 @@ public class TeacherScheduleFragment extends BaseFragment implements TeacherSche
         getTeacherScheduleComponent().inject(this);
         mView = inflater.inflate(R.layout.schedule, container, false);
 
-        binding = ScheduleBinding.bind(mView);
+        b = ScheduleBinding.bind(mView);
         mPresenter.attachView(this);
         mPresenter.loadSchedule();
 
-        binding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        b.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.loadSchedule();
-                binding.srlRefresh.setRefreshing(false);
+                b.srlRefresh.setRefreshing(false);
             }
         });
 
@@ -51,17 +50,15 @@ public class TeacherScheduleFragment extends BaseFragment implements TeacherSche
     }
 
     @Override
-    public void showSchedule(List<Lesson> lessons) {
-        mAdapter.setLessons(lessons);
-        mAdapter.notifyDataSetChanged();
+    public void showSchedule(Lesson[] lessons) {
+        mAdapter.setLessons(lessons, true);
 
-        binding.slTeacherLessons.setAdapter(mAdapter);
+        b.slTeacherLessons.setAdapter(mAdapter);
     }
 
     @Override
     public void showEmptySchedule() {
-        mAdapter.setLessons(Collections.<Lesson>emptyList());
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setLessons(new Lesson[0], true);
     }
 
     @Override

@@ -16,15 +16,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ru.ulstu_team.ulstuschedule.BR;
 import ru.ulstu_team.ulstuschedule.R;
-import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 import ru.ulstu_team.ulstuschedule.data.model.LessonComparator;
+import ru.ulstu_team.ulstuschedule.databinding.ScheduleListItemBinding;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-public class StickyListTeacherAdapter extends BaseAdapter implements StickyListHeadersAdapter {
+public class StickyListScheduleAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
     private List<Lesson> mLessons;
+    private Boolean mIsTeacher;
     private LayoutInflater mInflater;
     private Context mContext;
     private String[] mDaysOfWeek;
@@ -32,7 +34,7 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
     private Calendar calendar;
 
     @Inject
-    public StickyListTeacherAdapter(Context context) {
+    public StickyListScheduleAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mLessons = Collections.emptyList();
@@ -41,7 +43,7 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
         calendar.setTime(new Date());
     }
 
-    public StickyListTeacherAdapter(Context context, List<Lesson> lessons) {
+    public StickyListScheduleAdapter(Context context, Lesson[] lessons, Boolean isTeacher) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mLessons = Collections.emptyList();
@@ -49,16 +51,16 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
         calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
-        setLessons(lessons);
+        setLessons(lessons, isTeacher);
     }
 
-    public void setLessons(List<Lesson> lessons) {
-        ArrayList<Lesson> l = new ArrayList<>(lessons.size());
-        for (Lesson lesson : lessons) {
-            l.add(lesson);
-        }
+    public void setLessons(Lesson[] lessons, Boolean isTeacher) {
+        mIsTeacher = isTeacher;
+        ArrayList<Lesson> l = new ArrayList<>(lessons.length);
+        Collections.addAll(l, lessons);
         Collections.sort(l, new LessonComparator());
         mLessons = l;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -111,8 +113,8 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
 
         if (convertView == null) {
             convertView = DataBindingUtil.
-                    inflate(mInflater, R.layout.teacher_list_item, parent, false).getRoot();
-            // mInflater.inflate(R.layout.teacher_list_item, parent, false);
+                    inflate(mInflater, R.layout.schedule_list_item, parent, false).getRoot();
+            // mInflater.inflate(R.layout.schedule_list_item, parent, false);
 
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
@@ -148,13 +150,14 @@ public class StickyListTeacherAdapter extends BaseAdapter implements StickyListH
     }
 
     class ViewHolder {
-        final TeacherListItemBinding binding;
+        final ScheduleListItemBinding binding;
 
         public ViewHolder(View itemView) {
             binding = DataBindingUtil.bind(itemView);
+            binding.setVariable(BR.isTeacher, mIsTeacher);
         }
 
-        public TeacherListItemBinding getBinding() {
+        public ScheduleListItemBinding getBinding() {
             return binding;
         }
     }

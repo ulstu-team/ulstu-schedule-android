@@ -18,6 +18,7 @@ import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.component.ActivityComponent;
 import ru.ulstu_team.ulstuschedule.injection.component.DaggerActivityComponent;
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule;
+import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity;
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -75,13 +76,13 @@ public abstract class BaseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_schedule) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_favorites) {
             Toast.makeText(this, getString(R.string.favorites), Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_faculties) {
-            Intent intent = new Intent(this, FacultiesActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, FacultiesActivity.class));
+        } else if (id == R.id.nav_cathedries) {
+            startActivity(new Intent(this, CathedriesActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

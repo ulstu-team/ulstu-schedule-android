@@ -2,22 +2,33 @@ package ru.ulstu_team.ulstuschedule.data;
 
 import android.content.Context;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
-import ru.ulstu_team.ulstuschedule.data.remote.UlstuScheduleAPI;
+import ru.ulstu_team.ulstuschedule.data.remote.VolleySingleton;
 
 public class DataManager {
 
+    private static final String URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/ulstu/";
+
     private Context mContext;
     private PrefsManager mPrefsManager;
+    private VolleySingleton mVolley;
 
     @Inject
-    public DataManager(Context context, PrefsManager prefsManager) {
+    public DataManager(Context context, PrefsManager prefsManager, VolleySingleton volley) {
         mContext = context;
         mPrefsManager = prefsManager;
+        mVolley = volley;
     }
 
     public int getUserId() {
@@ -28,7 +39,82 @@ public class DataManager {
         return mPrefsManager.getString(PrefsKeys.USER_NAME);
     }
 
-    public void requestScheduleData(ScheduleRequest request) {
-        UlstuScheduleAPI.request(mContext, request);
+    private String getUrl(String key, int id) {
+        String url = URL_BASE_PART + key;
+        url = id != 0 ? url + id : url;
+        return url;
+    }
+
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void executeRequest(final ScheduleRequest request) {
+        mVolley.addToRequestQueue(new StringRequest(getUrl(request.getKey(), request.getId()),
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        saveInDatabase(response, request);
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        request.getCallbacks().onError(error);
+                    }
+                }
+        ));
+    }
+
+    private void saveInDatabase(final String json, final ScheduleRequest request) {
+        final Realm mRealm = Realm.getDefaultInstance();
+
+        // If json starts with '{' then it is a JSONObject and model is one
+        final boolean mIsOneModel = json.trim().charAt(0) == '{';
+        final Class clazz = request.getDataType();
+
+        mRealm.beginTransaction();
+
+        RealmResults objects = request.getRealmQuery().findAll();
+        objects.clear();
+
+        if (mIsOneModel) {
+            mRealm.createOrUpdateObjectFromJson(clazz, json);
+        } else {
+            mRealm.createOrUpdateAllFromJson(clazz, json);
+        }
+
+        mRealm.commitTransaction();
+        request.getCallbacks().onSuccess();
+
+//        mRealm.executeTransaction(
+//                new Realm.Transaction() {
+//
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        RealmResults objects = request.getRealmQuery().findAll();
+//                        objects.clear();
+//
+//                        if (mIsOneModel) {
+//                            mRealm.createOrUpdateObjectFromJson(clazz, json);
+//                        } else {
+//                            mRealm.createOrUpdateAllFromJson(clazz, json);
+//                        }
+//                    }
+//                }, new Realm.Transaction.Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        request.getCallbacks().onSuccess();
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        request.getCallbacks().onError(e);
+//                    }
+//                }
+//        );
+        mRealm.close();
     }
 }

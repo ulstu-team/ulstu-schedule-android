@@ -9,6 +9,7 @@ import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
+import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesAdapter;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
 
 @Module
@@ -40,5 +41,11 @@ public class ActivityModule {
     @Provides
     FacultiesAdapter provideFacultiesAdapter() {
         return new FacultiesAdapter();
+    }
+
+    @PerActivity
+    @Provides
+    CathedriesAdapter provideCathedriesAdapter() {
+        return new CathedriesAdapter();
     }
 }

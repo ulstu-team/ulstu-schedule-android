@@ -1,4 +1,4 @@
-package ulstu.schedule.api;
+package ru.ulstu_team.ulstuschedule.data.remote;
 
 public class DownloadException extends RuntimeException {
     public DownloadException() {

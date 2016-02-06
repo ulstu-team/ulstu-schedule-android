@@ -6,8 +6,9 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import ru.ulstu_team.ulstuschedule.data.JsonDownloadService;
+import ru.ulstu_team.ulstuschedule.data.remote.JsonDownloadService;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
+import ru.ulstu_team.ulstuschedule.data.remote.VolleySingleton;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
 import ru.ulstu_team.ulstuschedule.injection.module.ApplicationModule;
 
@@ -22,4 +23,5 @@ public interface ApplicationComponent {
     Application application();
     JsonDownloadService jsonDownloadService();
     PrefsManager prefsManager();
+    VolleySingleton volleySingleton();
 }

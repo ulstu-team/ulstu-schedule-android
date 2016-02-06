@@ -18,24 +18,24 @@ public class FacultiesActivity extends BaseActivity
 
     @Inject FacultiesAdapter mAdapter;
     @Inject FacultiesPresenter mPresenter;
-    private ActivityFacultiesBinding binding;
+    private ActivityFacultiesBinding b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_faculties);
+        b = DataBindingUtil.setContentView(this, R.layout.activity_faculties);
         getActivityComponent().inject(this);
-        configureNavigationView();
 
-        binding.rvFaculties.setLayoutManager(new LinearLayoutManager(this));
+        b.rvFaculties.setLayoutManager(new LinearLayoutManager(this));
+        b.rvFaculties.setHasFixedSize(true);
         mPresenter.attachView(this);
         mPresenter.loadFaculties();
 
-        binding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        b.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.loadFaculties();
-                binding.srlRefresh.setRefreshing(false);
+                b.srlRefresh.setRefreshing(false);
             }
         });
     }
@@ -43,8 +43,7 @@ public class FacultiesActivity extends BaseActivity
     @Override
     public void showFaculties(Faculty[] faculties) {
         mAdapter.setFaculties(faculties);
-        mAdapter.notifyDataSetChanged();
-        binding.rvFaculties.setAdapter(mAdapter);
+        b.rvFaculties.setAdapter(mAdapter);
     }
 
     @Override

@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="searchview">Поиск...</string>
+    <string name="searchview">Поиск…</string>
     <string name="my_schedule">Мое расписание</string>
     <string name="favorites">Избранное</string>
     <string name="credits">Зачеты</string>
@@ -54,4 +54,5 @@
         <item>Суббота</item>
         <item>Воскресенье</item>
     </string-array>
+    <string name="title_activity_cathedries">CathedriesActivity</string>
 </resources>

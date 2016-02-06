@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ru.ulstu_team.ulstuschedule.R;
-import ru.ulstu_team.ulstuschedule.databinding.TeacherListItemBinding;
 import ru.ulstu_team.ulstuschedule.data.model.Lesson;
+import ru.ulstu_team.ulstuschedule.databinding.ScheduleListItemBinding;
 
 public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
 
@@ -23,7 +23,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.teacher_list_item, parent, false);
+                .inflate(R.layout.schedule_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,14 +41,14 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TeacherListItemBinding binding;
+        final ScheduleListItemBinding binding;
 
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
 
-        public TeacherListItemBinding getBinding() {
+        public ScheduleListItemBinding getBinding() {
             return binding;
         }
     }

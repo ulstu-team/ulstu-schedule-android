@@ -43,7 +43,7 @@ public class StickyListScheduleAdapter extends BaseAdapter implements StickyList
         calendar.setTime(new Date());
     }
 
-    public StickyListScheduleAdapter(Context context, Lesson[] lessons, Boolean isTeacher) {
+    public StickyListScheduleAdapter(Context context, List<Lesson> lessons, Boolean isTeacher) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mLessons = Collections.emptyList();
@@ -54,10 +54,9 @@ public class StickyListScheduleAdapter extends BaseAdapter implements StickyList
         setLessons(lessons, isTeacher);
     }
 
-    public void setLessons(Lesson[] lessons, Boolean isTeacher) {
+    public void setLessons(List<Lesson> lessons, Boolean isTeacher) {
         mIsTeacher = isTeacher;
-        ArrayList<Lesson> l = new ArrayList<>(lessons.length);
-        Collections.addAll(l, lessons);
+        ArrayList<Lesson> l = new ArrayList<>(lessons);
         Collections.sort(l, new LessonComparator());
         mLessons = l;
         notifyDataSetChanged();

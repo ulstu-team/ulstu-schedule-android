@@ -23,12 +23,10 @@ public class StudentSchedulePresenter extends BasePresenter<StudentScheduleMvpVi
         checkViewAttached();
 
         List<Lesson> lessons = getRealmQuery().findAll();
-
-        if (lessons.size() == 0) {
+        if (!lessons.isEmpty()) {
+            getMvpView().showSchedule(lessons);
+        } else {
             mDataManager.executeRequest(getRequest());
-        }
-        else {
-            getMvpView().showSchedule(lessons.toArray(new Lesson[lessons.size()]));
         }
     }
 
@@ -44,7 +42,7 @@ public class StudentSchedulePresenter extends BasePresenter<StudentScheduleMvpVi
                     public void onSuccess() {
                         List<Lesson> lessons = getRealmQuery().findAll();
                         if (!lessons.isEmpty())
-                            getMvpView().showSchedule(lessons.toArray(new Lesson[lessons.size()]));
+                            getMvpView().showSchedule(lessons);
                         else
                             getMvpView().showEmptySchedule();
                     }

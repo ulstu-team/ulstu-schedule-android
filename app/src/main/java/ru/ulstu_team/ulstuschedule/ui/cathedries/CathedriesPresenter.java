@@ -10,7 +10,6 @@ import ru.ulstu_team.ulstuschedule.data.model.Cathedra;
 import ru.ulstu_team.ulstuschedule.data.remote.Schedule;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter;
-import ru.ulstu_team.ulstuschedule.util.GsonUtil;
 
 public class CathedriesPresenter extends BasePresenter<CathedriesMvpView> {
 
@@ -24,7 +23,12 @@ public class CathedriesPresenter extends BasePresenter<CathedriesMvpView> {
     public void loadCathedries() {
         checkViewAttached();
 
-        mDataManager.executeRequest(getRequest());
+        List<Cathedra> cathedries = getRealmQuery().findAll();
+        if (!cathedries.isEmpty()) {
+            getMvpView().showCathedries(cathedries);
+        } else {
+            mDataManager.executeRequest(getRequest());
+        }
     }
 
     private RealmQuery<Cathedra> getRealmQuery() {
@@ -37,7 +41,7 @@ public class CathedriesPresenter extends BasePresenter<CathedriesMvpView> {
                     @Override
                     public void onSuccess() {
                         List<Cathedra> cathedries = getRealmQuery().findAll();
-                        getMvpView().showCathedries(cathedries.toArray(new Cathedra[cathedries.size()]));
+                        getMvpView().showCathedries(cathedries);
                     }
 
                     @Override

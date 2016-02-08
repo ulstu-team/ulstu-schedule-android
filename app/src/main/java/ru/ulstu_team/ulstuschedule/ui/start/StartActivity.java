@@ -28,7 +28,7 @@ public class StartActivity extends AppCompatActivity {
         actv = (AutoCompleteTextView) findViewById(R.id.groupNameText);
         actv.setGravity(Gravity.CENTER);
         String[] groups = {};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.autocomplete_list_item, groups);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, groups);
         actv.setAdapter(adapter);
     }
 

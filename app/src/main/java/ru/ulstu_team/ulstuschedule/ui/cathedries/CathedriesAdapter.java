@@ -6,14 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.data.model.Cathedra;
 
 public class CathedriesAdapter extends RecyclerView.Adapter<CathedriesAdapter.ViewHolder> {
 
-    private Cathedra[] mCathedries;
+    private List<Cathedra> mCathedries;
 
-    public void setCathedries(Cathedra[] cathedries) {
+    public void setCathedries(List<Cathedra> cathedries) {
         mCathedries = cathedries;
         notifyDataSetChanged();
     }
@@ -27,13 +29,13 @@ public class CathedriesAdapter extends RecyclerView.Adapter<CathedriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Cathedra cathedra = mCathedries[position];
+        Cathedra cathedra = mCathedries.get(position);
         holder.name.setText(cathedra.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mCathedries.length;
+        return mCathedries.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

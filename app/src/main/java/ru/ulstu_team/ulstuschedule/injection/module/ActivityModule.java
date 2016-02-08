@@ -7,10 +7,11 @@ import dagger.Module;
 import dagger.Provides;
 import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
-import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesAdapter;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
+import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity;
+import ru.ulstu_team.ulstuschedule.ui.groups.GroupsAdapter;
 
 @Module
 public class ActivityModule {
@@ -47,5 +48,11 @@ public class ActivityModule {
     @Provides
     CathedriesAdapter provideCathedriesAdapter() {
         return new CathedriesAdapter();
+    }
+
+    @PerActivity
+    @Provides
+    GroupsAdapter provideGroupsAdapter() {
+        return new GroupsAdapter();
     }
 }

@@ -5,6 +5,7 @@
     <color name="black">#000000</color>
     <color name="white">#fff</color>
     <color name="secondaryText">#333</color>
+    <color name="divider">#888</color>
 
     <color name="beginTime">#607D8B</color>
     <color name="endTime">#455A64</color>

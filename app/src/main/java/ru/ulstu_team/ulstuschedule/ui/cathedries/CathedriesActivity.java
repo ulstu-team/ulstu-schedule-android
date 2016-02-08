@@ -4,8 +4,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,6 +30,7 @@ public class CathedriesActivity extends BaseActivity implements CathedriesMvpVie
         getActivityComponent().inject(this);
 
         b.rvCathedries.setLayoutManager(new LinearLayoutManager(this));
+        b.rvCathedries.setItemAnimator(new DefaultItemAnimator());
         b.rvCathedries.setHasFixedSize(true);
 
         mPresenter.attachView(this);
@@ -42,7 +46,7 @@ public class CathedriesActivity extends BaseActivity implements CathedriesMvpVie
     }
 
     @Override
-    public void showCathedries(Cathedra[] cathedries) {
+    public void showCathedries(List<Cathedra> cathedries) {
         mAdapter.setCathedries(cathedries);
         b.rvCathedries.setAdapter(mAdapter);
     }

@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.faculties;
+package ru.ulstu_team.ulstuschedule.ui.groups;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,38 +9,38 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.ulstu_team.ulstuschedule.R;
-import ru.ulstu_team.ulstuschedule.data.model.Faculty;
+import ru.ulstu_team.ulstuschedule.data.model.Group;
 
-public class FacultiesAdapter extends RecyclerView.Adapter<FacultiesAdapter.ViewHolder> {
+public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder> {
 
-    private List<Faculty> mFaculties;
+    private List<Group> mGroups;
 
-    public void setFaculties(List<Faculty> faculties) {
-        mFaculties = faculties;
+    public void setGroups(List<Group> groups) {
+        mGroups = groups;
         notifyDataSetChanged();
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.simple_list_item, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Faculty faculty = mFaculties.get(position);
-        holder.name.setText(faculty.getName());
+        Group group = mGroups.get(position);
+        holder.name.setText(group.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mFaculties.size();
+        return mGroups.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name;
+        private TextView name;
 
         public ViewHolder(View itemView) {
             super(itemView);

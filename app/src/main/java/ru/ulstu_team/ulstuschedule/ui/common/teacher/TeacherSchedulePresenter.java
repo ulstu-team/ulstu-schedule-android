@@ -10,7 +10,6 @@ import ru.ulstu_team.ulstuschedule.data.model.Lesson;
 import ru.ulstu_team.ulstuschedule.data.remote.Schedule;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter;
-import ru.ulstu_team.ulstuschedule.util.GsonUtil;
 
 public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpView> {
 
@@ -29,7 +28,7 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
         if (lessons.isEmpty()) {
             mDataManager.executeRequest(getRequest());
         } else {
-            getMvpView().showSchedule(lessons.toArray(new Lesson[lessons.size()]));
+            getMvpView().showSchedule(lessons);
         }
     }
 
@@ -45,7 +44,7 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
                     public void onSuccess() {
                         List<Lesson> lessons = getRealmQuery().findAll();
                         if (!lessons.isEmpty())
-                            getMvpView().showSchedule(lessons.toArray(new Lesson[lessons.size()]));
+                            getMvpView().showSchedule(lessons);
                         else
                             getMvpView().showEmptySchedule();
                     }

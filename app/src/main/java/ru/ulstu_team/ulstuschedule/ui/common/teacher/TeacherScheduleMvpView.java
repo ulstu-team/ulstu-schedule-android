@@ -7,7 +7,7 @@ import ru.ulstu_team.ulstuschedule.ui.base.MvpView;
 
 public interface TeacherScheduleMvpView extends MvpView {
 
-    void showSchedule(Lesson[] lessons);
+    void showSchedule(List<Lesson> lessons);
 
     void showEmptySchedule();
 

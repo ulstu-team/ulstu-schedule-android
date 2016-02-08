@@ -10,7 +10,6 @@ import ru.ulstu_team.ulstuschedule.data.model.Faculty;
 import ru.ulstu_team.ulstuschedule.data.remote.Schedule;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter;
-import ru.ulstu_team.ulstuschedule.util.GsonUtil;
 
 public class FacultiesPresenter extends BasePresenter<FacultiesMvpView> {
 
@@ -23,7 +22,13 @@ public class FacultiesPresenter extends BasePresenter<FacultiesMvpView> {
 
     public void loadFaculties() {
         checkViewAttached();
-        mDataManager.executeRequest(getRequest());
+
+        List<Faculty> faculties = getRealmQuery().findAll();
+        if (!faculties.isEmpty()) {
+            getMvpView().showFaculties(faculties);
+        } else {
+            mDataManager.executeRequest(getRequest());
+        }
     }
 
     private RealmQuery<Faculty> getRealmQuery() {
@@ -36,7 +41,7 @@ public class FacultiesPresenter extends BasePresenter<FacultiesMvpView> {
                     @Override
                     public void onSuccess() {
                         List<Faculty> faculties = getRealmQuery().findAll();
-                        getMvpView().showFaculties(faculties.toArray(new Faculty[faculties.size()]));
+                        getMvpView().showFaculties(faculties);
                     }
 
                     @Override

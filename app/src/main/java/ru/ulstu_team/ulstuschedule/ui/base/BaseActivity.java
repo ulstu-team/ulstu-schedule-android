@@ -20,6 +20,7 @@ import ru.ulstu_team.ulstuschedule.injection.component.DaggerActivityComponent;
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule;
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity;
+import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity;
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -83,6 +84,8 @@ public abstract class BaseActivity extends AppCompatActivity
             startActivity(new Intent(this, FacultiesActivity.class));
         } else if (id == R.id.nav_cathedries) {
             startActivity(new Intent(this, CathedriesActivity.class));
+        } else if (id == R.id.nav_groups) {
+            startActivity(new Intent(this, GroupsActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

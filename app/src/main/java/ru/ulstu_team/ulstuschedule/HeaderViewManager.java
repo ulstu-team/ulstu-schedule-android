@@ -20,8 +20,6 @@ import java.util.TimerTask;
 import javax.inject.Inject;
 
 import ru.ulstu_team.ulstuschedule.data.DataManager;
-import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
-import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
 
 public class HeaderViewManager {
 

@@ -1,6 +1,9 @@
 package ru.ulstu_team.ulstuschedule.ui.base;
 
+import javax.inject.Inject;
+
 import io.realm.Realm;
+import ru.ulstu_team.ulstuschedule.data.DataManager;
 
 public class BasePresenter<T extends MvpView> implements Presenter<T> {
 

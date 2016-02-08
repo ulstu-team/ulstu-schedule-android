@@ -9,9 +9,13 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="16dp"
         android:textSize="16sp"
         android:textColor="@color/black"
         tools:text="Факультет информационных систем и технологий" />
+
+    <View android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/divider" />
 
 </LinearLayout>

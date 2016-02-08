@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import ru.ulstu_team.ulstuschedule.R;
@@ -49,15 +52,14 @@ public class StudentScheduleFragment extends BaseFragment implements StudentSche
     }
 
     @Override
-    public void showSchedule(Lesson[] lessons) {
+    public void showSchedule(List<Lesson> lessons) {
         mAdapter.setLessons(lessons, false);
-
         b.slTeacherLessons.setAdapter(mAdapter);
     }
 
     @Override
     public void showEmptySchedule() {
-        mAdapter.setLessons(new Lesson[0], false);
+        mAdapter.setLessons(new ArrayList<Lesson>(), false);
     }
 
     @Override

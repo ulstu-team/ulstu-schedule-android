@@ -6,7 +6,6 @@ import android.os.Bundle;
 import ru.ulstu_team.ulstuschedule.R;
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity;
 import ru.ulstu_team.ulstuschedule.ui.common.student.StudentScheduleFragment;
-import ru.ulstu_team.ulstuschedule.ui.common.teacher.TeacherScheduleFragment;
 
 public class MainActivity extends BaseActivity {
 

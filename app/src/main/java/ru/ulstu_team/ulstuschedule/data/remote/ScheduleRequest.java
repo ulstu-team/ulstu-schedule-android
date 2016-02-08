@@ -1,8 +1,5 @@
 package ru.ulstu_team.ulstuschedule.data.remote;
 
-import com.android.volley.RequestQueue;
-
-import io.realm.Realm;
 import io.realm.RealmQuery;
 
 public class ScheduleRequest {
@@ -14,6 +11,9 @@ public class ScheduleRequest {
     private Callbacks mCallbacks;
 
     public ScheduleRequest(String key, Class clazz, RealmQuery query, Callbacks callbacks) {
+        if (key == null || clazz == null || callbacks == null || query == null)
+            throw new RequestNotCorrectException();
+
         mKey = key;
         mClass = clazz;
         mRealmQuery = query;

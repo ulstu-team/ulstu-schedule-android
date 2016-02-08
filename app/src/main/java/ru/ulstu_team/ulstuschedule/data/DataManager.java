@@ -2,17 +2,19 @@ package ru.ulstu_team.ulstuschedule.data;
 
 import android.content.Context;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys;
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager;
+import ru.ulstu_team.ulstuschedule.data.remote.DownloadException;
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest;
 import ru.ulstu_team.ulstuschedule.data.remote.VolleySingleton;
 
@@ -50,25 +52,32 @@ public class DataManager {
     }
 
     public void executeRequest(final ScheduleRequest request) {
-        mVolley.addToRequestQueue(new StringRequest(getUrl(request.getKey(), request.getId()),
-
+        Request volleyRequest = new StringRequest(getUrl(request.getKey(), request.getId()),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         saveInDatabase(response, request);
                     }
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         request.getCallbacks().onError(error);
                     }
                 }
-        ));
+        ).setRetryPolicy(new RetryPolicy() {
+            @Override public int getCurrentTimeout() { return 3000;}
+            @Override public int getCurrentRetryCount() { return 2;}
+            @Override public void retry(VolleyError error) throws VolleyError { }
+        });
+        mVolley.addToRequestQueue(volleyRequest);
     }
 
     private void saveInDatabase(final String json, final ScheduleRequest request) {
+        if (json == null || json.isEmpty()) {
+            request.getCallbacks().onError(new DownloadException());
+            return;
+        }
         final Realm mRealm = Realm.getDefaultInstance();
 
         // If json starts with '{' then it is a JSONObject and model is one

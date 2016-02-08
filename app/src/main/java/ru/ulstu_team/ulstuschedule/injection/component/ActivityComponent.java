@@ -5,6 +5,7 @@ import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule;
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity;
+import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity;
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity;
 
 /**
@@ -17,5 +18,6 @@ public interface ActivityComponent {
     void inject(MainActivity mainActivity);
     void inject(FacultiesActivity facultiesActivity);
     void inject(CathedriesActivity cathedriesActivity);
+    void inject(GroupsActivity groupsActivity);
 
 }

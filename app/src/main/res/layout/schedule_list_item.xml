@@ -4,10 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="ru.ulstu_team.ulstuschedule.data.model.Lesson" />
+
         <import type="ru.ulstu_team.ulstuschedule.util.TimeStringUtils" />
-        <variable name="lesson" type="Lesson" />
-        <variable name="isTeacher" type="java.lang.Boolean"/>
+
+        <variable
+            name="lesson"
+            type="Lesson" />
+
+        <variable
+            name="isTeacher"
+            type="java.lang.Boolean" />
     </data>
 
     <RelativeLayout
@@ -31,8 +39,8 @@
                 android:paddingLeft="3dp"
                 android:text="@{TimeStringUtils.beginHour(lesson.getNumber())}"
                 android:textSize="13sp"
-                tools:text="13"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry"
+                tools:text="13" />
 
             <TextView
                 style="@style/TimeText.Little"
@@ -78,31 +86,6 @@
             tools:ignore="RtlHardcoded">
 
             <TextView
-                android:id="@+id/groupName"
-                style="@style/TeacherSchedule.Group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{isTeacher ? lesson.getGroup().getName() : lesson.getTeacher().name}"
-                android:textSize="16sp"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@id/cabinet"
-                android:paddingRight="7dp"
-                app:font="@{`Roboto-Medium.ttf`}"
-                tools:text="ПИбд-31"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                style="@style/TeacherSchedule.Lesson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="@{lesson.getName()}"
-                android:textSize="16sp"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@id/lessonNumber"
-                tools:text="пр.Ин.яз." />
-
-            <TextView
                 android:id="@+id/cabinet"
                 style="@style/TeacherSchedule.Lesson"
                 android:layout_width="wrap_content"
@@ -121,6 +104,31 @@
                 android:layout_alignParentRight="true"
                 android:text="@{@string/pair(lesson.getNumber())}"
                 tools:text="1" />
+
+            <TextView
+                android:id="@+id/groupName"
+                style="@style/TeacherSchedule.Group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@id/cabinet"
+                android:paddingRight="7dp"
+                android:text="@{isTeacher ? lesson.getGroup().getName() : lesson.getTeacher().name}"
+                android:textSize="16sp"
+                app:font="@{`Roboto-Medium.ttf`}"
+                tools:ignore="RtlSymmetry"
+                tools:text="ПИбд-31" />
+
+            <TextView
+                style="@style/TeacherSchedule.Lesson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@id/lessonNumber"
+                android:text="@{lesson.getName()}"
+                android:textSize="16sp"
+                tools:text="пр.Ин.яз." />
 
         </RelativeLayout>
 

@@ -76,8 +76,14 @@ constructor(private val mContext: Context, private val mDataManager: DataManager
 
         fun setRandomHeaderImage(context: Context, imageView: ImageView) {
             getImagePaths(context)
-            val path = "file:///android_asset/headerImages/" + imagePaths!![random.nextInt(imagePaths!!.size)]
-            Glide.with(context).load(path).centerCrop().skipMemoryCache(true).crossFade(1200).into(imageView)
+            val path = "file:///android_asset/headerImages/" +
+                    imagePaths!![random.nextInt(imagePaths!!.size)]
+            Glide.with(context)
+                    .load(path)
+                    .centerCrop()
+                    .skipMemoryCache(true)
+                    .crossFade(1200)
+                    .into(imageView)
         }
 
         private fun getImagePaths(context: Context): Array<String> {

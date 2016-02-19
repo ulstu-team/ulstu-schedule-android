@@ -40,7 +40,9 @@ class App : Application() {
     val component: ApplicationComponent
         get() {
             if (mApplicationComponent == null) {
-                mApplicationComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
+                mApplicationComponent = DaggerApplicationComponent.builder()
+                        .applicationModule(ApplicationModule(this))
+                        .build()
             }
             return mApplicationComponent!!
         }

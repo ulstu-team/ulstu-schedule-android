@@ -2,8 +2,11 @@ package ru.ulstu_team.ulstuschedule.ui.base
 
 import android.app.Fragment
 import android.content.Context
+import android.support.annotation.LayoutRes
+import android.view.ViewStub
 
 import ru.ulstu_team.ulstuschedule.App
+import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.injection.component.DaggerStudentScheduleComponent
 import ru.ulstu_team.ulstuschedule.injection.component.DaggerTeacherScheduleComponent
 import ru.ulstu_team.ulstuschedule.injection.component.StudentScheduleComponent

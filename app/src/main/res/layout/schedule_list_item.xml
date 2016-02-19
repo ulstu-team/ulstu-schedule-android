@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
@@ -20,22 +19,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="3dp"
-            android:text="@{TimeStringUtils.beginHour(lesson.getNumber())}"
             android:textSize="13sp"
             tools:ignore="RtlSymmetry"
             tools:text="13" />
 
         <TextView
+            android:id="@+id/beginMinutes"
             style="@style/TimeText.Little"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/beginHour"
-            android:text="@{TimeStringUtils.beginMinutes(lesson.getNumber())}"
             tools:text="10" />
 
         <TextView
-            android:id="@+id/endMinute"
+            android:id="@+id/endMinutes"
             style="@style/TimeText.Little"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +43,6 @@
             android:layout_marginRight="2dp"
             android:gravity="center"
             android:paddingBottom="3dp"
-            android:text="@{TimeStringUtils.endMinutes(lesson.getNumber())}"
             tools:text="40" />
 
         <TextView
@@ -54,14 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/endMinute"
-            android:text="@{TimeStringUtils.endHour(lesson.getNumber())}"
+            android:layout_toLeftOf="@id/endMinutes"
             android:textSize="13sp"
             tools:text="14" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/lessonInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -74,7 +71,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@{lesson.getCabinet()}"
             android:textSize="16sp"
             tools:text="а.г.503" />
 
@@ -85,31 +81,28 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="@{@string/pair(lesson.getNumber())}"
-            tools:text="1" />
+            tools:text="1 пара" />
 
         <TextView
-            android:id="@+id/groupName"
+            android:id="@+id/ownerName"
             style="@style/TeacherSchedule.Group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toRightOf="@id/cabinet"
             android:paddingRight="7dp"
-            android:text="@{isTeacher ? lesson.getGroup().getName() : lesson.getTeacher().name}"
             android:textSize="16sp"
-            app:font="@{`Roboto-Medium.ttf`}"
             tools:ignore="RtlSymmetry"
             tools:text="ПИбд-31" />
 
         <TextView
+            android:id="@+id/lessonName"
             style="@style/TeacherSchedule.Lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_toRightOf="@id/lessonNumber"
-            android:text="@{lesson.getName()}"
             android:textSize="16sp"
             tools:text="пр.Ин.яз." />
 

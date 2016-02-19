@@ -22,7 +22,8 @@
             android:layout_height="166dp"
             android:layout_marginBottom="35dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/logo_ulgtu_blue" />
+            android:background="@drawable/logo_ulstu_blue"
+            android:contentDescription="@string/ulstu_logo" />
 
         <TextView
             android:id="@+id/greeting"
@@ -50,7 +51,6 @@
                 android:text="Студента"
                 android:textColor="@color/darkBlue"
                 android:textSize="16sp" />
-            />
 
             <RadioButton
                 android:id="@+id/tutorSchedule"

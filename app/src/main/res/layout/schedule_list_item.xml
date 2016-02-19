@@ -1,137 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="ru.ulstu_team.ulstuschedule.data.model.Lesson" />
-
-        <import type="ru.ulstu_team.ulstuschedule.util.TimeStringUtils" />
-
-        <variable
-            name="lesson"
-            type="Lesson" />
-
-        <variable
-            name="isTeacher"
-            type="java.lang.Boolean" />
-    </data>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:padding="6dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="6dp">
+        android:id="@+id/timeView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/splitted_square"
+        tools:ignore="RtlHardcoded">
 
-        <RelativeLayout
-            android:id="@+id/timeView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/splitted_square"
-            tools:ignore="RtlHardcoded">
-
-            <TextView
-                android:id="@+id/beginHour"
-                style="@style/TimeText.Big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="3dp"
-                android:text="@{TimeStringUtils.beginHour(lesson.getNumber())}"
-                android:textSize="13sp"
-                tools:ignore="RtlSymmetry"
-                tools:text="13" />
-
-            <TextView
-                style="@style/TimeText.Little"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@id/beginHour"
-                android:text="@{TimeStringUtils.beginMinutes(lesson.getNumber())}"
-                tools:text="10" />
-
-            <TextView
-                android:id="@+id/endMinute"
-                style="@style/TimeText.Little"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:gravity="center"
-                android:paddingBottom="3dp"
-                android:text="@{TimeStringUtils.endMinutes(lesson.getNumber())}"
-                tools:text="40" />
-
-            <TextView
-                android:id="@+id/endHour"
-                style="@style/TimeText.Big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@id/endMinute"
-                android:text="@{TimeStringUtils.endHour(lesson.getNumber())}"
-                android:textSize="13sp"
-                tools:text="14" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/beginHour"
+            style="@style/TimeText.Big"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/timeView"
-            tools:ignore="RtlHardcoded">
+            android:paddingLeft="3dp"
+            android:text="@{TimeStringUtils.beginHour(lesson.getNumber())}"
+            android:textSize="13sp"
+            tools:ignore="RtlSymmetry"
+            tools:text="13" />
 
-            <TextView
-                android:id="@+id/cabinet"
-                style="@style/TeacherSchedule.Lesson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@{lesson.getCabinet()}"
-                android:textSize="16sp"
-                tools:text="а.г.503" />
+        <TextView
+            style="@style/TimeText.Little"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/beginHour"
+            android:text="@{TimeStringUtils.beginMinutes(lesson.getNumber())}"
+            tools:text="10" />
 
-            <TextView
-                android:id="@+id/lessonNumber"
-                style="@style/TeacherSchedule.Lesson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:text="@{@string/pair(lesson.getNumber())}"
-                tools:text="1" />
+        <TextView
+            android:id="@+id/endMinute"
+            style="@style/TimeText.Little"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:text="@{TimeStringUtils.endMinutes(lesson.getNumber())}"
+            tools:text="40" />
 
-            <TextView
-                android:id="@+id/groupName"
-                style="@style/TeacherSchedule.Group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@id/cabinet"
-                android:paddingRight="7dp"
-                android:text="@{isTeacher ? lesson.getGroup().getName() : lesson.getTeacher().name}"
-                android:textSize="16sp"
-                app:font="@{`Roboto-Medium.ttf`}"
-                tools:ignore="RtlSymmetry"
-                tools:text="ПИбд-31" />
-
-            <TextView
-                style="@style/TeacherSchedule.Lesson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@id/lessonNumber"
-                android:text="@{lesson.getName()}"
-                android:textSize="16sp"
-                tools:text="пр.Ин.яз." />
-
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/endHour"
+            style="@style/TimeText.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/endMinute"
+            android:text="@{TimeStringUtils.endHour(lesson.getNumber())}"
+            android:textSize="13sp"
+            tools:text="14" />
 
     </RelativeLayout>
 
-</layout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/timeView"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/cabinet"
+            style="@style/TeacherSchedule.Lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@{lesson.getCabinet()}"
+            android:textSize="16sp"
+            tools:text="а.г.503" />
+
+        <TextView
+            android:id="@+id/lessonNumber"
+            style="@style/TeacherSchedule.Lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@{@string/pair(lesson.getNumber())}"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/groupName"
+            style="@style/TeacherSchedule.Group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@id/cabinet"
+            android:paddingRight="7dp"
+            android:text="@{isTeacher ? lesson.getGroup().getName() : lesson.getTeacher().name}"
+            android:textSize="16sp"
+            app:font="@{`Roboto-Medium.ttf`}"
+            tools:ignore="RtlSymmetry"
+            tools:text="ПИбд-31" />
+
+        <TextView
+            style="@style/TeacherSchedule.Lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@id/lessonNumber"
+            android:text="@{lesson.getName()}"
+            android:textSize="16sp"
+            tools:text="пр.Ин.яз." />
+
+    </RelativeLayout>
+
+</RelativeLayout>

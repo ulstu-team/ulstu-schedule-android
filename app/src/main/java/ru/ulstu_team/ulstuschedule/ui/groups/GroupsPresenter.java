@@ -37,7 +37,7 @@ public class GroupsPresenter extends BasePresenter<GroupsMvpView> {
     }
 
     private RealmQuery<Group> getRealmQuery() {
-        return mRealm.where(Group.class);
+        return getMRealm().where(Group.class);
     }
 
     private ScheduleRequest getRequest() {

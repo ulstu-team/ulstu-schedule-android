@@ -27,7 +27,7 @@ public class GroupsActivity extends BaseActivity implements GroupsMvpView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivityComponent().inject(this);
-        b = DataBindingUtil.setContentView(this, R.layout.activity_groups);
+        b = DataBindingUtil.setContentView(this, R.layout.groups_content);
 
         b.rvGroups.setLayoutManager(new LinearLayoutManager(this));
         b.rvGroups.setItemAnimator(new DefaultItemAnimator());

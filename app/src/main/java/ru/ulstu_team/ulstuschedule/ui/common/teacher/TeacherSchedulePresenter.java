@@ -33,7 +33,7 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
     }
 
     private RealmQuery<Lesson> getRealmQuery() {
-        return mRealm.where(Lesson.class).equalTo("TeacherId", mDataManager.getUserId());
+        return getMRealm().where(Lesson.class).equalTo("TeacherId", mDataManager.getUserId());
     }
 
     private ScheduleRequest getRequest() {

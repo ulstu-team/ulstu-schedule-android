@@ -2,7 +2,9 @@ package ru.ulstu_team.ulstuschedule.data.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
+@RealmClass
 public class Teacher extends RealmObject {
 
     @PrimaryKey

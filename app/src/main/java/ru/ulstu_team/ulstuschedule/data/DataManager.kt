@@ -117,6 +117,12 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
     fun getLessonsForGroup(id: Int): List<Lesson> = mRealm.where(Lesson::class.java)
             .equalTo("GroupId", id).findAll()
 
+    fun getLessonsForCurrentTeacher(): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("TeacherId", userId).findAll()
+
+    fun getLessonsForTeacher(teacherId: Int): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("TeacherId", teacherId).findAll()
+
     fun loadFaculties(callbacks: RequestCallbacks) =
             executeRequest(
                     ScheduleRequest(Schedule.FACULTIES, Faculty::class.java,
@@ -136,6 +142,19 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
                     ScheduleRequest(Schedule.GROUP_LESSONS, groupId, Lesson::class.java,
                             mRealm.where(Lesson::class.java).equalTo("GroupId", groupId),
                             callbacks)
+            )
+
+    fun loadLessonsForCurrentTeacher(callbacks: RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
+                            mRealm.where(Lesson::class.java).equalTo("TeacherId", userId),
+                            callbacks)
+            )
+
+    fun loadLessonsForTeacher(teacherId: Int, callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
+                    mRealm.where(Lesson::class.java).equalTo("TeacherId", teacherId),
+                    callbacks)
             )
 
     companion object {

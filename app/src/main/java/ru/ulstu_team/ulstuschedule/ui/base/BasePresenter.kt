@@ -6,16 +6,13 @@ open class BasePresenter<T : MvpView> : Presenter<T> {
 
     var mvpView: T? = null
         private set
-    protected lateinit var mRealm: Realm
 
     override fun attachView(mvpView: T) {
         this.mvpView = mvpView
-        mRealm = Realm.getDefaultInstance()
     }
 
     override fun detachView() {
         mvpView = null
-        mRealm.close()
     }
 
     val isViewAttached: Boolean

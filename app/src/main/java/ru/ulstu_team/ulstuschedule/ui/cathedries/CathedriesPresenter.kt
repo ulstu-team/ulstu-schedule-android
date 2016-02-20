@@ -19,7 +19,7 @@ constructor(private val mDataManager: DataManager) : BasePresenter<CathedriesMvp
         if (!cathedries.isEmpty()) {
             mvpView?.showCathedries(cathedries)
         } else {
-            mDataManager.executeRequest(getRequest(getAllCathedriesQuery()))
+            //mDataManager.executeRequest(getRequest(getAllCathedriesQuery()))
         }
     }
 
@@ -32,8 +32,8 @@ constructor(private val mDataManager: DataManager) : BasePresenter<CathedriesMvp
 
         if (!cathedries.isEmpty())
             mvpView?.showCathedries(cathedries)
-        else
-            mDataManager.executeRequest(getRequest(getFacultyCathedriesQuery(facultyId)))
+        //else
+            //mDataManager.executeRequest(getRequest(getFacultyCathedriesQuery(facultyId)))
     }
 
     private fun getAllCathedriesQuery(): RealmQuery<Cathedra> =
@@ -42,17 +42,17 @@ constructor(private val mDataManager: DataManager) : BasePresenter<CathedriesMvp
     private fun getFacultyCathedriesQuery(facultyId: Int): RealmQuery<Cathedra> =
             mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId)
 
-    private fun getRequest(query: RealmQuery<Cathedra>): ScheduleRequest {
-        return ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java, query,
-                object : ScheduleRequest.Callbacks {
-                    override fun onSuccess() {
-                        val cathedries = query.findAll()
-                        mvpView?.showCathedries(cathedries)
-                    }
-
-                    override fun onError(e: Exception) {
-                        mvpView?.showError()
-                    }
-                })
-    }
+//    private fun getRequest(query: RealmQuery<Cathedra>): ScheduleRequest {
+//        return ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java, query,
+//                object : ScheduleRequest.Callbacks {
+//                    override fun onSuccess() {
+//                        val cathedries = query.findAll()
+//                        mvpView?.showCathedries(cathedries)
+//                    }
+//
+//                    override fun onError(e: Exception) {
+//                        mvpView?.showError()
+//                    }
+//                })
+//    }
 }

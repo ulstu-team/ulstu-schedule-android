@@ -27,35 +27,35 @@ public class GroupsPresenter extends BasePresenter<GroupsMvpView> {
         if (groups.size() > 50) {
             getMvpView().showGroups(groups);
         } else {
-            mDataManager.executeRequest(getRequest());
+            //mDataManager.executeRequest(getRequest());
         }
     }
 
     public void forceLoad() {
         checkViewAttached();
-        mDataManager.executeRequest(getRequest());
+        //mDataManager.executeRequest(getRequest());
     }
 
     private RealmQuery<Group> getRealmQuery() {
         return getMRealm().where(Group.class);
     }
 
-    private ScheduleRequest getRequest() {
-        return new ScheduleRequest(Schedule.GROUPS, Group.class, getRealmQuery(),
-                new ScheduleRequest.Callbacks() {
-                    @Override
-                    public void onSuccess() {
-                        List<Group> groups = getRealmQuery().findAll();
-                        if (groups.size() > 50)
-                            getMvpView().showGroups(groups);
-                        else
-                            getMvpView().showEmptyList();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        getMvpView().showError();
-                    }
-                });
-    }
+//    private ScheduleRequest getRequest() {
+//        return new ScheduleRequest(Schedule.GROUPS, Group.class, getRealmQuery(),
+//                new ScheduleRequest.Callbacks() {
+//                    @Override
+//                    public void onSuccess() {
+//                        List<Group> groups = getRealmQuery().findAll();
+//                        if (groups.size() > 50)
+//                            getMvpView().showGroups(groups);
+//                        else
+//                            getMvpView().showEmptyList();
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        getMvpView().showError();
+//                    }
+//                });
+//    }
 }

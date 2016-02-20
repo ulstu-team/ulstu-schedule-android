@@ -26,7 +26,7 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
 
         List<Lesson> lessons = getRealmQuery().findAll();
         if (lessons.isEmpty()) {
-            mDataManager.executeRequest(getRequest());
+            //mDataManager.executeRequest(getRequest());
         } else {
             getMvpView().showSchedule(lessons);
         }
@@ -36,26 +36,26 @@ public class TeacherSchedulePresenter extends BasePresenter<TeacherScheduleMvpVi
         return getMRealm().where(Lesson.class).equalTo("TeacherId", mDataManager.getUserId());
     }
 
-    private ScheduleRequest getRequest() {
-        return new ScheduleRequest(Schedule.TEACHER_LESSONS,
-                mDataManager.getUserId(), Lesson.class, getRealmQuery(),
-                new ScheduleRequest.Callbacks() {
-                    @Override
-                    public void onSuccess() {
-                        List<Lesson> lessons = getRealmQuery().findAll();
-                        if (!lessons.isEmpty())
-                            getMvpView().showSchedule(lessons);
-                        else
-                            getMvpView().showEmptySchedule();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        getMvpView().showError();
-                    }
-                }
-        );
-    }
+//    private ScheduleRequest getRequest() {
+//        return new ScheduleRequest(Schedule.TEACHER_LESSONS,
+//                mDataManager.getUserId(), Lesson.class, getRealmQuery(),
+//                new ScheduleRequest.Callbacks() {
+//                    @Override
+//                    public void onSuccess() {
+//                        List<Lesson> lessons = getRealmQuery().findAll();
+//                        if (!lessons.isEmpty())
+//                            getMvpView().showSchedule(lessons);
+//                        else
+//                            getMvpView().showEmptySchedule();
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        getMvpView().showError();
+//                    }
+//                }
+//        );
+//    }
 
     public void reload() {
         loadSchedule();

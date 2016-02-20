@@ -23,13 +23,15 @@ class StudentScheduleFragment() : BaseFragment(), StudentScheduleMvpView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         getStudentScheduleComponent().inject(this)
-        val view = inflater.inflate(R.layout.schedule, container, false)
+        return inflater.inflate(R.layout.schedule, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
         mPresenter.attachView(this)
         mPresenter.loadSchedule()
 
         srlRefresh.setOnRefreshListener { mPresenter.loadSchedule() }
-
-        return view
     }
 
     override fun showSchedule(lessons: List<Lesson>) {

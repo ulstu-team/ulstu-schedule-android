@@ -1,16 +1,18 @@
 package ru.ulstu_team.ulstuschedule.data.remote;
 
+import io.realm.RealmObject;
 import io.realm.RealmQuery;
 
 public class ScheduleRequest {
 
     private String mKey;
     private int mId;
-    private Class mClass;
+    private Class<? extends RealmObject> mClass;
     private RealmQuery mRealmQuery;
-    private Callbacks mCallbacks;
+    private RequestCallbacks mCallbacks;
 
-    public ScheduleRequest(String key, Class clazz, RealmQuery query, Callbacks callbacks) {
+    public ScheduleRequest(String key, Class<? extends RealmObject> clazz,
+                           RealmQuery query, RequestCallbacks callbacks) {
         if (key == null || clazz == null || callbacks == null || query == null)
             throw new RequestNotCorrectException();
 
@@ -20,7 +22,8 @@ public class ScheduleRequest {
         mCallbacks = callbacks;
     }
 
-    public ScheduleRequest(String key, int id, Class clazz, RealmQuery query, Callbacks callbacks) {
+    public ScheduleRequest(String key, int id, Class<? extends RealmObject> clazz,
+                           RealmQuery query, RequestCallbacks callbacks) {
         this(key, clazz, query, callbacks);
         mId = id;
     }
@@ -37,16 +40,11 @@ public class ScheduleRequest {
         return mRealmQuery;
     }
 
-    public Class getDataType() {
+    public Class<? extends RealmObject> getDataType() {
         return mClass;
     }
 
-    public Callbacks getCallbacks() {
+    public RequestCallbacks getCallbacks() {
         return mCallbacks;
-    }
-
-    public interface Callbacks {
-        void onSuccess();
-        void onError(Exception e);
     }
 }

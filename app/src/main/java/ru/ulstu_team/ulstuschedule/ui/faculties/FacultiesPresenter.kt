@@ -5,6 +5,7 @@ import javax.inject.Inject
 import io.realm.RealmQuery
 import ru.ulstu_team.ulstuschedule.data.DataManager
 import ru.ulstu_team.ulstuschedule.data.model.Faculty
+import ru.ulstu_team.ulstuschedule.data.remote.RequestCallbacks
 import ru.ulstu_team.ulstuschedule.data.remote.Schedule
 import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter
@@ -16,27 +17,27 @@ constructor(private val mDataManager: DataManager) : BasePresenter<FacultiesMvpV
     fun loadFaculties() {
         checkViewAttached()
 
-        val faculties = realmQuery.findAll()
+        val faculties = mDataManager.getFaculties()
         if (!faculties.isEmpty()) {
             mvpView?.showFaculties(faculties)
         } else {
-            mDataManager.executeRequest(request)
+            mDataManager.loadFaculties(callbacks)
         }
     }
 
-    private val realmQuery: RealmQuery<Faculty>
-        get() = mRealm.where(Faculty::class.java)
+    private val callbacks: RequestCallbacks
+        get() = object: RequestCallbacks{
+            override fun onSuccess() {
+                val faculties = mDataManager.getFaculties()
+                if (faculties.isNotEmpty())
+                    mvpView?.showFaculties(faculties)
+                else
+                    mvpView?.showEmptyList()
+            }
 
-    val request: ScheduleRequest
-        get() = ScheduleRequest(Schedule.FACULTIES, Faculty::class.java, realmQuery,
-                object : ScheduleRequest.Callbacks {
-                    override fun onSuccess() {
-                        val faculties = realmQuery.findAll()
-                        mvpView?.showFaculties(faculties)
-                    }
+            override fun onError(e: Exception) {
+                mvpView?.showError()
+            }
 
-                    override fun onError(e: Exception) {
-                        mvpView?.showError()
-                    }
-                })
+        }
 }

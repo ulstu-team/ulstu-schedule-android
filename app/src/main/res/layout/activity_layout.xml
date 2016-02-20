@@ -8,9 +8,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ViewStub
             android:id="@+id/vsToolbar"
@@ -23,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/vsToolbar" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

@@ -22,7 +22,7 @@ constructor(private val mDataManager: DataManager) : BasePresenter<StudentSchedu
         if (!lessons.isEmpty()) {
             mvpView!!.showSchedule(lessons)
         } else {
-            mDataManager.executeRequest(request)
+            //mDataManager.executeRequest(request)
         }
     }
 
@@ -32,22 +32,22 @@ constructor(private val mDataManager: DataManager) : BasePresenter<StudentSchedu
         else
             mRealm.where(Lesson::class.java).equalTo("GroupId", mGroupId)
 
-    private val request: ScheduleRequest
-        get() = ScheduleRequest(Schedule.GROUP_LESSONS,
-                mDataManager.userId, Lesson::class.java, realmQuery,
-                object : ScheduleRequest.Callbacks {
-                    override fun onSuccess() {
-                        val lessons = realmQuery.findAll()
-                        if (!lessons.isEmpty())
-                            mvpView!!.showSchedule(lessons)
-                        else
-                            mvpView!!.showEmptySchedule()
-                    }
-
-                    override fun onError(e: Exception) {
-                        mvpView!!.showError()
-                    }
-                })
+//    private val request: ScheduleRequest
+//        get() = ScheduleRequest(Schedule.GROUP_LESSONS,
+//                mDataManager.userId, Lesson::class.java, realmQuery,
+//                object : ScheduleRequest.Callbacks {
+//                    override fun onSuccess() {
+//                        val lessons = realmQuery.findAll()
+//                        if (!lessons.isEmpty())
+//                            mvpView!!.showSchedule(lessons)
+//                        else
+//                            mvpView!!.showEmptySchedule()
+//                    }
+//
+//                    override fun onError(e: Exception) {
+//                        mvpView!!.showError()
+//                    }
+//                })
 
     fun reload() {
         loadSchedule()

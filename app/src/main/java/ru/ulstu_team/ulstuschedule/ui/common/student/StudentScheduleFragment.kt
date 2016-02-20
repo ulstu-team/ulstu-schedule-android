@@ -19,6 +19,11 @@ class StudentScheduleFragment() : BaseFragment(), StudentScheduleMvpView {
     internal lateinit var mAdapter: StickyListScheduleAdapter
     @Inject
     internal lateinit var mPresenter: StudentSchedulePresenter
+    private var mGroupId = -1
+
+    constructor(groupId: Int):this() {
+        mGroupId = groupId
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -29,9 +34,16 @@ class StudentScheduleFragment() : BaseFragment(), StudentScheduleMvpView {
     override fun onStart() {
         super.onStart()
         mPresenter.attachView(this)
-        mPresenter.loadSchedule()
+        loadSchedule()
 
-        srlRefresh.setOnRefreshListener { mPresenter.loadSchedule() }
+        srlRefresh.setOnRefreshListener { loadSchedule() }
+    }
+
+    private fun loadSchedule() {
+        if (mGroupId <= 0)
+            mPresenter.loadScheduleForCurrentGroup()
+        else
+            mPresenter.loadGroupSchedule(mGroupId)
     }
 
     override fun showSchedule(lessons: List<Lesson>) {
@@ -47,12 +59,8 @@ class StudentScheduleFragment() : BaseFragment(), StudentScheduleMvpView {
 
     override fun showError() {
         Snackbar.make(view, "Возниикла ошибка", Snackbar.LENGTH_LONG)
-                .setAction("Повторить", { reload() })
+                .setAction("Повторить", { loadSchedule() })
                 .show()
-    }
-
-    override fun reload() {
-        mPresenter.reload()
     }
 
     companion object {

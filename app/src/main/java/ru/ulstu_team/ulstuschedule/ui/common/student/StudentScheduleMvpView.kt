@@ -11,6 +11,4 @@ interface StudentScheduleMvpView : MvpView {
 
     fun showError()
 
-    fun reload()
-
 }

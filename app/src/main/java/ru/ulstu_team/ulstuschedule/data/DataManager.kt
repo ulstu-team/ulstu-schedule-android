@@ -9,10 +9,7 @@ import io.realm.Realm
 import io.realm.RealmObject
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager
-import ru.ulstu_team.ulstuschedule.data.model.Cathedra
-import ru.ulstu_team.ulstuschedule.data.model.Faculty
-import ru.ulstu_team.ulstuschedule.data.model.Group
-import ru.ulstu_team.ulstuschedule.data.model.Teacher
+import ru.ulstu_team.ulstuschedule.data.model.*
 import ru.ulstu_team.ulstuschedule.data.remote.*
 import javax.inject.Inject
 
@@ -46,7 +43,8 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
             override fun getCurrentRetryCount() = 2
 
             @Throws(VolleyError::class)
-            override fun retry(error: VolleyError) { }
+            override fun retry(error: VolleyError) {
+            }
         })
         mVolley.addToRequestQueue(volleyRequest)
     }
@@ -113,11 +111,32 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
 
     fun getTeachers(): List<Teacher> = mRealm.where(Teacher::class.java).findAll()
 
+    fun getLessonsForCurrentGroup(): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("GroupId", userId).findAll()
+
+    fun getLessonsForGroup(id: Int): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("GroupId", id).findAll()
+
     fun loadFaculties(callbacks: RequestCallbacks) =
             executeRequest(
                     ScheduleRequest(Schedule.FACULTIES, Faculty::class.java,
-                    mRealm.where(Faculty::class.java),
-                    callbacks))
+                            mRealm.where(Faculty::class.java),
+                            callbacks)
+            )
+
+    fun loadLessonsForCurrentGroup(callbacks: RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.GROUP_LESSONS, userId, Lesson::class.java,
+                            mRealm.where(Lesson::class.java).equalTo("GroupId", userId),
+                            callbacks)
+            )
+
+    fun loadLessonsForGroup(groupId: Int, callbacks: RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.GROUP_LESSONS, groupId, Lesson::class.java,
+                            mRealm.where(Lesson::class.java).equalTo("GroupId", groupId),
+                            callbacks)
+            )
 
     companion object {
         private val URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/ulstu/"

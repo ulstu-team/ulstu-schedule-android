@@ -18,11 +18,10 @@ constructor(private val mDataManager: DataManager) : BasePresenter<FacultiesMvpV
         checkViewAttached()
 
         val faculties = mDataManager.getFaculties()
-        if (!faculties.isEmpty()) {
+        if (faculties.isNotEmpty())
             mvpView?.showFaculties(faculties)
-        } else {
+        else
             mDataManager.loadFaculties(callbacks)
-        }
     }
 
     private val callbacks: RequestCallbacks
@@ -38,6 +37,5 @@ constructor(private val mDataManager: DataManager) : BasePresenter<FacultiesMvpV
             override fun onError(e: Exception) {
                 mvpView?.showError()
             }
-
         }
 }

@@ -28,11 +28,14 @@ class GroupsActivity : BaseActivity(), GroupsMvpView {
         rvGroups.layoutManager = LinearLayoutManager(this)
         rvGroups.itemAnimator = DefaultItemAnimator()
         rvGroups.setHasFixedSize(true)
+    }
 
+    override fun onStart() {
+        super.onStart()
         mPresenter.attachView(this)
         mPresenter.loadGroups()
 
-        srlRefresh.setOnRefreshListener { mPresenter.forceLoad() }
+        srlRefresh.setOnRefreshListener { mPresenter.loadGroups() }
     }
 
     override fun showGroups(groups: List<Group>) {

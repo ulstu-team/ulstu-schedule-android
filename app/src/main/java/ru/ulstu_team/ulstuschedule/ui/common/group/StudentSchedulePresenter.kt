@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.common.student
+package ru.ulstu_team.ulstuschedule.ui.common.group
 
 import ru.ulstu_team.ulstuschedule.data.DataManager
 import ru.ulstu_team.ulstuschedule.data.remote.RequestCallbacks
@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class StudentSchedulePresenter
 @Inject
-constructor(private val mDataManager: DataManager) : BasePresenter<StudentScheduleMvpView>() {
+constructor(private val mDataManager: DataManager) : BasePresenter<GroupScheduleMvpView>() {
     private var mGroupId: Int = 0
 
     fun loadScheduleForCurrentGroup() {

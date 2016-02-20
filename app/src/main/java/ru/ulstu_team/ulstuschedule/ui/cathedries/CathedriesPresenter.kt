@@ -1,10 +1,7 @@
 package ru.ulstu_team.ulstuschedule.ui.cathedries
 
-import io.realm.RealmQuery
 import ru.ulstu_team.ulstuschedule.data.DataManager
-import ru.ulstu_team.ulstuschedule.data.model.Cathedra
-import ru.ulstu_team.ulstuschedule.data.remote.Schedule
-import ru.ulstu_team.ulstuschedule.data.remote.ScheduleRequest
+import ru.ulstu_team.ulstuschedule.data.remote.RequestCallbacks
 import ru.ulstu_team.ulstuschedule.ui.base.BasePresenter
 import javax.inject.Inject
 
@@ -15,44 +12,51 @@ constructor(private val mDataManager: DataManager) : BasePresenter<CathedriesMvp
     fun loadCathedries() {
         checkViewAttached()
 
-        val cathedries = getAllCathedriesQuery().findAll()
-        if (!cathedries.isEmpty()) {
-            mvpView?.showCathedries(cathedries)
-        } else {
-            //mDataManager.executeRequest(getRequest(getAllCathedriesQuery()))
-        }
+        val cathedries = mDataManager.getCathedries()
+        if (cathedries.isNotEmpty())
+            mvpView!!.showCathedries(cathedries)
+        else
+            mDataManager.loadCathedries(getCathedriesRequestCallbacks())
     }
 
     fun loadCathedries(facultyId: Int) {
         checkViewAttached()
 
-        val cathedries =
-            if (facultyId <= 0) getAllCathedriesQuery().findAll()
-            else getFacultyCathedriesQuery(facultyId).findAll()
-
+        val cathedries = mDataManager.getFacultyCathedries(facultyId)
         if (!cathedries.isEmpty())
-            mvpView?.showCathedries(cathedries)
-        //else
-            //mDataManager.executeRequest(getRequest(getFacultyCathedriesQuery(facultyId)))
+            mvpView!!.showCathedries(cathedries)
+        else
+            mDataManager.loadFacultyCathedries(facultyId,
+                    getFacultyCathedriesRequestCallbacks(facultyId))
     }
 
-    private fun getAllCathedriesQuery(): RealmQuery<Cathedra> =
-            mRealm.where(Cathedra::class.java)
+    private fun getCathedriesRequestCallbacks(): RequestCallbacks =
+            object: RequestCallbacks {
+                override fun onSuccess() {
+                    val cathedries = mDataManager.getCathedries()
+                    if (cathedries.isNotEmpty())
+                        mvpView!!.showCathedries(cathedries)
+                    else
+                        mvpView!!.showEmptyList()
+                }
 
-    private fun getFacultyCathedriesQuery(facultyId: Int): RealmQuery<Cathedra> =
-            mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId)
+                override fun onError(e: Exception) {
+                    mvpView!!.showError()
+                }
+            }
 
-//    private fun getRequest(query: RealmQuery<Cathedra>): ScheduleRequest {
-//        return ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java, query,
-//                object : ScheduleRequest.Callbacks {
-//                    override fun onSuccess() {
-//                        val cathedries = query.findAll()
-//                        mvpView?.showCathedries(cathedries)
-//                    }
-//
-//                    override fun onError(e: Exception) {
-//                        mvpView?.showError()
-//                    }
-//                })
-//    }
+    private fun getFacultyCathedriesRequestCallbacks(facultyId: Int): RequestCallbacks =
+            object: RequestCallbacks {
+                override fun onSuccess() {
+                    val cathedries = mDataManager.getFacultyCathedries(facultyId)
+                    if (cathedries.isNotEmpty())
+                        mvpView!!.showCathedries(cathedries)
+                    else
+                        mvpView!!.showEmptyList()
+                }
+
+                override fun onError(e: Exception) {
+                    mvpView!!.showError()
+                }
+            }
 }

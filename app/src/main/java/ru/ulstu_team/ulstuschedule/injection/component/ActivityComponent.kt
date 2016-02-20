@@ -7,6 +7,7 @@ import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity
 import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity
+import ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleActivity
 
 /**
  * This component inject dependencies to all Activities across the application
@@ -19,5 +20,6 @@ interface ActivityComponent {
     fun inject(facultiesActivity: FacultiesActivity)
     fun inject(cathedriesActivity: CathedriesActivity)
     fun inject(groupsActivity: GroupsActivity)
+    fun inject(scheduleActivity: ScheduleActivity)
 
 }

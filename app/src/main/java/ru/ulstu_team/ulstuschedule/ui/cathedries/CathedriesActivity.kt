@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Cathedra
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity
+import java.util.*
 import javax.inject.Inject
 
 class CathedriesActivity : BaseActivity(), CathedriesMvpView {
@@ -29,15 +30,23 @@ class CathedriesActivity : BaseActivity(), CathedriesMvpView {
         rvCathedries.layoutManager = LinearLayoutManager(this)
         rvCathedries.itemAnimator = DefaultItemAnimator()
         rvCathedries.setHasFixedSize(true)
-
-        mPresenter.attachView(this)
-        mPresenter.loadCathedries(facultyId)
-
-        srlRefresh.setOnRefreshListener { mPresenter.loadCathedries() }
     }
 
-    val facultyId: Int
-        get() = intent.getIntExtra("FacultyId", 0)
+    override fun onStart() {
+        super.onStart()
+        mPresenter.attachView(this)
+        loadCathedries()
+
+        srlRefresh.setOnRefreshListener { loadCathedries() }
+    }
+
+    private fun loadCathedries() {
+        val facultyId = intent.getIntExtra("FacultyId", -1)
+        if (facultyId <= 0)
+            mPresenter.loadCathedries()
+        else
+            mPresenter.loadCathedries(facultyId)
+    }
 
     override fun showCathedries(cathedries: List<Cathedra>) {
         mAdapter.setCathedries(cathedries)
@@ -46,12 +55,13 @@ class CathedriesActivity : BaseActivity(), CathedriesMvpView {
     }
 
     override fun showEmptyList() {
+        mAdapter.setCathedries(ArrayList<Cathedra>())
         srlRefresh.isRefreshing = false
     }
 
     override fun showError() {
         Snackbar.make(drawer_layout, "Возниикла ошибка", Snackbar.LENGTH_LONG)
-                .setAction("Повторить") { mPresenter.loadCathedries(facultyId) }
+                .setAction("Повторить") { loadCathedries() }
                 .show()
         srlRefresh.isRefreshing = false
     }

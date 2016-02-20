@@ -107,9 +107,13 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
 
     fun getCathedries(): List<Cathedra> = mRealm.where(Cathedra::class.java).findAll()
 
+    fun getFacultyCathedries(facultyId: Int): List<Cathedra> = mRealm.where(Cathedra::class.java)
+            .equalTo("FacultyId", facultyId).findAll()
+
     fun getGroups(): List<Group> = mRealm.where(Group::class.java).findAll()
 
     fun getTeachers(): List<Teacher> = mRealm.where(Teacher::class.java).findAll()
+
 
     fun getLessonsForCurrentGroup(): List<Lesson> = mRealm.where(Lesson::class.java)
             .equalTo("GroupId", userId).findAll()
@@ -127,6 +131,27 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
             executeRequest(
                     ScheduleRequest(Schedule.FACULTIES, Faculty::class.java,
                             mRealm.where(Faculty::class.java),
+                            callbacks)
+            )
+
+    fun loadCathedries(callbacks: RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java,
+                            mRealm.where(Cathedra::class.java),
+                            callbacks)
+            )
+
+    fun loadGroups(callbacks: RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.GROUPS, Group::class.java,
+                            mRealm.where(Group::class.java),
+                            callbacks)
+            )
+
+    fun loadFacultyCathedries(facultyId: Int, callbacks:RequestCallbacks) =
+            executeRequest(
+                    ScheduleRequest(Schedule.CATHEDRIES, facultyId, Cathedra::class.java,
+                            mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId),
                             callbacks)
             )
 

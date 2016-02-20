@@ -135,7 +135,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         }
     }
 
-    private inner class ViewHolder(itemView: View) {
+    inner class ViewHolder(itemView: View) {
 
         var view = itemView
 

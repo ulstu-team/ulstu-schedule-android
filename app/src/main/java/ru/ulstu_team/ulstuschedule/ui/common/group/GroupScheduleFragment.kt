@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.common.student
+package ru.ulstu_team.ulstuschedule.ui.common.group
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -13,7 +13,7 @@ import ru.ulstu_team.ulstuschedule.ui.common.StickyListScheduleAdapter
 import java.util.*
 import javax.inject.Inject
 
-class StudentScheduleFragment() : BaseFragment(), StudentScheduleMvpView {
+class GroupScheduleFragment() : BaseFragment(), GroupScheduleMvpView {
 
     @Inject
     internal lateinit var mAdapter: StickyListScheduleAdapter

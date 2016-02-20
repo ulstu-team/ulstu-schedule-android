@@ -1,9 +1,9 @@
-package ru.ulstu_team.ulstuschedule.ui.common.student
+package ru.ulstu_team.ulstuschedule.ui.common.group
 
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.ui.base.MvpView
 
-interface StudentScheduleMvpView : MvpView {
+interface GroupScheduleMvpView : MvpView {
 
     fun showSchedule(lessons: List<Lesson>)
 

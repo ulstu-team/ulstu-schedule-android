@@ -9,7 +9,7 @@ import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.ui.common.StickyListScheduleAdapter;
-import ru.ulstu_team.ulstuschedule.ui.common.student.StudentSchedulePresenter;
+import ru.ulstu_team.ulstuschedule.ui.common.group.StudentSchedulePresenter;
 
 @Module
 public class TeacherScheduleModule {

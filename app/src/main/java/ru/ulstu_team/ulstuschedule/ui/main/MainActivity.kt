@@ -5,7 +5,7 @@ import android.view.ViewStub
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity
-import ru.ulstu_team.ulstuschedule.ui.common.student.StudentScheduleFragment
+import ru.ulstu_team.ulstuschedule.ui.common.group.GroupScheduleFragment
 
 class MainActivity : BaseActivity() {
 
@@ -22,10 +22,10 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         val fm = fragmentManager
-        if (fm.findFragmentByTag(StudentScheduleFragment.TAG) == null) {
+        if (fm.findFragmentByTag(GroupScheduleFragment.TAG) == null) {
             fm.beginTransaction().add(R.id.fragmentContainer,
-                    StudentScheduleFragment(),
-                    StudentScheduleFragment.TAG).commit()
+                    GroupScheduleFragment(),
+                    GroupScheduleFragment.TAG).commit()
         }
     }
 }

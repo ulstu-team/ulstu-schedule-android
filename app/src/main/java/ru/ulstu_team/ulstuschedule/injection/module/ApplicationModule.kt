@@ -16,28 +16,28 @@ import ru.ulstu_team.ulstuschedule.injection.ApplicationContext
  * Provide application-level dependencies.
  */
 @Module
-class ApplicationModule(protected val mApplication: Application) {
+class ApplicationModule(private val mApplication: Application) {
 
     @Provides
-    internal fun provideApplication(): Application {
+    fun provideApplication(): Application {
         return mApplication
     }
 
     @Provides
     @ApplicationContext
-    internal fun provideContext(): Context {
+    fun provideContext(): Context {
         return mApplication
     }
 
     @Provides
     @Singleton
-    internal fun providePrefsManager(@ApplicationContext context: Context): PrefsManager {
+    fun providePrefsManager(@ApplicationContext context: Context): PrefsManager {
         return PrefsManager(context)
     }
 
     @Provides
     @Singleton
-    internal fun provideVolleySingleton(@ApplicationContext context: Context): VolleySingleton {
+    fun provideVolleySingleton(@ApplicationContext context: Context): VolleySingleton {
         return VolleySingleton.getInstance(context)
     }
 }

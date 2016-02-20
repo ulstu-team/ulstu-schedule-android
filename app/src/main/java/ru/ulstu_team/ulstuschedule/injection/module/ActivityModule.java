@@ -10,7 +10,6 @@ import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesAdapter;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
-import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity;
 import ru.ulstu_team.ulstuschedule.ui.groups.GroupsAdapter;
 
 @Module

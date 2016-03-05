@@ -18,6 +18,9 @@
     <string name="feedback">Обратная связь</string>
     <string name="ulstu_photo">ulstu photo</string>
 
+    <string name="loading_error">Возникла ошибка</string>
+    <string name="retry">Повторить</string>
+
     <string name="pair">%d пара</string>
     <string name="welcome">Войти</string>
 

@@ -6,4 +6,5 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     app:elevation="3dp"
+    app:titleTextColor="@color/colorHeaderText"
     android:elevation="3dp" />

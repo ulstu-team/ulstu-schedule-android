@@ -2,6 +2,8 @@ package ru.ulstu_team.ulstuschedule.ui.base
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -10,6 +12,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewStub
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.App
 import ru.ulstu_team.ulstuschedule.HeaderViewManager
 import ru.ulstu_team.ulstuschedule.R
@@ -20,7 +25,10 @@ import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity
 import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity
 import ru.ulstu_team.ulstuschedule.ui.main.MainActivity
+import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(),
@@ -30,6 +38,11 @@ abstract class BaseActivity : AppCompatActivity(),
 
     @Inject internal lateinit var headerViewManager: HeaderViewManager
     private var configured: Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Fabric.with(this, Crashlytics())
+    }
 
     override fun onStart() {
         super.onStart()
@@ -61,10 +74,7 @@ abstract class BaseActivity : AppCompatActivity(),
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.nav_my_schedule ->
                 startActivity(Intent(this, MainActivity::class.java))
             R.id.nav_favorites ->
@@ -75,8 +85,16 @@ abstract class BaseActivity : AppCompatActivity(),
                 startActivity(Intent(this, CathedriesActivity::class.java))
             R.id.nav_groups ->
                 startActivity(Intent(this, GroupsActivity::class.java))
+            R.id.nav_teachers ->
+                startActivity(Intent(this, TeachersActivity::class.java))
+            R.id.nav_feedback -> {
+                val emailIntent = Intent(Intent.ACTION_SENDTO,
+                                Uri.fromParts("mailto", "we.are.mere.team@gmail.com", null))
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+                                "[" + SimpleDateFormat("dd.MM.yyyy").format(Date()) + "] Ваш отзыв:")
+                startActivity(Intent.createChooser(emailIntent, "Оставить ваш отзыв..."))
+            }
         }
-
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
@@ -108,6 +126,7 @@ abstract class BaseActivity : AppCompatActivity(),
             val vsToolbar = findViewById(R.id.vsToolbar) as ViewStub
             vsToolbar.layoutResource = layoutId
             vsToolbar.inflate()
+            toolbar.setTitleTextColor(R.color.colorHeaderText)
         }
 
     val activityComponent: ActivityComponent

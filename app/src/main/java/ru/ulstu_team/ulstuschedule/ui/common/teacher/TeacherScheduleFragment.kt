@@ -56,8 +56,8 @@ class TeacherScheduleFragment() : BaseFragment(), TeacherScheduleMvpView {
     }
 
     override fun showError() {
-        Snackbar.make(view, "Возниикла ошибка", Snackbar.LENGTH_LONG)
-                .setAction("Повторить", { loadSchedule() })
+        Snackbar.make(view, R.string.loading_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, { loadSchedule() })
                 .show()
     }
 

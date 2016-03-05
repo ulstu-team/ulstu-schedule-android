@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
@@ -90,11 +91,16 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
 
         val lesson = mLessons!![position]
         with (holder) {
-            beginHour.text = TimeStringUtils.beginHour(lesson.number)
-            beginMinutes.text = TimeStringUtils.beginMinutes(lesson.number)
-            endHour.text = TimeStringUtils.endHour(lesson.number)
-            endMinutes.text = TimeStringUtils.endMinutes(lesson.number)
-
+            time.setImageResource(when(lesson.number){
+                1 -> R.drawable.lesson1
+                2 -> R.drawable.lesson2
+                3 -> R.drawable.lesson3
+                4 -> R.drawable.lesson4
+                5 -> R.drawable.lesson5
+                6 -> R.drawable.lesson6
+                7 -> R.drawable.lesson7
+                else -> R.drawable.lesson8
+            })
             cabinet.text = lesson.cabinet
             val stringTemplate = view.context.getString(R.string.pair)
             lessonNumber.text = String.format(stringTemplate, lesson.number)
@@ -139,24 +145,14 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
 
         var view = itemView
 
-        lateinit var beginHour: TextView
-        lateinit var beginMinutes: TextView
-        lateinit var endHour: TextView
-        lateinit var endMinutes: TextView
-
         lateinit var lessonName: TextView
         lateinit var ownerName: TextView
         lateinit var cabinet: TextView
         lateinit var lessonNumber: TextView
+        lateinit var time: ImageView
 
         init {
-            val timeView = itemView.findViewById(R.id.timeView)
-            with(timeView) {
-                beginHour = findViewById(R.id.beginHour) as TextView
-                beginMinutes = findViewById(R.id.beginMinutes) as TextView
-                endHour = findViewById(R.id.endHour) as TextView
-                endMinutes = findViewById(R.id.endMinutes) as TextView
-            }
+            time = itemView.findViewById(R.id.timeView) as ImageView
 
             val lessonInfo = itemView.findViewById(R.id.lessonInfo)
             with (lessonInfo) {

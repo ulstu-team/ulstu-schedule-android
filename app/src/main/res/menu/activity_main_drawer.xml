@@ -16,7 +16,8 @@
 
     <group
         android:id="@+id/nav_test_sections"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:visible="false">
         <item
             android:id="@+id/nav_credits"
             android:icon="@mipmap/credits"

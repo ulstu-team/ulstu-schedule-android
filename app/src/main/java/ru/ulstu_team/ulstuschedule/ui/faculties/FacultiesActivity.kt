@@ -49,8 +49,8 @@ class FacultiesActivity : BaseActivity(),
     }
 
     override fun showError() {
-        Snackbar.make(drawer_layout, "Возниикла ошибка", Snackbar.LENGTH_LONG)
-                .setAction("Повторить") { mPresenter.loadFaculties() }
+        Snackbar.make(drawer_layout, R.string.loading_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry) { mPresenter.loadFaculties() }
                 .show()
         srlRefresh.isRefreshing = false
     }

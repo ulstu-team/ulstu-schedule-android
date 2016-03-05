@@ -5,57 +5,13 @@
     android:layout_height="60dp"
     android:padding="6dp">
 
-    <RelativeLayout
+    <ImageView
         android:id="@+id/timeView"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/splitted_square"
-        tools:ignore="RtlHardcoded">
-
-        <TextView
-            android:id="@+id/beginHour"
-            style="@style/TimeText.Big"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:textSize="13sp"
-            tools:ignore="RtlSymmetry"
-            tools:text="13" />
-
-        <TextView
-            android:id="@+id/beginMinutes"
-            style="@style/TimeText.Little"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/beginHour"
-            tools:text="10" />
-
-        <TextView
-            android:id="@+id/endMinutes"
-            style="@style/TimeText.Little"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            tools:text="40" />
-
-        <TextView
-            android:id="@+id/endHour"
-            style="@style/TimeText.Big"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/endMinutes"
-            android:textSize="13sp"
-            tools:text="14" />
-
-    </RelativeLayout>
+        tools:background="@color/colorPrimary"
+        tools:ignore="RtlHardcoded" />
 
     <RelativeLayout
         android:id="@+id/lessonInfo"

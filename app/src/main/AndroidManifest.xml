@@ -3,13 +3,14 @@
     package="ru.ulstu_team.ulstuschedule">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.main.MainActivity"
@@ -37,7 +38,20 @@
             android:label="@string/title_activity_cathedries"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.groups.GroupsActivity" />
-        <activity android:name=".ui.schedule.ScheduleActivity"></activity>
+        <activity android:name=".ui.schedule.ScheduleActivity" />
+        <activity android:name=".ui.teachers.TeachersActivity" />
+
+        <service android:name=".data.remote.sync.ScheduleAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="78ecd023a340c012d7b3f24601fe58412bfaa4c1" />
     </application>
 
 </manifest>

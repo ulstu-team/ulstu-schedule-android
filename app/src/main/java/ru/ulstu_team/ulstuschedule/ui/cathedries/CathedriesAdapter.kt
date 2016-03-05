@@ -32,7 +32,7 @@ class CathedriesAdapter : RecyclerView.Adapter<CathedriesAdapter.ViewHolder>() {
             val context = itemView.context
             itemView.setOnClickListener {
                 val intent = Intent(context, TeachersActivity::class.java)
-                        .putExtra("CathedraId", cathedra.id)
+                        .putExtra("cathedra_id", cathedra.id)
                 context.startActivity(intent)
             }
         }

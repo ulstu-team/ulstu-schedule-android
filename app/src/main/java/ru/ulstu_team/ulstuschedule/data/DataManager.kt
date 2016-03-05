@@ -27,14 +27,132 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
     val userName: String
         get() = mPrefsManager.getString(PrefsKeys.USER_NAME)
 
-    private fun getUrl(key: String, id: Int): String {
-        var url = URL_BASE_PART + key
-        url = if (id != 0) url + id else url
-        return url
+
+    fun getFavorites(): List<Favorite> = mRealm.where(Favorite::class.java).findAll()
+
+    fun addToFavorites(ownerId: Int, ownerName: String, ownerType: String, isSaved: Boolean) {
+        if (!containsInFavorites(ownerName)) {
+            val fav = Favorite().apply {
+                this.ownerId = ownerId
+                this.isSaved = isSaved
+                this.name = ownerName
+                this.type = ownerType
+            }
+            mRealm.executeTransaction { mRealm.copyToRealm(fav) }
+        }
     }
 
+    fun removeFromFavorites(ownerName: String) {
+        val fav = mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst()
+        if (fav != null) {
+            mRealm.executeTransaction { fav.removeFromRealm() }
+        }
+    }
+
+    fun containsInFavorites(ownerName: String): Boolean =
+            mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst() == null
+
+    //    fun isSavedInDatabase(ownerName: String, ownerType:String): Boolean {
+    //        if (!containsInFavorites(ownerName))
+    //            return false
+    //
+    //        return when (ownerType) {
+    //            "group" -> mRealm.where(Lesson::class.java)
+    //        }
+    //    }
+
+    fun getFaculties(): List<Faculty> {
+        val result = mRealm.where(Faculty::class.java).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getCathedries(): List<Cathedra> {
+        val result = mRealm.where(Cathedra::class.java).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getFacultyCathedries(facultyId: Int): List<Cathedra> {
+        val result = mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getGroups(): List<Group> {
+        val result = mRealm.where(Group::class.java).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getTeachers(): List<Teacher> {
+        val result = mRealm.where(Teacher::class.java).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getCathedraTeachers(cathedraId: Int): List<Teacher> {
+        val result = mRealm.where(Teacher::class.java).equalTo("CathedraId", cathedraId).findAll()
+        result.sort("Name")
+        return result
+    }
+
+    fun getLessonsForCurrentGroup(): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("GroupId", userId).findAll()
+
+    fun getLessonsForGroup(id: Int): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("GroupId", id).findAll()
+
+    fun getLessonsForCurrentTeacher(): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("TeacherId", userId).findAll()
+
+    fun getLessonsForTeacher(teacherId: Int): List<Lesson> = mRealm.where(Lesson::class.java)
+            .equalTo("TeacherId", teacherId).findAll()
+
+
+    fun loadFaculties(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.FACULTIES, Faculty::class.java,
+                    mRealm.where(Faculty::class.java), callbacks))
+
+    fun loadCathedries(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java,
+                    mRealm.where(Cathedra::class.java), callbacks))
+
+    fun loadFacultyCathedries(facultyId: Int, callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.CATHEDRIES, facultyId, Cathedra::class.java,
+                    mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId), callbacks))
+
+    fun loadGroups(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.GROUPS, Group::class.java,
+                    mRealm.where(Group::class.java), callbacks))
+
+    fun loadTeachers(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.TEACHERS, Teacher::class.java,
+                    mRealm.where(Teacher::class.java), callbacks))
+
+    fun loadCathedraTeachers(cathedraId: Int, callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.TEACHERS, cathedraId, Teacher::class.java,
+                    mRealm.where(Teacher::class.java).equalTo("CathedraId", cathedraId), callbacks))
+
+    fun loadLessonsForCurrentGroup(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.GROUP_LESSONS, userId, Lesson::class.java,
+                    mRealm.where(Lesson::class.java).equalTo("GroupId", userId), callbacks))
+
+    fun loadLessonsForGroup(groupId: Int, callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.GROUP_LESSONS, groupId, Lesson::class.java,
+                    mRealm.where(Lesson::class.java).equalTo("GroupId", groupId), callbacks))
+
+    fun loadLessonsForCurrentTeacher(callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
+                    mRealm.where(Lesson::class.java).equalTo("TeacherId", userId), callbacks))
+
+    fun loadLessonsForTeacher(teacherId: Int, callbacks: RequestCallbacks) =
+            executeRequest(ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
+                    mRealm.where(Lesson::class.java).equalTo("TeacherId", teacherId), callbacks))
+
+
     private fun executeRequest(request: ScheduleRequest) {
-        val volleyRequest = StringRequest(getUrl(request.key, request.id),
+        val volleyRequest = StringRequest(UrlManager.getUrl(request.key, request.id),
                 Response.Listener<String> { response -> saveInDatabase(response, request) },
                 Response.ErrorListener { error -> request.callbacks.onError(error) }
         ).setRetryPolicy(object : RetryPolicy {
@@ -60,129 +178,25 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
         val mIsOneModel = json.trim { it <= ' ' }[0] == '{'
         val clazz: Class<out RealmObject> = request.dataType
 
-        mRealm.beginTransaction()
 
         val objects = request.realmQuery.findAll()
+        mRealm.beginTransaction()
         objects.clear()
 
-        if (mIsOneModel) {
-            mRealm.createOrUpdateObjectFromJson(clazz, json)
-        } else {
-            mRealm.createOrUpdateAllFromJson(clazz, json)
-        }
-
         mRealm.commitTransaction()
-        request.callbacks.onSuccess()
+        mRealm.executeTransaction({ realm ->
+            if (mIsOneModel) {
+                realm.createOrUpdateObjectFromJson(clazz, json)
+            } else {
+                mRealm.createOrUpdateAllFromJson(clazz, json)
+            }
+            request.callbacks.onSuccess()
+        })
 
-        //        mRealm.executeTransaction(
-        //                new Realm.Transaction() {
-        //
-        //                    @Override
-        //                    public void execute(Realm realm) {
-        //                        RealmResults objects = request.getRealmQuery().findAll();
-        //                        objects.clear();
-        //
-        //                        if (mIsOneModel) {
-        //                            mRealm.createOrUpdateObjectFromJson(clazz, json);
-        //                        } else {
-        //                            mRealm.createOrUpdateAllFromJson(clazz, json);
-        //                        }
-        //                    }
-        //                }, new Realm.Transaction.Callback() {
-        //                    @Override
-        //                    public void onSuccess() {
-        //                        request.getCallbacks().onSuccess();
-        //                    }
-        //
-        //                    @Override
-        //                    public void onError(Exception e) {
-        //                        request.getCallbacks().onError(e);
-        //                    }
-        //                }
-        //        );
+
+            //request.callbacks.onSuccess()
+
         //mRealm.close()
     }
 
-    fun getFaculties(): List<Faculty> = mRealm.where(Faculty::class.java).findAll()
-
-    fun getCathedries(): List<Cathedra> = mRealm.where(Cathedra::class.java).findAll()
-
-    fun getFacultyCathedries(facultyId: Int): List<Cathedra> = mRealm.where(Cathedra::class.java)
-            .equalTo("FacultyId", facultyId).findAll()
-
-    fun getGroups(): List<Group> = mRealm.where(Group::class.java).findAll()
-
-    fun getTeachers(): List<Teacher> = mRealm.where(Teacher::class.java).findAll()
-
-
-    fun getLessonsForCurrentGroup(): List<Lesson> = mRealm.where(Lesson::class.java)
-            .equalTo("GroupId", userId).findAll()
-
-    fun getLessonsForGroup(id: Int): List<Lesson> = mRealm.where(Lesson::class.java)
-            .equalTo("GroupId", id).findAll()
-
-    fun getLessonsForCurrentTeacher(): List<Lesson> = mRealm.where(Lesson::class.java)
-            .equalTo("TeacherId", userId).findAll()
-
-    fun getLessonsForTeacher(teacherId: Int): List<Lesson> = mRealm.where(Lesson::class.java)
-            .equalTo("TeacherId", teacherId).findAll()
-
-    fun loadFaculties(callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.FACULTIES, Faculty::class.java,
-                            mRealm.where(Faculty::class.java),
-                            callbacks)
-            )
-
-    fun loadCathedries(callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.CATHEDRIES, Cathedra::class.java,
-                            mRealm.where(Cathedra::class.java),
-                            callbacks)
-            )
-
-    fun loadGroups(callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.GROUPS, Group::class.java,
-                            mRealm.where(Group::class.java),
-                            callbacks)
-            )
-
-    fun loadFacultyCathedries(facultyId: Int, callbacks:RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.CATHEDRIES, facultyId, Cathedra::class.java,
-                            mRealm.where(Cathedra::class.java).equalTo("FacultyId", facultyId),
-                            callbacks)
-            )
-
-    fun loadLessonsForCurrentGroup(callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.GROUP_LESSONS, userId, Lesson::class.java,
-                            mRealm.where(Lesson::class.java).equalTo("GroupId", userId),
-                            callbacks)
-            )
-
-    fun loadLessonsForGroup(groupId: Int, callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.GROUP_LESSONS, groupId, Lesson::class.java,
-                            mRealm.where(Lesson::class.java).equalTo("GroupId", groupId),
-                            callbacks)
-            )
-
-    fun loadLessonsForCurrentTeacher(callbacks: RequestCallbacks) =
-            executeRequest(
-                    ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
-                            mRealm.where(Lesson::class.java).equalTo("TeacherId", userId),
-                            callbacks)
-            )
-
-    fun loadLessonsForTeacher(teacherId: Int, callbacks: RequestCallbacks) =
-            executeRequest(ScheduleRequest(Schedule.TEACHERS_LESSONS, Lesson::class.java,
-                    mRealm.where(Lesson::class.java).equalTo("TeacherId", teacherId),
-                    callbacks)
-            )
-
-    companion object {
-        private val URL_BASE_PART = "http://ulstuschedule.azurewebsites.net/ulstu/"
-    }
 }

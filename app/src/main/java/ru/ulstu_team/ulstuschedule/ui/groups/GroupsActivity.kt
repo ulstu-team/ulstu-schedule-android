@@ -1,8 +1,10 @@
 package ru.ulstu_team.ulstuschedule.ui.groups
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_layout.*
 import kotlinx.android.synthetic.main.groups_content.*
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.R
@@ -50,6 +52,9 @@ class GroupsActivity : BaseActivity(), GroupsMvpView {
     }
 
     override fun showError() {
+        Snackbar.make(drawer_layout, R.string.loading_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry) { mPresenter.loadGroups() }
+                .show()
         srlRefresh.isRefreshing = false
     }
 }

@@ -60,8 +60,8 @@ class CathedriesActivity : BaseActivity(), CathedriesMvpView {
     }
 
     override fun showError() {
-        Snackbar.make(drawer_layout, "Возниикла ошибка", Snackbar.LENGTH_LONG)
-                .setAction("Повторить") { loadCathedries() }
+        Snackbar.make(drawer_layout, R.string.loading_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry) { loadCathedries() }
                 .show()
         srlRefresh.isRefreshing = false
     }

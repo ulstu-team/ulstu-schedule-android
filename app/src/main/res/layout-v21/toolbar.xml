@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
-    android:titleTextAppearance="@color/secondaryText"
+    app:titleTextColor="@color/colorHeaderText"
     app:elevation="3dp"
     android:elevation="3dp" />

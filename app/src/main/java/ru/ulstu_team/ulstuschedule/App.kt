@@ -2,6 +2,9 @@ package ru.ulstu_team.ulstuschedule
 
 import android.app.Application
 import android.content.Context
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
+import io.fabric.sdk.android.Fabric
 
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -19,6 +22,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Fabric.with(this, Crashlytics(), Answers())
+
         CalligraphyConfig.initDefault(
                 CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/Roboto-Regular.ttf")
@@ -26,14 +31,14 @@ class App : Application() {
                         .build())
 
         val config = RealmConfiguration.Builder(applicationContext)
-                .name("schedule.realm")
+                .name("schedule_realm.realm")
                 .schemaVersion(1)
                 .build()
         Realm.setDefaultConfiguration(config)
 
         val prefsManager = PrefsManager(this)
-        prefsManager.putInt(PrefsKeys.USER_ID, 103)
-        prefsManager.putString(PrefsKeys.USER_NAME, "ПИбд-11")
+        prefsManager.putInt(PrefsKeys.USER_ID, 123)
+        prefsManager.putString(PrefsKeys.USER_NAME, "ПИбд-31")
         prefsManager.putString(PrefsKeys.USER_TYPE, "student")
     }
 

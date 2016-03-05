@@ -1,7 +1,9 @@
 package ru.ulstu_team.ulstuschedule.ui.main
 
+import android.accounts.Account
+import android.accounts.AccountManager
+import android.content.Context
 import android.os.Bundle
-import android.view.ViewStub
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity
@@ -26,6 +28,29 @@ class MainActivity : BaseActivity() {
             fm.beginTransaction().add(R.id.fragmentContainer,
                     GroupScheduleFragment(),
                     GroupScheduleFragment.TAG).commit()
+        }
+
+        //CreateSyncAccount(this)
+    }
+
+    private companion object {
+        fun CreateSyncAccount(context: Context) {
+            val account: Account = Account("schedule", "schedule")
+            val accountManager = context.getSystemService(ACCOUNT_SERVICE) as AccountManager
+            if (accountManager.addAccountExplicitly(account, null, null)) {
+                /*
+                 * If you don't set android:syncable="true" in
+                 * in your <provider> element in the manifest,
+                 * then call context.setIsSyncable(account, AUTHORITY, lesson1)
+                 * here.
+                 */
+                //context.isSyncable(account, null, lesson1)
+            } else {
+                /*
+                 * The account exists or some other error occurred. Log this, report it,
+                 * or handle it internally.
+                 */
+            }
         }
     }
 }

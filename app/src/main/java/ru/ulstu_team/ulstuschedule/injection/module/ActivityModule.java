@@ -11,6 +11,7 @@ import ru.ulstu_team.ulstuschedule.injection.PerActivity;
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesAdapter;
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
 import ru.ulstu_team.ulstuschedule.ui.groups.GroupsAdapter;
+import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersAdapter;
 
 @Module
 public class ActivityModule {
@@ -53,5 +54,11 @@ public class ActivityModule {
     @Provides
     GroupsAdapter provideGroupsAdapter() {
         return new GroupsAdapter();
+    }
+
+    @PerActivity
+    @Provides
+    TeachersAdapter provideTeacherAdapter() {
+        return new TeachersAdapter();
     }
 }

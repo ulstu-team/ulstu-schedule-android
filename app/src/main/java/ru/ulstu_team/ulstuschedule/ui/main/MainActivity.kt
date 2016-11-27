@@ -1,56 +1,30 @@
 package ru.ulstu_team.ulstuschedule.ui.main
 
-import android.accounts.Account
-import android.accounts.AccountManager
-import android.content.Context
 import android.os.Bundle
-import kotlinx.android.synthetic.main.toolbar.*
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.main.*
 import ru.ulstu_team.ulstuschedule.R
-import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity
-import ru.ulstu_team.ulstuschedule.ui.common.group.GroupScheduleFragment
+import ru.ulstu_team.ulstuschedule.util.showToast
 
-class MainActivity : BaseActivity() {
-
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityComponent.inject(this)
-        setContentView(R.layout.activity_layout)
-        configureNavigationView()
-
-        contentLayout = R.layout.main_content
-        toolbarLayout = R.layout.toolbar
-        toolbar.title = getString(R.string.app_name)
-        setSupportActionBar(toolbar)
-
-        val fm = fragmentManager
-        if (fm.findFragmentByTag(GroupScheduleFragment.TAG) == null) {
-            fm.beginTransaction().add(R.id.fragmentContainer,
-                    GroupScheduleFragment(),
-                    GroupScheduleFragment.TAG).commit()
-        }
-
-        //CreateSyncAccount(this)
+        setContentView(R.layout.main)
+        configureBottomNavigationBar()
     }
 
-    private companion object {
-        fun CreateSyncAccount(context: Context) {
-            val account: Account = Account("schedule", "schedule")
-            val accountManager = context.getSystemService(ACCOUNT_SERVICE) as AccountManager
-            if (accountManager.addAccountExplicitly(account, null, null)) {
-                /*
-                 * If you don't set android:syncable="true" in
-                 * in your <provider> element in the manifest,
-                 * then call context.setIsSyncable(account, AUTHORITY, lesson1)
-                 * here.
-                 */
-                //context.isSyncable(account, null, lesson1)
-            } else {
-                /*
-                 * The account exists or some other error occurred. Log this, report it,
-                 * or handle it internally.
-                 */
+    private fun configureBottomNavigationBar() {
+        bottomNavigationBar.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.action_my_schedule ->
+                        showToast(R.string.bottom_bar_my_schedule)
+                R.id.action_favorites ->
+                        showToast(R.string.bottom_bar_favorite)
+                R.id.action_settings ->
+                        showToast(R.string.bottom_bar_settings)
             }
+            false
         }
     }
 }

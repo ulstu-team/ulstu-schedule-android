@@ -23,4 +23,8 @@
     <color name="lightBlue">#42A5F5</color>
     <color name="darkBlue">#00458e</color>
 
+    <color name="bottom_bar_icons">#333</color>
+
+    <color name="schedule_view_divider">#ddd</color>
+
 </resources>

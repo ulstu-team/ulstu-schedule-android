@@ -28,7 +28,7 @@
             android:paddingRight="10dp"
             android:paddingTop="6dp"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="15sp"
+            android:textSize="16sp"
             tools:text="Пн, 18 января" />
 
         <View

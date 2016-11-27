@@ -37,7 +37,7 @@ class App : Application() {
         Realm.setDefaultConfiguration(config)
 
         val prefsManager = PrefsManager(this)
-        prefsManager.putInt(PrefsKeys.USER_ID, 123)
+        prefsManager.putInt(PrefsKeys.USER_ID, 109)
         prefsManager.putString(PrefsKeys.USER_NAME, "ПИбд-31")
         prefsManager.putString(PrefsKeys.USER_TYPE, "student")
     }

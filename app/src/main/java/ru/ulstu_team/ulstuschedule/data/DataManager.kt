@@ -21,7 +21,7 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
 
     fun dispose() = { mRealm.close() }
 
-    val userId: Int
+    val userId: Int?
         get() = mPrefsManager.getInt(PrefsKeys.USER_ID)
 
     val userName: String
@@ -31,26 +31,28 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
     fun getFavorites(): List<Favorite> = mRealm.where(Favorite::class.java).findAll()
 
     fun addToFavorites(ownerId: Int, ownerName: String, ownerType: String, isSaved: Boolean) {
-        if (!containsInFavorites(ownerName)) {
+        if (!containsInFavorites(`@+id/teacher`)) {
             val fav = Favorite().apply {
                 this.ownerId = ownerId
                 this.isSaved = isSaved
-                this.name = ownerName
+                this.name = `@+id/teacher`
                 this.type = ownerType
             }
-            mRealm.executeTransaction { mRealm.copyToRealm(fav) }
+            mRealm.executeTransaction {
+                mRealm.copyToRealm(fav)
+            }
         }
     }
 
     fun removeFromFavorites(ownerName: String) {
-        val fav = mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst()
+        val fav = mRealm.where(Favorite::class.java).equalTo("Name", `@+id/teacher`).findFirst()
         if (fav != null) {
             mRealm.executeTransaction { fav.removeFromRealm() }
         }
     }
 
     fun containsInFavorites(ownerName: String): Boolean =
-            mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst() == null
+            mRealm.where(Favorite::class.java).equalTo("Name", `@+id/teacher`).findFirst() == null
 
     //    fun isSavedInDatabase(ownerName: String, ownerType:String): Boolean {
     //        if (!containsInFavorites(ownerName))
@@ -135,7 +137,7 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
                     mRealm.where(Teacher::class.java).equalTo("CathedraId", cathedraId), callbacks))
 
     fun loadLessonsForCurrentGroup(callbacks: RequestCallbacks) =
-            executeRequest(ScheduleRequest(Schedule.GROUP_LESSONS, userId, Lesson::class.java,
+            executeRequest(ScheduleRequest(Schedule.GROUP_LESSONS, userId!!, Lesson::class.java,
                     mRealm.where(Lesson::class.java).equalTo("GroupId", userId), callbacks))
 
     fun loadLessonsForGroup(groupId: Int, callbacks: RequestCallbacks) =
@@ -157,12 +159,10 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
                 Response.ErrorListener { error -> request.callbacks.onError(error) }
         ).setRetryPolicy(object : RetryPolicy {
             override fun getCurrentTimeout() = 3000
-
             override fun getCurrentRetryCount() = 2
 
             @Throws(VolleyError::class)
-            override fun retry(error: VolleyError) {
-            }
+            override fun retry(error: VolleyError) { }
         })
         mVolley.addToRequestQueue(volleyRequest)
     }
@@ -180,23 +180,17 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
 
 
         val objects = request.realmQuery.findAll()
-        mRealm.beginTransaction()
-        objects.clear()
+        mRealm.executeTransaction {
+            objects.clear()
+        }
 
-        mRealm.commitTransaction()
-        mRealm.executeTransaction({ realm ->
+        mRealm.executeTransaction { realm ->
             if (mIsOneModel) {
                 realm.createOrUpdateObjectFromJson(clazz, json)
             } else {
                 mRealm.createOrUpdateAllFromJson(clazz, json)
             }
             request.callbacks.onSuccess()
-        })
-
-
-            //request.callbacks.onSuccess()
-
-        //mRealm.close()
+        }
     }
-
 }

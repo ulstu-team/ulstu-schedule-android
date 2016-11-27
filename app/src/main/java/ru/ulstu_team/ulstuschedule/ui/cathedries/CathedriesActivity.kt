@@ -30,6 +30,7 @@ class CathedriesActivity : BaseActivity(), CathedriesMvpView {
         rvCathedries.layoutManager = LinearLayoutManager(this)
         rvCathedries.itemAnimator = DefaultItemAnimator()
         rvCathedries.setHasFixedSize(true)
+        rvCathedries.adapter = mAdapter
     }
 
     override fun onStart() {
@@ -50,7 +51,6 @@ class CathedriesActivity : BaseActivity(), CathedriesMvpView {
 
     override fun showCathedries(cathedries: List<Cathedra>) {
         mAdapter.setCathedries(cathedries)
-        rvCathedries.adapter = mAdapter
         srlRefresh.isRefreshing = false
     }
 

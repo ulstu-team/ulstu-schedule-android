@@ -104,7 +104,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
             cabinet.text = lesson.cabinet
             val stringTemplate = view.context.getString(R.string.pair)
             lessonNumber.text = String.format(stringTemplate, lesson.number)
-            ownerName.text = if (mIsTeacher) lesson.group.name else lesson.teacher.name
+            `@+id/teacher`.text = if (mIsTeacher) lesson.group.name else lesson.teacher.name
             lessonName.text = lesson.name
         }
 
@@ -157,7 +157,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
             val lessonInfo = itemView.findViewById(R.id.lessonInfo)
             with (lessonInfo) {
                 lessonName = findViewById(R.id.lessonName) as TextView
-                ownerName = findViewById(R.id.ownerName) as TextView
+                `@+id/teacher` = findViewById(R.id.`@+id/teacher`) as TextView
                 cabinet = findViewById(R.id.cabinet) as TextView
                 lessonNumber = findViewById(R.id.lessonNumber) as TextView
             }
@@ -166,7 +166,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         }
 
         fun setStyle(){
-            ownerName.typeface = FontUtil.getMedium(mContext)
+            `@+id/teacher`.typeface = FontUtil.getMedium(mContext)
         }
     }
 }

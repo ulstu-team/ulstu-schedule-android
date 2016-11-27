@@ -24,7 +24,7 @@ import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule
 import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity
 import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity
 import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity
-import ru.ulstu_team.ulstuschedule.ui.main.MainActivity
+import ru.ulstu_team.ulstuschedule.ui.main2.MainActivity2
 import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
@@ -76,7 +76,7 @@ abstract class BaseActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_my_schedule ->
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MainActivity2::class.java))
             R.id.nav_favorites ->
                 Toast.makeText(this, getString(R.string.favorites), Toast.LENGTH_SHORT).show()
             R.id.nav_faculties ->

@@ -30,32 +30,77 @@
         <item name="fontPath">fonts/Roboto-Medium.ttf</item>
     </style>
 
-    <style name="TimeText">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TimeText.Little" parent="TimeText">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="TimeText.Big" parent="TimeText">
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="TeacherSchedule.Group" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorSecondaryText</item>
-    </style>
-
-    <style name="TeacherSchedule.Lesson" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/secondaryText</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-    </style>
-
-
     <style name="ulstu" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
     </style>
+
+    <!-- Schedule View -->
+    <style name="ScheduleView" />
+
+    <style name="ScheduleView.Title">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="ScheduleView.LessonContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="ScheduleView.LessonTime">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_toStartOf">@id/lessonName</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+    <style name="ScheduleView.Teacher">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginStart">64dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:layout_toEndOf">@id/cabinet</item>
+    </style>
+
+    <style name="ScheduleView.Lesson">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+        <item name="android:layout_alignStart">@id/teacher</item>
+        <item name="android:layout_below">@id/teacher</item>
+        <item name="android:layout_toEndOf">@id/lessonNumber</item>
+    </style>
+
+    <style name="ScheduleView.Cabinet">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="ScheduleView.LessonNumber">
+        <item name="@id/lessonNumber" type="id" />
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+        <item name="android:layout_below">@id/cabinet</item>
+    </style>
+    <!-- End Schedule View -->
 
 </resources>

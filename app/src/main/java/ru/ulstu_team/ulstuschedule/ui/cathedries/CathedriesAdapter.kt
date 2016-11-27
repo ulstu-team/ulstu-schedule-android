@@ -10,10 +10,11 @@ import android.widget.TextView
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Cathedra
 import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersActivity
+import java.util.*
 
 class CathedriesAdapter : RecyclerView.Adapter<CathedriesAdapter.ViewHolder>() {
 
-    private lateinit  var mCathedries: List<Cathedra>
+    private  var mCathedries: List<Cathedra> = ArrayList()
 
     fun setCathedries(cathedries: List<Cathedra>) {
         mCathedries = cathedries

@@ -40,7 +40,7 @@
             tools:text="1 пара" />
 
         <TextView
-            android:id="@+id/ownerName"
+            android:id="@+id/teacher"
             style="@style/TeacherSchedule.Group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -12,7 +12,7 @@ import android.widget.RadioButton
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.local.PrefsKeys
 import ru.ulstu_team.ulstuschedule.data.local.PrefsManager
-import ru.ulstu_team.ulstuschedule.ui.main.MainActivity
+import ru.ulstu_team.ulstuschedule.ui.main2.MainActivity2
 
 class StartActivity : AppCompatActivity() {
     private var actv: AutoCompleteTextView? = null
@@ -47,7 +47,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     fun onLoginClicked(view: View) {
-        val intent = Intent(this@StartActivity, MainActivity::class.java)
+        val intent = Intent(this@StartActivity, MainActivity2::class.java)
         if ((findViewById(R.id.studentSchedule) as RadioButton).isChecked && actv!!.text.toString().trim { it <= ' ' } != "") {
             prefs!!.putString(PrefsKeys.USER_TYPE, "student")
             prefs!!.putString(PrefsKeys.USER_GROUP, actv!!.text.toString().trim { it <= ' ' })

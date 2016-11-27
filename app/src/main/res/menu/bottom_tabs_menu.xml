@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_my_schedule"
+        android:enabled="true"
+        android:icon="@drawable/calendar_clock"
+        android:title="@string/bottom_bar_my_schedule"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@drawable/star"
+        android:title="@string/bottom_bar_favorite"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings"
+        android:enabled="true"
+        android:icon="@drawable/settings"
+        android:title="@string/bottom_bar_settings"
+        app:showAsAction="ifRoom" />
+
+</menu>

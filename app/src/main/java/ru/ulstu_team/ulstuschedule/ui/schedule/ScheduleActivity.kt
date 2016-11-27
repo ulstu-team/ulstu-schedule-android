@@ -1,5 +1,7 @@
 package ru.ulstu_team.ulstuschedule.ui.schedule
 
+
+
 import android.app.Fragment
 import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar.*
@@ -27,7 +29,7 @@ class ScheduleActivity : BaseActivity() {
 
         contentLayout = R.layout.main_content
         toolbarLayout = R.layout.toolbar
-        toolbar.title = ownerName
+        toolbar.title = `@+id/teacher`
         setSupportActionBar(toolbar)
 
         val fragmentTag = "ScheduleActivity"

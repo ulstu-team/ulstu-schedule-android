@@ -34,7 +34,9 @@ class ScheduleSyncAdapter(context: Context, autoInitialize: Boolean, allowParall
                                provider: ContentProviderClient?,
                                syncResult: SyncResult?) {
 
-        mDataManager.dispose()
+        checkAndUpdateFavorites()
+        syncStudentsSchedule()
+        syncTeachersSchedule()
     }
 
     private fun checkAndUpdateFavorites() {

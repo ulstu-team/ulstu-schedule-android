@@ -81,7 +81,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         val holder: ViewHolder
 
         if (convertView == null) {
-            lessonView = mInflater.inflate(R.layout.schedule_list_item, parent, false)
+            lessonView = mInflater.inflate(R.layout.schedule_view, parent, false)
             holder = ViewHolder(lessonView)
             lessonView.tag = holder
         } else {
@@ -104,7 +104,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
             cabinet.text = lesson.cabinet
             val stringTemplate = view.context.getString(R.string.pair)
             lessonNumber.text = String.format(stringTemplate, lesson.number)
-            `@+id/teacher`.text = if (mIsTeacher) lesson.group.name else lesson.teacher.name
+            ownerName.text = if (mIsTeacher) lesson.group.name else lesson.teacher.name
             lessonName.text = lesson.name
         }
 
@@ -152,12 +152,12 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         lateinit var time: ImageView
 
         init {
-            time = itemView.findViewById(R.id.timeView) as ImageView
+            time = itemView.findViewById(R.id.lessonName) as ImageView
 
-            val lessonInfo = itemView.findViewById(R.id.lessonInfo)
+            val lessonInfo = itemView.findViewById(R.id.teacher)
             with (lessonInfo) {
                 lessonName = findViewById(R.id.lessonName) as TextView
-                `@+id/teacher` = findViewById(R.id.`@+id/teacher`) as TextView
+                ownerName = findViewById(R.id.teacher) as TextView
                 cabinet = findViewById(R.id.cabinet) as TextView
                 lessonNumber = findViewById(R.id.lessonNumber) as TextView
             }
@@ -166,7 +166,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         }
 
         fun setStyle(){
-            `@+id/teacher`.typeface = FontUtil.getMedium(mContext)
+            ownerName.typeface = FontUtil.getMedium(mContext)
         }
     }
 }

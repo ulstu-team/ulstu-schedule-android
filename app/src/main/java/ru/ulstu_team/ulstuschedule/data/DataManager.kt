@@ -31,11 +31,11 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
     fun getFavorites(): List<Favorite> = mRealm.where(Favorite::class.java).findAll()
 
     fun addToFavorites(ownerId: Int, ownerName: String, ownerType: String, isSaved: Boolean) {
-        if (!containsInFavorites(`@+id/teacher`)) {
+        if (!containsInFavorites(ownerName)) {
             val fav = Favorite().apply {
                 this.ownerId = ownerId
                 this.isSaved = isSaved
-                this.name = `@+id/teacher`
+                this.name = ownerName
                 this.type = ownerType
             }
             mRealm.executeTransaction {
@@ -45,14 +45,14 @@ constructor(val context: Context, private val mPrefsManager: PrefsManager, priva
     }
 
     fun removeFromFavorites(ownerName: String) {
-        val fav = mRealm.where(Favorite::class.java).equalTo("Name", `@+id/teacher`).findFirst()
+        val fav = mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst()
         if (fav != null) {
             mRealm.executeTransaction { fav.removeFromRealm() }
         }
     }
 
     fun containsInFavorites(ownerName: String): Boolean =
-            mRealm.where(Favorite::class.java).equalTo("Name", `@+id/teacher`).findFirst() == null
+            mRealm.where(Favorite::class.java).equalTo("Name", ownerName).findFirst() == null
 
     //    fun isSavedInDatabase(ownerName: String, ownerType:String): Boolean {
     //        if (!containsInFavorites(ownerName))

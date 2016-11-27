@@ -29,7 +29,7 @@ class ScheduleActivity : BaseActivity() {
 
         contentLayout = R.layout.main_content
         toolbarLayout = R.layout.toolbar
-        toolbar.title = `@+id/teacher`
+        toolbar.title = ownerName
         setSupportActionBar(toolbar)
 
         val fragmentTag = "ScheduleActivity"

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import org.jetbrains.anko.find
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.data.model.LessonComparator
@@ -129,7 +130,7 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
             (lesson.numberOfWeek - 1) * 7 + (lesson.dayOfWeek - 1)
 
     private class HeaderViewHolder(context: Context, itemView: View) {
-        lateinit var headerText: TextView
+        var headerText: TextView
 
         init {
             headerText = itemView.findViewById(R.id.headerTitle) as TextView
@@ -149,19 +150,17 @@ constructor(private val mContext: Context) : BaseAdapter(), StickyListHeadersAda
         lateinit var ownerName: TextView
         lateinit var cabinet: TextView
         lateinit var lessonNumber: TextView
-        lateinit var time: ImageView
+        var time: ImageView
 
         init {
             time = itemView.findViewById(R.id.lessonName) as ImageView
 
-            val lessonInfo = itemView.findViewById(R.id.teacher)
-            with (lessonInfo) {
-                lessonName = findViewById(R.id.lessonName) as TextView
-                ownerName = findViewById(R.id.teacher) as TextView
-                cabinet = findViewById(R.id.cabinet) as TextView
-                lessonNumber = findViewById(R.id.lessonNumber) as TextView
+            with (itemView.find<View>(R.id.teacher)) {
+                lessonName = find<TextView>(R.id.lessonName)
+                ownerName = find<TextView>(R.id.teacher)
+                cabinet = find<TextView>(R.id.cabinet)
+                lessonNumber = find<TextView>(R.id.lessonNumber)
             }
-
             setStyle()
         }
 

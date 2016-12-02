@@ -1,7 +1,5 @@
 package ru.ulstu_team.ulstuschedule.ui.schedule
 
-
-
 import android.app.Fragment
 import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar.*

@@ -47,6 +47,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
+    // Anko DSL
+    def ANKO_VERSION = 0.9
+    compile "org.jetbrains.anko:anko-sdk21:$ANKO_VERSION"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$ANKO_VERSION"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$ANKO_VERSION"
+    compile "org.jetbrains.anko:anko-cardview-v7:$ANKO_VERSION"
+
     // Realm
     compile 'io.realm:realm-android:0.87.5'
     kapt 'io.realm:realm-annotations-processor:0.87.5'

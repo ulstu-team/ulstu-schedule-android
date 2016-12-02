@@ -6,7 +6,11 @@
     android:orientation="vertical"
     android:paddingTop="16dp">
 
-    <include layout="@layout/schedule_view" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvDaySchedules"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigationBar" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationBar"

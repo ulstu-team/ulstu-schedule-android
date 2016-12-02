@@ -58,6 +58,7 @@
         <item>Суббота</item>
         <item>Воскресенье</item>
     </string-array>
+
     <string name="title_activity_cathedries">CathedriesActivity</string>
     <string name="ulstu_logo">ulstu_logo</string>
     <string name="bottom_bar_my_schedule">Расписание</string>

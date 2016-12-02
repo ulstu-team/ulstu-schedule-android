@@ -37,9 +37,45 @@
     <!-- Schedule View -->
     <style name="ScheduleView" />
 
+    <style name="ScheduleView.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:elevation">32dp</item>
+        <item name="android:background">@color/lightBlue</item>
+    </style>
+
+    <style name="ScheduleView.ContentContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/schedule_view_padding</item>
+    </style>
+
+    <style name="ScheduleView.WeekColor">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:contentDescription">@string/color_of_current_week</item>
+    </style>
+
     <style name="ScheduleView.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignBaseline">@id/imgWeekColor</item>
+        <item name="android:layout_toEndOf">@id/imgWeekColor</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="ScheduleView.LessonsContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_below">@id/tvDay</item>
     </style>
 
     <style name="ScheduleView.LessonContainer">
@@ -99,6 +135,16 @@
         <item name="android:textColor">@color/secondaryText</item>
         <item name="fontPath">fonts/Roboto-Medium.ttf</item>
         <item name="android:layout_below">@id/cabinet</item>
+    </style>
+
+    <style name="ScheduleView.Divider">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignBottom">@id/lessonsContainer</item>
+        <item name="android:layout_below">@id/tvDay</item>
+        <item name="android:layout_marginStart">56dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@color/schedule_view_divider</item>
     </style>
     <!-- End Schedule View -->
 

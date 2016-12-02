@@ -6,7 +6,7 @@ import android.os.IBinder
 
 class ScheduleAuthenticatorService() : Service() {
 
-    private lateinit var mAuthenticator: ScheduleAuthenticator
+    private var mAuthenticator: ScheduleAuthenticator
 
     init {
         mAuthenticator = ScheduleAuthenticator(this)

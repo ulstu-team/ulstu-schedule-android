@@ -14,7 +14,6 @@ import org.jetbrains.anko.cardview.v7.cardView
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
-import ru.ulstu_team.ulstuschedule.data.remote.Schedule
 import java.util.*
 import java.util.Calendar.*
 
@@ -51,8 +50,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                     id = R.id.lessonContainer
                     lparams {
                         width = matchParent
-                        topMargin = dip(8)
-                        bottomMargin = dip(8)
+                        setPadding(0, dip(6), 0, dip(6))
                     }
 
                     textView {
@@ -63,8 +61,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                         text = time(lesson.number)
                     }.lparams {
                         marginEnd = dip(16)
-                        alignParentStart()
-                        alignStart(R.id.lessonName)
+                        leftOf(R.id.lessonName)
                     }
                     textView {
                         id = R.id.cabinet
@@ -112,8 +109,8 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
             }
         }
 
+        holder.lessensContainer.removeAllViews()
         scheduleOfDay.lessons.forEach {
-            holder.lessensContainer.removeAllViews()
             holder.lessensContainer.addView(addLesson(holder.itemView.context, it))
         }
     }
@@ -122,14 +119,9 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
 
     private fun scheduleView(context: Context): View = with(context) {
         verticalLayout {
-            lparams {
-                bottomMargin = dip(8)
-                leftMargin = dip(16)
-                rightMargin = dip(16)
-            }
             cardView {
-                lparams { width = matchParent }
-                cardElevation = 32f
+                cardElevation = 12f
+                clipToPadding = false
 
                 relativeLayout {
                     id = R.id.contentContainer
@@ -167,9 +159,15 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                         bottomOf(R.id.lessonContainer)
                         below(R.id.tvDay)
                         marginStart = dip(56)
-                        topMargin = dip(8)
+                        topMargin = dip(4)
                     }
                 }
+            }.lparams {
+                width = matchParent
+                topMargin = dip(8)
+                bottomMargin = dip(8)
+                leftMargin = dip(16)
+                rightMargin = dip(16)
             }
         }
     }

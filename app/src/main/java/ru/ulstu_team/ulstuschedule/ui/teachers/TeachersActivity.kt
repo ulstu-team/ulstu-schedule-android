@@ -41,7 +41,7 @@ class TeachersActivity : BaseActivity(), TeachersMvpView {
     }
 
     private fun loadTeachers(){
-        val cathedraId = intent.getIntExtra("cathedra_id", 0);
+        val cathedraId = intent.getIntExtra("cathedra_id", 0)
         if (cathedraId <= 0)
             mPresenter.loadTeachers()
         else

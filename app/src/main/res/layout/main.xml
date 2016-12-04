@@ -20,6 +20,6 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_tabs_menu" />
+        app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

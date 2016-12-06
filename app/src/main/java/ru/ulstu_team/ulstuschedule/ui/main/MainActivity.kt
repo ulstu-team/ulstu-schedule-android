@@ -9,72 +9,71 @@ import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleFragment
 import ru.ulstu_team.ulstuschedule.util.bottomNavigationView
 import ru.ulstu_team.ulstuschedule.util.colorStateList
-import ru.ulstu_team.ulstuschedule.util.showToast
+import ru.ulstu_team.ulstuschedule.util.presentFragment
 
 class MainActivity : AppCompatActivity() {
-    private val CONTENT_CONTAINER_ID = 0x00000000000001
-    private val BOTTOM_NAVIGATION_BAR_ID = 0x00000000000002
 
-    private lateinit var contentContainer: LinearLayout
-    private lateinit var bottomNavigationBar: BottomNavigationView
+    private lateinit var ui: MainActivityUI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView()
+        ui = MainActivityUI()
+        ui.setContentView(this)
         configureBottomNavigationBar()
 
-        val scheduleFragment = fragmentManager.findFragmentByTag(ScheduleFragment.TAG)
-        if (scheduleFragment == null) {
-            fragmentManager.beginTransaction().add(CONTENT_CONTAINER_ID,
-                    ScheduleFragment.newInstance(),
-                    ScheduleFragment.TAG)
-                    .commit()
-        } else {
-            fragmentManager.beginTransaction()
-                    .show(scheduleFragment)
-                    .commit()
-        }
-    }
-
-    private fun setContentView() {
-        relativeLayout {
-            lparams {
-                width = matchParent
-                height = matchParent
-            }
-            bottomNavigationBar = bottomNavigationView {
-                id = BOTTOM_NAVIGATION_BAR_ID
-                backgroundResource = R.color.colorPrimary
-                itemBackgroundResource = R.color.colorPrimary
-                itemTextColor = colorStateList(R.color.bottom_navigation_text_color)
-                itemIconTintList = colorStateList(R.color.bottom_navigation_text_color)
-                inflateMenu(R.menu.bottom_navigation_menu)
-            }.lparams {
-                width = matchParent
-                alignParentBottom()
-            }
-            addView(bottomNavigationBar)
-            contentContainer = verticalLayout {
-                id = CONTENT_CONTAINER_ID
-            }.lparams {
-                width = matchParent
-                height = matchParent
-                above(BOTTOM_NAVIGATION_BAR_ID)
-            }
-        }
+        showSchedule()
     }
 
     private fun configureBottomNavigationBar() {
-        bottomNavigationBar.setOnNavigationItemSelectedListener { item ->
+        ui.bottomNavigationBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_my_schedule ->
-                    showToast(R.string.bottom_bar_my_schedule)
+                    showSchedule()
                 R.id.action_favorites ->
-                    showToast(R.string.bottom_bar_favorite)
+                    toast(R.string.bottom_bar_favorite)
                 R.id.action_settings ->
-                    showToast(R.string.bottom_bar_settings)
+                    toast(R.string.bottom_bar_settings)
             }
             false
+        }
+    }
+
+    private fun showSchedule() =
+            presentFragment(ui.CONTENT_CONTAINER_ID, ScheduleFragment.TAG, { ScheduleFragment.newInstance() })
+
+
+    private class MainActivityUI : AnkoComponent<MainActivity> {
+        val CONTENT_CONTAINER_ID = 0x1
+        val BOTTOM_NAVIGATION_BAR_ID = 0x2
+
+        lateinit var contentContainer: LinearLayout
+        lateinit var bottomNavigationBar: BottomNavigationView
+
+        override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
+            relativeLayout {
+                lparams {
+                    width = matchParent
+                    height = matchParent
+                }
+                bottomNavigationBar = bottomNavigationView {
+                    id = BOTTOM_NAVIGATION_BAR_ID
+                    backgroundResource = R.color.colorPrimary
+                    itemBackgroundResource = R.color.colorPrimary
+                    itemTextColor = ui.ctx.colorStateList(R.color.bottom_navigation_text_color)
+                    itemIconTintList = ui.ctx.colorStateList(R.color.bottom_navigation_text_color)
+                    inflateMenu(R.menu.bottom_navigation_menu)
+                }.lparams {
+                    width = matchParent
+                    alignParentBottom()
+                }
+                contentContainer = verticalLayout {
+                    id = CONTENT_CONTAINER_ID
+                }.lparams {
+                    width = matchParent
+                    height = matchParent
+                    above(BOTTOM_NAVIGATION_BAR_ID)
+                }
+            }
         }
     }
 }

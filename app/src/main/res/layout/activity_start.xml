@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ru.ulstu_team.ulstuschedule.ui.start.StartActivity">
+    tools:context=".ui.old.start.StartActivity">
 
     <ImageView
         android:id="@+id/ulstu_logo"

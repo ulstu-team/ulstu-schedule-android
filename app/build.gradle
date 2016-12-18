@@ -33,7 +33,7 @@ dependencies {
     final DAGGER_VERSION = '2.0.2'
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     kapt 'com.google.dagger:dagger-compiler:2.0.2'
-
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // Support Libraries
     def LIBS_VERSION = '25.0.1'
@@ -42,10 +42,10 @@ dependencies {
     compile "com.android.support:design:$LIBS_VERSION"
     compile "com.android.support:support-v4:$LIBS_VERSION"
     compile "com.android.support:recyclerview-v7:$LIBS_VERSION"
+    compile 'com.android.support:support-v4:25.0.1'
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // Anko DSL
     def ANKO_VERSION = 0.9
@@ -67,13 +67,12 @@ dependencies {
     // Core
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    testCompile 'junit:junit:4.12'
 
     // Fabric
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-
-    testCompile 'junit:junit:4.12'
 }
 buildscript {
     ext.kotlin_version = '1.0.5-2'

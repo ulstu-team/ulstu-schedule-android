@@ -3,12 +3,12 @@ package ru.ulstu_team.ulstuschedule.injection.component
 import dagger.Component
 import ru.ulstu_team.ulstuschedule.injection.PerActivity
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule
-import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity
-import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity
-import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity
-import ru.ulstu_team.ulstuschedule.ui.main2.MainActivity2
+import ru.ulstu_team.ulstuschedule.ui.old.cathedries.CathedriesActivity
+import ru.ulstu_team.ulstuschedule.ui.old.faculties.FacultiesActivity
+import ru.ulstu_team.ulstuschedule.ui.old.groups.GroupsActivity
+import ru.ulstu_team.ulstuschedule.ui.old.main2.MainActivity2
 import ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleActivity
-import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersActivity
+import ru.ulstu_team.ulstuschedule.ui.old.teachers.TeachersActivity
 
 /**
  * This component inject dependencies to all Activities across the application

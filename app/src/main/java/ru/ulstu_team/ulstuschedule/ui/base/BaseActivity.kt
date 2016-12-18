@@ -12,8 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewStub
 import android.widget.Toast
-import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
+//import com.crashlytics.android.Crashlytics
+//import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.App
 import ru.ulstu_team.ulstuschedule.HeaderViewManager
@@ -21,11 +21,11 @@ import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.injection.component.ActivityComponent
 import ru.ulstu_team.ulstuschedule.injection.component.DaggerActivityComponent
 import ru.ulstu_team.ulstuschedule.injection.module.ActivityModule
-import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesActivity
-import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesActivity
-import ru.ulstu_team.ulstuschedule.ui.groups.GroupsActivity
-import ru.ulstu_team.ulstuschedule.ui.main2.MainActivity2
-import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersActivity
+import ru.ulstu_team.ulstuschedule.ui.old.cathedries.CathedriesActivity
+import ru.ulstu_team.ulstuschedule.ui.old.faculties.FacultiesActivity
+import ru.ulstu_team.ulstuschedule.ui.old.groups.GroupsActivity
+import ru.ulstu_team.ulstuschedule.ui.old.main2.MainActivity2
+import ru.ulstu_team.ulstuschedule.ui.old.teachers.TeachersActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Fabric.with(this, Crashlytics())
+//        Fabric.with(this, Crashlytics())
     }
 
     override fun onStart() {

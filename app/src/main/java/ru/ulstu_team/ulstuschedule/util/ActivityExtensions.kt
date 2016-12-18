@@ -6,14 +6,8 @@ import android.support.annotation.StringRes
 import android.widget.Toast
 
 fun Activity.presentFragment(containerId: Int, tag: String, fragment: () -> Fragment) {
-    val currentFragment = fragmentManager.findFragmentByTag(tag)
-    if (currentFragment == null) {
-        fragmentManager.beginTransaction()
-                .add(containerId, fragment(), tag)
-                .commit()
-    } else {
-        fragmentManager.beginTransaction()
-                .show(currentFragment)
-                .commit()
-    }
+    val presentingFragment = fragmentManager.findFragmentByTag(tag) ?: fragment()
+    fragmentManager.beginTransaction()
+        .replace(containerId, presentingFragment, tag)
+        .commit()
 }

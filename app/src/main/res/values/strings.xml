@@ -68,4 +68,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="color_of_current_week">Color of current week</string>
+    <string name="empty_favorites">Добавьте интересующие вас расписания в избранное</string>
 </resources>

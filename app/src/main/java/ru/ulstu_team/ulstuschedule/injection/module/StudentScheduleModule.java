@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.ulstu_team.ulstuschedule.injection.ApplicationContext;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
-import ru.ulstu_team.ulstuschedule.ui.common.StickyListScheduleAdapter;
+import ru.ulstu_team.ulstuschedule.ui.old.common.StickyListScheduleAdapter;
 
 @Module
 public class StudentScheduleModule {

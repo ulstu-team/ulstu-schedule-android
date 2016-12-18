@@ -8,10 +8,10 @@ import dagger.Provides;
 import ru.ulstu_team.ulstuschedule.HeaderViewManager;
 import ru.ulstu_team.ulstuschedule.data.DataManager;
 import ru.ulstu_team.ulstuschedule.injection.PerActivity;
-import ru.ulstu_team.ulstuschedule.ui.cathedries.CathedriesAdapter;
-import ru.ulstu_team.ulstuschedule.ui.faculties.FacultiesAdapter;
-import ru.ulstu_team.ulstuschedule.ui.groups.GroupsAdapter;
-import ru.ulstu_team.ulstuschedule.ui.teachers.TeachersAdapter;
+import ru.ulstu_team.ulstuschedule.ui.old.cathedries.CathedriesAdapter;
+import ru.ulstu_team.ulstuschedule.ui.old.faculties.FacultiesAdapter;
+import ru.ulstu_team.ulstuschedule.ui.old.groups.GroupsAdapter;
+import ru.ulstu_team.ulstuschedule.ui.old.teachers.TeachersAdapter;
 
 @Module
 public class ActivityModule {

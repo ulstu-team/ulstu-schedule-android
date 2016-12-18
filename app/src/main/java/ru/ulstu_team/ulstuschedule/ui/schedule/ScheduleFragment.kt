@@ -2,39 +2,26 @@ package ru.ulstu_team.ulstuschedule.ui.schedule
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.jetbrains.anko.*
-import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.ctx
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
-import ru.ulstu_team.ulstuschedule.ui.main.DaySchedulesAdapter
+import ru.ulstu_team.ulstuschedule.ui.schedule.DaySchedulesAdapter
 import java.util.*
 
 class ScheduleFragment : Fragment() {
 
     private val daySchedulesAdapter = DaySchedulesAdapter()
+    private val ui = ScheduleFragmentUI()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return with(ctx) {
-            verticalLayout {
-                lparams {
-                    width = matchParent
-                    height = matchParent
-                }
-                recyclerView {
-                    adapter = daySchedulesAdapter
-                    layoutManager = LinearLayoutManager(ctx)
-                    setHasFixedSize(true)
-                }.lparams {
-                    width = matchParent
-                    height = matchParent
-                }
-            }
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
+        val view = ui.createView(AnkoContext.create(ctx, this))
+        ui.rvSchedules.adapter = daySchedulesAdapter
+        return view
     }
 
     override fun onStart() {
@@ -73,11 +60,9 @@ class ScheduleFragment : Fragment() {
     companion object {
         val TAG = "ScheduleFragment"
 
-        fun newInstance(): ScheduleFragment {
-            val scheduleFragment = ScheduleFragment()
-            scheduleFragment.arguments = Bundle()
-            return scheduleFragment
-        }
+        fun newInstance() = ScheduleFragment().apply {
+                arguments = Bundle()
+            }
     }
 
 }

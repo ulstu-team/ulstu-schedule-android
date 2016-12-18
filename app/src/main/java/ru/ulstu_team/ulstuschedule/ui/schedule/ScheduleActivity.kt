@@ -5,8 +5,8 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.ui.base.BaseActivity
-import ru.ulstu_team.ulstuschedule.ui.common.group.GroupScheduleFragment
-import ru.ulstu_team.ulstuschedule.ui.common.teacher.TeacherScheduleFragment
+import ru.ulstu_team.ulstuschedule.ui.old.common.group.GroupScheduleFragment
+import ru.ulstu_team.ulstuschedule.ui.old.common.teacher.TeacherScheduleFragment
 
 class ScheduleActivity : BaseActivity() {
 

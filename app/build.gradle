@@ -23,6 +23,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/java'
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -75,7 +76,7 @@ dependencies {
     }
 }
 buildscript {
-    ext.kotlin_version = '1.0.5-2'
+    ext.kotlin_version = '1.0.6'
     repositories {
         mavenCentral()
     }

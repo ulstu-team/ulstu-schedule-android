@@ -36,7 +36,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
 
         val scheduleOfDay = mDaySchedules[position]
 
-        val cal = getInstance()
+        val cal = Calendar.getInstance()
         cal.time = scheduleOfDay.date
         val dateText = "${weekDay(cal.get(DAY_OF_WEEK), context).capitalize()}, " +
                 " ${cal.get(DAY_OF_MONTH)} ${month(cal.get(MONTH), context)}"
@@ -50,7 +50,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                     id = R.id.lessonContainer
                     lparams {
                         width = matchParent
-                        setPadding(0, dip(6), 0, dip(6))
+                        setPadding(0, dip(12), 0, dip(6))
                     }
 
                     textView {
@@ -148,7 +148,6 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                     }
                     verticalLayout {
                         id = R.id.lessonContainer
-                        orientation = LinearLayout.VERTICAL
                     }.lparams { width = matchParent; below(R.id.tvDay) }
 
                     view {
@@ -184,7 +183,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
         if (Companion.weekDays == null) {
             Companion.weekDays = context.resources.getStringArray(R.array.full_days_of_week)
         }
-        return Companion.weekDays!![index - 1]
+        return Companion.weekDays!![index]
     }
 
     // TODO: Move to core layer
@@ -192,7 +191,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
         if (Companion.months == null) {
             Companion.months = context.resources.getStringArray(R.array.months)
         }
-        return Companion.months!![index - 1]
+        return Companion.months!![index]
     }
 
     // TODO: Move to core layer

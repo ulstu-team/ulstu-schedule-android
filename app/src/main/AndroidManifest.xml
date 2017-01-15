@@ -32,7 +32,7 @@
             android:label="@string/title_activity_cathedries"
             android:theme="@style/AppTheme" />
         <activity android:name="ru.ulstu_team.ulstuschedule.ui.old.groups.GroupsActivity" />
-        <activity android:name="ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleActivity" />
+        <activity android:name="ru.ulstu_team.ulstuschedule.ui.old.ScheduleActivity" />
         <activity android:name="ru.ulstu_team.ulstuschedule.ui.old.teachers.TeachersActivity" />
 
         <service android:name=".data.remote.sync.ScheduleAuthenticatorService">

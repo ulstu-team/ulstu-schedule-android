@@ -1,4 +1,4 @@
-package ru.ulstu_team.ulstuschedule.ui.schedule
+package ru.ulstu_team.ulstuschedule.ui.old
 
 import android.app.Fragment
 import android.os.Bundle

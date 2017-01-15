@@ -17,8 +17,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
     override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
         relativeLayout {
             lparams {
-                width = matchParent
-                height = matchParent
+                width = matchParent; height = matchParent
             }
             bottomNavigationBar = bottomNavigationView {
                 id = BOTTOM_NAVIGATION_BAR_ID

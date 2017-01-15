@@ -7,7 +7,7 @@ import ru.ulstu_team.ulstuschedule.ui.old.cathedries.CathedriesActivity
 import ru.ulstu_team.ulstuschedule.ui.old.faculties.FacultiesActivity
 import ru.ulstu_team.ulstuschedule.ui.old.groups.GroupsActivity
 import ru.ulstu_team.ulstuschedule.ui.old.main2.MainActivity2
-import ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleActivity
+import ru.ulstu_team.ulstuschedule.ui.old.ScheduleActivity
 import ru.ulstu_team.ulstuschedule.ui.old.teachers.TeachersActivity
 
 /**

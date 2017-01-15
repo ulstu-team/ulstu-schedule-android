@@ -17,7 +17,7 @@ import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
 import java.util.*
 import java.util.Calendar.*
 
-class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DayScheduleViewHolder>() {
+class DaySchedulesAdapter : RecyclerView.Adapter<DaySchedulesAdapter.DayScheduleViewHolder>() {
 
     var mDaySchedules: List<ScheduleOfDay> = ArrayList()
 
@@ -50,7 +50,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
                     id = R.id.lessonContainer
                     lparams {
                         width = matchParent
-                        setPadding(0, dip(12), 0, dip(6))
+                        setPadding(0, dip(6), dip(6), dip(6))
                     }
 
                     textView {
@@ -120,7 +120,7 @@ class DaySchedulesAdapter() : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedu
     private fun scheduleView(context: Context): View = with(context) {
         verticalLayout {
             cardView {
-                cardElevation = 12f
+                cardElevation = 8f
                 clipToPadding = false
 
                 relativeLayout {

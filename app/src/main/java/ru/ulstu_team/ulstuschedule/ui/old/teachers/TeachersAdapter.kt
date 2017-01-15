@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Teacher
-import ru.ulstu_team.ulstuschedule.ui.schedule.ScheduleActivity
+import ru.ulstu_team.ulstuschedule.ui.old.ScheduleActivity
 
 
 class TeachersAdapter : RecyclerView.Adapter<TeachersAdapter.ViewHolder>() {

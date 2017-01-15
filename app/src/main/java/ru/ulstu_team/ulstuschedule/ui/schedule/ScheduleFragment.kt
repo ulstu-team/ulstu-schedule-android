@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.ctx
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
@@ -26,43 +27,46 @@ class ScheduleFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFakeData()
+        // setupCalendar()
+    }
+
+    private fun setupCalendar() {
+        val days = arrayOf("П", "В", "С", "Ч", "П", "С")
+        for (i in 0 until days.count())
+            ui.calendarGrid.addView(TextView(activity).apply { text = days[i] })
     }
 
     private fun setupFakeData() {
-        daySchedulesAdapter.setDaySchedules(listOf(
-                ScheduleOfDay(listOf(Lesson().apply {
-                    number = 1
-                    numberOfWeek = 1
-                    dayOfWeek = 1
-                    name = "Программирование"
-                    cabinet = "a.431/3"
-                    teacher = Teacher().apply { name = "Эгов Е.Н." }
-                }, Lesson().apply {
-                    number = 2
-                    numberOfWeek = 1
-                    dayOfWeek = 1
-                    name = "Ин.Яз."
-                    cabinet = "a.401/г"
-                    teacher = Teacher().apply { name = "Новосельцева Н.Н." }
-                }, Lesson().apply {
-                    number = 3
-                    numberOfWeek = 1
-                    dayOfWeek = 1
-                    name = "Физика"
-                    cabinet = "a.801/г"
-                    teacher = Teacher().apply { name = "Качаев А.А." }
-                }), Date()),
-                ScheduleOfDay(listOf(
-                        Lesson().apply {
-                            number = 1
-                            numberOfWeek = 1
-                            dayOfWeek = 1
-                            name = "Программирование"
-                            cabinet = "a.431/3"
-                            teacher = Teacher().apply { name = "Эгов Е.Н." }
-                        }
-                ), Date())))
+        fun randomScheduleOfDay() : ScheduleOfDay {
+            val teachers = arrayOf("Эгов Е.Н.", "Новосельцева Н.Н.", "Романов А.А.", "Воронина В.В.", "Афанасьева Т.В.", "Качаев А.А.")
+            val subjects = arrayOf("Программирование", "Ин.Яз.", "Физика", "Алгоритмы и структуры данных", "Выш. матан", "РВИП", "ТПО")
+            val cabinets = arrayOf("a.401/г", "a.431/3", "a.801/г")
+
+            val random = Random()
+            val lessons = ArrayList<Lesson>()
+
+            for (i in 2..random.nextInt(5)) {
+                lessons.add(Lesson().apply {
+                    number = random.nextInt(8) + 1
+                    numberOfWeek = 1 + random.nextInt(2)
+                    dayOfWeek = random.nextInt(6)
+                    name = subjects[random.nextInt(subjects.count())]
+                    cabinet = cabinets[random.nextInt(cabinets.count())]
+                    teacher = Teacher().apply { name = teachers[random.nextInt(teachers.count())] }
+                })
+            }
+
+            return ScheduleOfDay(lessons, Date(Date().time - random.nextInt(432898970) * 100 - 432890689689))
+        }
+
+        val schedules = ArrayList<ScheduleOfDay>()
+        for (i in 1..12)
+            schedules.add(randomScheduleOfDay())
+
+        daySchedulesAdapter.setDaySchedules(schedules)
     }
+
+
 
     companion object {
         val TAG = "ScheduleFragment"

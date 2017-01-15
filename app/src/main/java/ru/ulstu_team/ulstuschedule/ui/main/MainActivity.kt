@@ -27,17 +27,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_favorites -> showFavorites()
                 R.id.action_settings -> showSettings()
             }
-            false
+            true
         }
     }
 
-    private fun showSchedule() =
-            presentFragment(ui.CONTENT_CONTAINER_ID,
-                    ScheduleFragment.TAG, { ScheduleFragment.newInstance() })
-
-    private fun showFavorites() =
-            presentFragment(ui.CONTENT_CONTAINER_ID,
-                    FavoritesFragment.TAG, { FavoritesFragment.newInstance() })
+    private fun showSchedule() = presentFragment(ui.CONTENT_CONTAINER_ID,
+            ScheduleFragment.TAG, { ScheduleFragment.newInstance() })
+    private fun showFavorites() = presentFragment(ui.CONTENT_CONTAINER_ID,
+            FavoritesFragment.TAG, { FavoritesFragment.newInstance() })
 
     private fun showSettings() = toast(R.string.bottom_bar_settings)
 }

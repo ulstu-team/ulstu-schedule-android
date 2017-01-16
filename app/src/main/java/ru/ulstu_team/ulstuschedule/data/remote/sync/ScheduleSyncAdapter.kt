@@ -25,7 +25,7 @@ class ScheduleSyncAdapter(context: Context, autoInitialize: Boolean, allowParall
     @Inject internal lateinit var mDataManager: DataManager
 
     private val mPrefsManager = PrefsManager(context)
-    private val mVolley: VolleySingleton = VolleySingleton.getInstance(context)
+    private val mVolley = VolleySingleton.getInstance(context)
     private var isSyncSucceed = true
 
     override fun onPerformSync(account: Account?,

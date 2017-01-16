@@ -22,3 +22,11 @@ fun Context.colorStateList(@ColorRes colorStateList: Int) : ColorStateList {
         return resources.getColorStateList(colorStateList, theme)
     }
 }
+
+fun Context.getColorResource(@ColorRes color: Int) : Int {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        return resources.getColor(color)
+    } else{
+        return resources.getColor(color, this.theme)
+    }
+}

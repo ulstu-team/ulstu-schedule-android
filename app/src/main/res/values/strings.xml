@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">УлГТУ. Расписание</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -23,6 +22,11 @@
 
     <string name="pair">%d пара</string>
     <string name="welcome">Войти</string>
+
+    <string name="current_group">Текущая группа</string>
+    <string name="current_group_name">ПИбд-41</string>
+    <string name="notification_current_lesson">Уведомления о текущей паре</string>
+    <string name="notification_lessons">Уведомления о парах</string>
 
     <string-array name="months">
         <item>Января</item>

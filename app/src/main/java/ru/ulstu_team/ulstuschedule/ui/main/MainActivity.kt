@@ -35,6 +35,6 @@ class MainActivity : AppCompatActivity() {
             ScheduleFragment.TAG, { ScheduleFragment.newInstance() })
     private fun showFavorites() = presentFragment(ui.CONTENT_CONTAINER_ID,
             FavoritesFragment.TAG, { FavoritesFragment.newInstance() })
-
-    private fun showSettings() = toast(R.string.bottom_bar_settings)
+    private fun showSettings() = presentFragment (ui.CONTENT_CONTAINER_ID,
+            SettingsFragment.TAG, {SettingsFragment.newInstance() })
 }

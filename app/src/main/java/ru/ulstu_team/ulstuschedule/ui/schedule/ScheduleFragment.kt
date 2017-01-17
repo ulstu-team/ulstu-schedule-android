@@ -3,16 +3,10 @@ package ru.ulstu_team.ulstuschedule.ui.schedule
 import android.app.Fragment
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.GridLayout
 import android.widget.TextView
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.textColor
+import org.jetbrains.anko.*
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
@@ -22,7 +16,7 @@ import ru.ulstu_team.ulstuschedule.util.context
 import ru.ulstu_team.ulstuschedule.util.getColorResource
 import java.util.*
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     private val daySchedulesAdapter = DaySchedulesAdapter()
     private val ui = ScheduleFragmentUI()
@@ -36,11 +30,17 @@ class ScheduleFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFakeData()
+
+        view.viewTreeObserver.addOnGlobalLayoutListener (this)
+    }
+
+    override fun onGlobalLayout() {
         setupCalendar()
+        view.viewTreeObserver.removeOnGlobalLayoutListener(this)
     }
 
     private fun setupCalendar() {
-        val cellWidth = dip(27)
+        val cellWidth = ui.calendarContainer.width / 7
         val cellHeight = dip(20)
 
         val days = arrayOf("П", "В", "С", "Ч", "П", "С", "В")

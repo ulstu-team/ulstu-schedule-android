@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.widget.GridLayout
-import android.widget.GridView
+import android.widget.LinearLayout
 import android.widget.TextView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -19,7 +19,8 @@ class ScheduleFragmentUI : AnkoComponent<ScheduleFragment> {
     lateinit var calendarGrid: GridLayout
     lateinit var tvCurrentDay: TextView
     lateinit var tvCurrentMonth: TextView
-    lateinit var tvTodayLessinCount: TextView
+    lateinit var tvTodayLessonCount: TextView
+    lateinit var calendarContainer: LinearLayout
 
     override fun createView(ui: AnkoContext<ScheduleFragment>) = with(ui) {
         verticalLayout {
@@ -49,7 +50,7 @@ class ScheduleFragmentUI : AnkoComponent<ScheduleFragment> {
                         centerInParent()
                     }
 
-                    tvTodayLessinCount = textView {
+                    tvTodayLessonCount = textView {
                         textSize = sp(12).toFloat()
                         textColor = ctx.getColorResource(R.color.white)
                     }.lparams {
@@ -63,12 +64,17 @@ class ScheduleFragmentUI : AnkoComponent<ScheduleFragment> {
                     gravity = Gravity.CENTER_VERTICAL
                 }
 
-                calendarGrid = gridLayout {
-                    backgroundColor = android.R.color.holo_red_dark
-                    columnCount = 7
-                }.lparams {
-                    width = wrapContent; height = wrapContent
+                calendarContainer = linearLayout {
                     gravity = Gravity.CENTER
+                    calendarGrid = gridLayout {
+                        columnCount = 7
+                    }.lparams {
+                        width = matchParent
+                        gravity = Gravity.CENTER
+                    }
+                }.lparams {
+                    width = matchParent; height = matchParent
+                    marginEnd = dip(24)
                 }
             }
 

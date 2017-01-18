@@ -180,10 +180,11 @@ class DaySchedulesAdapter : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedule
 
     // TODO: Move to core layer
     fun weekDay(index: Int, context: Context): String {
+        Log.d("week", index.toString())
         if (Companion.weekDays == null) {
             Companion.weekDays = context.resources.getStringArray(R.array.full_days_of_week)
         }
-        return Companion.weekDays!![index - 1]
+        return Companion.weekDays!![index - 2]
     }
 
     // TODO: Move to core layer
@@ -191,7 +192,7 @@ class DaySchedulesAdapter : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedule
         if (Companion.months == null) {
             Companion.months = context.resources.getStringArray(R.array.months)
         }
-        return Companion.months!![index - 1]
+        return Companion.months!![index]
     }
 
     // TODO: Move to core layer
@@ -216,3 +217,6 @@ class DaySchedulesAdapter : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedule
         var months: Array<String>? = null
     }
 }
+
+
+

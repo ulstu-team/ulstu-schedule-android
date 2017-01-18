@@ -216,3 +216,6 @@ class DaySchedulesAdapter : RecyclerView.Adapter<DaySchedulesAdapter.DaySchedule
         var months: Array<String>? = null
     }
 }
+
+
+

@@ -7,10 +7,18 @@ import android.view.*
 import android.widget.GridLayout
 import android.widget.TextView
 import org.jetbrains.anko.*
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import ru.ulstu_team.ulstuschedule.R
+import ru.ulstu_team.ulstuschedule.data.local.PrefsManager
+import ru.ulstu_team.ulstuschedule.data.model.Group
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
 import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
 import ru.ulstu_team.ulstuschedule.data.model.Teacher
+import ru.ulstu_team.ulstuschedule.data.remote.ScheduleApiAdapter
 import ru.ulstu_team.ulstuschedule.util.DateFormatter
 import ru.ulstu_team.ulstuschedule.util.context
 import ru.ulstu_team.ulstuschedule.util.getColorResource
@@ -21,16 +29,16 @@ class ScheduleFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     private val daySchedulesAdapter = DaySchedulesAdapter()
     private val ui = ScheduleFragmentUI()
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
         val view = ui.createView(AnkoContext.create(ctx, this))
         ui.rvSchedules.adapter = daySchedulesAdapter
         return view
     }
 
-    override fun onStart() {
+    override fun onStart(){
         super.onStart()
-        setupFakeData()
-
+        updateData()
         view.viewTreeObserver.addOnGlobalLayoutListener (this)
     }
 
@@ -38,6 +46,26 @@ class ScheduleFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
         setupCalendar()
         view.viewTreeObserver.removeOnGlobalLayoutListener(this)
     }
+
+    fun updateData(){
+        val prefixManager = PrefsManager(context)
+        doAsync {
+
+            val currentGroup = Group()
+            currentGroup.name = prefixManager.getString("currentGroup")
+
+
+            val api = ScheduleApiAdapter()
+            val lessons = api.getLessons(currentGroup)
+
+            uiThread {
+                Log.i("group", currentGroup.name)
+                Log.i("doAsync", "success")
+                daySchedulesAdapter.setDaySchedules(api.getSchedule(lessons))
+            }
+        }
+    }
+
 
     private fun setupCalendar() {
         val cellWidth = ui.calendarContainer.width / 7
@@ -76,6 +104,7 @@ class ScheduleFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
             }
         }
     }
+
 
     private fun setupFakeData() {
         fun randomScheduleOfDay() : ScheduleOfDay {

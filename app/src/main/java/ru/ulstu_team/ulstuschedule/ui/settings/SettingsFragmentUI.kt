@@ -1,14 +1,24 @@
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Gravity
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.switchCompat
 import org.jetbrains.anko.design.coordinatorLayout
+import org.w3c.dom.Text
 import ru.ulstu_team.ulstuschedule.R
 import ru.ulstu_team.ulstuschedule.R.color.colorSecondaryText
+import ru.ulstu_team.ulstuschedule.data.local.PrefsManager
+import ru.ulstu_team.ulstuschedule.data.remote.ScheduleApiAdapter
 
 class SettingsFragmentUI : AnkoComponent<SettingsFragment> {
 
     private val NOTIFICATION_CURRENT_LESSON = 0x13
     private val NOTIFICATION_LESSONS = 0x13
+
+    lateinit var autoCompleteForGroupField: AutoCompleteTextView
+
     override fun createView(ui: AnkoContext<SettingsFragment>) = with(ui) {
         coordinatorLayout {
             lparams {
@@ -25,13 +35,23 @@ class SettingsFragmentUI : AnkoComponent<SettingsFragment> {
                         width = dip(250)
                         margin = dip(10)
                     }
-                    textView {
+
+                    autoCompleteForGroupField = autoCompleteTextView(){
+                        textSize = sp(5.5.toFloat()).toFloat()
+
+                    }.lparams {
+                        width = dip(250)
+                        leftMargin = dip(10)
+                    }
+
+
+                    /*autoCompleteTextView {
                         textResource = R.string.current_group_name
                         textSize = sp(5.5.toFloat()).toFloat()
                     }.lparams {
                         width = dip(250)
                         leftMargin = dip(10)
-                    }
+                    }*/
 
                     view {
                         backgroundResource = R.color.colorPrimary
@@ -67,5 +87,9 @@ class SettingsFragmentUI : AnkoComponent<SettingsFragment> {
                 }
             }
         }
+    }
+
+    private fun UpdateCurrentGroup() {
+
     }
 }

@@ -3,10 +3,12 @@ package ru.ulstu_team.ulstuschedule.data.remote
 import com.google.gson.*
 import ru.ulstu_team.ulstuschedule.data.model.Group
 import ru.ulstu_team.ulstuschedule.data.model.Lesson
+import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
 import ru.ulstu_team.ulstuschedule.data.model.Teacher
 import java.net.URL
+import java.util.*
 
-class ScheduleApiAdapter {
+class ScheduleApiAdapter() {
     private val daysOfWeek = listOf("mon", "tue", "wed", "thu", "fri", "sat")
 
     fun getGroups() : List<Group> {
@@ -74,8 +76,19 @@ class ScheduleApiAdapter {
         lesson.cabinet = json["classroom"].asJsonArray.joinToString("/").drop(1).dropLast(1)
         lesson.number = number
         lesson.numberOfWeek = week
-        lesson.dayOfWeek = daysOfWeek.indexOf(day) + 1
+        lesson.dayOfWeek = daysOfWeek.indexOf(day)
 
         return lesson
+    }
+
+    fun getSchedule(lessons : List<Lesson>) : List<ScheduleOfDay>{
+        return lessons
+                .filter { lesson -> lesson.numberOfWeek == 1}
+                .groupBy { lesson -> lesson.dayOfWeek }
+                .map { group -> ScheduleOfDay(group.value, getData(group.key)) }
+    }
+
+    private fun getData(dayOfWeek : Int) : Date {
+        return Date(Date().time - Random().nextInt(432898970) * 100 - 432890689689)
     }
 }

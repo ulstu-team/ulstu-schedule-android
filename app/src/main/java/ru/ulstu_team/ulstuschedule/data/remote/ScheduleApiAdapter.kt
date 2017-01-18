@@ -7,6 +7,7 @@ import ru.ulstu_team.ulstuschedule.data.model.ScheduleOfDay
 import ru.ulstu_team.ulstuschedule.data.model.Teacher
 import java.net.URL
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ScheduleApiAdapter() {
     private val daysOfWeek = listOf("mon", "tue", "wed", "thu", "fri", "sat")
@@ -89,6 +90,11 @@ class ScheduleApiAdapter() {
     }
 
     private fun getData(dayOfWeek : Int) : Date {
-        return Date(Date().time - Random().nextInt(432898970) * 100 - 432890689689)
+        val c = Calendar.getInstance()
+        c.time = Date()
+        val nowDayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 2
+
+        val delta = nowDayOfWeek - dayOfWeek
+        return Date(Date().time - delta * TimeUnit.DAYS.toMillis(1))
     }
 }

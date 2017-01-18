@@ -3,6 +3,7 @@
 
     <color name="colorHeaderText">#FFF</color>
     <color name="black">#000000</color>
+    <color name="primaryText">#1a1919</color>
     <color name="white">#fff</color>
     <color name="secondaryText">#333</color>
     <color name="divider">#888</color>

@@ -36,5 +36,5 @@ class MainActivity : AppCompatActivity() {
     private fun showFavorites() = presentFragment(ui.CONTENT_CONTAINER_ID,
             FavoritesFragment.TAG, { FavoritesFragment.newInstance() })
     private fun showSettings() = presentFragment (ui.CONTENT_CONTAINER_ID,
-            SettingsFragment.TAG, {SettingsFragment.newInstance() })
+            SettingsFragment.TAG, { SettingsFragment.newInstance() })
 }

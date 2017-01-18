@@ -1,19 +1,14 @@
 import android.view.Gravity
-import android.widget.EditText
+import android.widget.AutoCompleteTextView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.switchCompat
-import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.textInputLayout
 import ru.ulstu_team.ulstuschedule.R
-import ru.ulstu_team.ulstuschedule.R.color.colorSecondaryText
 import ru.ulstu_team.ulstuschedule.util.color
 
 class SettingsFragmentUI : AnkoComponent<SettingsFragment> {
 
-    private val NOTIFICATION_CURRENT_LESSON = 0x13
-    private val NOTIFICATION_LESSONS = 0x14
-
-    lateinit var etCurrentGroup: EditText
+    lateinit var actvCurrentGroup: AutoCompleteTextView
 
     override fun createView(ui: AnkoContext<SettingsFragment>) = with(ui) {
         verticalLayout {
@@ -37,7 +32,7 @@ class SettingsFragmentUI : AnkoComponent<SettingsFragment> {
 
             verticalLayout {
                 textInputLayout {
-                    etCurrentGroup = editText {
+                    actvCurrentGroup = autoCompleteTextView {
 
                         lparams {
                             width = matchParent

@@ -9,4 +9,5 @@ object PrefsKeys {
     val USER_GROUP = "user_group"
     val STUDENT_SCHEDULE_LAST_UPDATE = "student_schedule_last_update"
     val TEACHER_SCHEDULE_LAST_UPDATE = "teacher_schedule_last_update"
+    val CURRENT_GROUP = "currentGroup"
 }

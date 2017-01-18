@@ -3,6 +3,7 @@ package ru.ulstu_team.ulstuschedule.ui.schedule
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
